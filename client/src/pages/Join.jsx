@@ -1,14 +1,13 @@
 import React from 'react';
 import Header from '../components/Header/Header';
+import JoinForm from '../components/Join/JoinForm';
 
 const Join = () => {
    return (
       <>
          <Header/>
-         <div className='container'>
-            <h1>Join</h1>
-            <br/>
-            <h2>회원 가입 페이지</h2>
+         <div className='container' style={{marginTop:100}}>
+            <JoinForm/>
          </div>
       </>
    );

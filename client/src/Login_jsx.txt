@@ -6,8 +6,8 @@ const Login = () => {
    return (
       <>
          <Header/>
-         <div className='container' style={{marginTop:100}}>
-         <LoginForm/>
+         <div className='container'>
+            <LoginForm/>
          </div>
       </>
    );
