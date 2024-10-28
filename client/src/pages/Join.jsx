@@ -6,7 +6,7 @@ const Join = () => {
    return (
       <>
          <Header/>
-         <div className='container' style={{marginTop:100}}>
+         <div className='container'>
             <JoinForm/>
          </div>
       </>

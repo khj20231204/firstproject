@@ -7,7 +7,7 @@ const Login = () => {
    return (
       <>
          <Header/>
-         <div className='container' style={{marginTop:100}}>
+         <div className='container'>
          {/* <LoginForm/> */}
          <LoginFormJs/>
          </div>

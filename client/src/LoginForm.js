@@ -10,6 +10,7 @@ window.onload = function() {
      container.classList.add("right-panel-active");
      
    });
+   
    signInBtn.addEventListener("click", () => {
     alert("geg");
      container.classList.remove("right-panel-active");
