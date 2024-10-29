@@ -38,8 +38,9 @@ const Header = () => {
                      </> 
                      :
                      <>
-                     <Nav.Link onClick={() => {navigate("/login")}} style={{padding:10}}>로그인</Nav.Link>
-                     <Nav.Link onClick={() => {navigate("/join")}} style={{padding:10}}>회원가입</Nav.Link>
+                     {/* <Nav.Link onClick={() => {navigate("/login")}} style={{padding:10}}>로그인</Nav.Link>
+                     <Nav.Link onClick={() => {navigate("/join")}} style={{padding:10}}>회원가입</Nav.Link> */}
+                     <Nav.Link onClick={() => { navigate("/loginjoin") }} style={{padding:10}}>로그인</Nav.Link>
                      </>
                   }
 
