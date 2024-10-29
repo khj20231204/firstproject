@@ -42,11 +42,11 @@ const LoginContextProvider = ({ children }) => {
    
 
    // 로그인
-   const login = async(username, password) => {
+   const login = async(username, password) => {  //서버에 로그인 요청을 보내고, 응답을 기다림
       console.log(`username : ${username}`);
       console.log(`password : ${password}`);
 
-      const response = await auth.login(username, password);
+      const response = await auth.login(username, password); // 로그인 성공 후 처리 로직
 
       const data = response.data;
       const status = response.status;
