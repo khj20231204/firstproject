@@ -39,20 +39,35 @@ const LoginContextProvider = ({ children }) => {
    //아이디 저장
    const [remberUserId, setRemberUserId] = useState();
 
-   
+   //로그인 체크
+   /* 
+      처음 로그인을 하면 jwt토큰 응답을 받은 상태, 
+      토큰을 가지고 다시 서버측에 유저 정보를 응답해주는 요청을 전송 
+      쿠키를 가져와서 쿠키 안에 유저 정보를 요청하는 것도 여기서 실행 
+      쿠키에 jwt가 있는지 확인
+      jwt로 사용자 정보를 요청
+   */
+   const loginCheck = async () => {
 
-   // 로그인
-   const login = async(username, password) => {  //서버에 로그인 요청을 보내고, 응답을 기다림
+      let response
+      let data
+
+      //response = await auth.info
+
+   }
+
+   // 로그인 : 로그인 버튼을 누르면 호출됨
+   const login = async(username, password) => {
       console.log(`username : ${username}`);
       console.log(`password : ${password}`);
 
-      const response = await auth.login(username, password); // 로그인 성공 후 처리 로직
+      const response = await auth.login(username, password);
 
       const data = response.data;
       const status = response.status;
       const headers = response.headers;
       const authorization = response.authorization;
-      const accessToken = headers.replace("Bearer", "");
+      const accessToken = headers.replace("Bearer", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
       
       console.log(`data: ${data}`);
       console.log(`status: ${status}`);
@@ -68,7 +83,6 @@ const LoginContextProvider = ({ children }) => {
 
         alert("로그인 성공");
       }
-
    }
 
    //로그인 세팅

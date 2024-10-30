@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import './LoginJoinForm.css';
+import './JoinFormJS.css';
 
-const LoginJoinForm = () => {
+const JoinFormJs = () => {
 
    useEffect(() => {
       const signUpBtn = document.getElementById("signUp");
       const signInBtn = document.getElementById("signIn");
-      const container = document.querySelector(".loginformjs .container");
+      const container = document.querySelector(".joinformjs .container");
          
       signUpBtn.addEventListener("click", () => {
          container.classList.add("right-panel-active");
@@ -25,7 +25,7 @@ const LoginJoinForm = () => {
    },[]);
 
    return (
-   <div className="loginformjs">
+   <div className="joinformjs">
       <div className="wrapper">
          <div className="container right-panel-active">
             <div className="sign-up-container">
@@ -88,4 +88,4 @@ const LoginJoinForm = () => {
    );
 };
 
-export default LoginJoinForm;
+export default JoinFormJs;

@@ -1,15 +1,15 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css");
 
-.loginformjs * {
+.joinformjs * {
   box-sizing: border-box;
 }
-.loginformjs body {
+.joinformjs body {
   font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.loginformjs .wrapper {
+.joinformjs .wrapper {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -18,7 +18,7 @@
   background: #ebecf0;
   overflow: hidden;
 }
-.loginformjs .container {
+.joinformjs .container {
   border-radius: 10px;
   box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
   position: absolute;
@@ -26,7 +26,7 @@
   min-height: 480px;
   overflow: hidden;
 }
-.loginformjs form {
+.joinformjs form {
   background: #ebecf0;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
   justify-content: center;
   align-items: center;
 }
-.loginformjs form input {
+.joinformjs form input {
   background: #eee;
   padding: 16px;
   margin: 8px 0;
@@ -45,7 +45,7 @@
   border-radius: 20px;
   box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;
 }
-.loginformjs button {
+.joinformjs button {
   border-radius: 20px;
   border: none;
   outline: none;
@@ -58,25 +58,25 @@
   cursor: pointer;
   transition: transform 80ms ease-in;
 }
-.loginformjs .form_btn {
+.joinformjs .form_btn {
   box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
 }
-.loginformjs .form_btn:active {
+.joinformjs .form_btn:active {
   box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
 }
-.loginformjs .overlay_btn {
+.joinformjs .overlay_btn {
   background-color: #ff4b2b;
   color: #fff;
   box-shadow: -5px -5px 10px #ff6b3f, 5px 5px 8px #bf4b2b;
 }
-.loginformjs .sign-in-container {
+.joinformjs .sign-in-container {
   position: absolute;
   left: 0;
   width: 50%;
   height: 100%;
   transition: all 0.5s;
 }
-.loginformjs .sign-up-container {
+.joinformjs .sign-up-container {
   position: absolute;
   left: 0;
   width: 50%;
@@ -84,7 +84,7 @@
   opacity: 0;
   transition: all 0.5s;
 }
-.loginformjs .overlay-left {
+.joinformjs .overlay-left {
   display: flex;
   flex-direction: column;
   padding: 0 50px;
@@ -99,7 +99,7 @@
   color: #fff;
   transition: all 0.5s;
 }
-.loginformjs .overlay-right {
+.joinformjs .overlay-right {
   display: flex;
   flex-direction: column;
   padding: 0 50px;
@@ -113,46 +113,46 @@
   color: #fff;
   transition: all 0.5s;
 }
-.loginformjs .container.right-panel-active .sign-in-container {
+.joinformjs .container.right-panel-active .sign-in-container {
   transform: translateX(100%);
   opacity: 0;
 }
-.loginformjs .container.right-panel-active .sign-up-container {
+.joinformjs .container.right-panel-active .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 2;
 }
-.loginformjs .container.right-panel-active .overlay-right {
+.joinformjs .container.right-panel-active .overlay-right {
   transform: translateX(-100%);
   opacity: 0;
 }
-.loginformjs .container.right-panel-active .overlay-left {
+.joinformjs .container.right-panel-active .overlay-left {
   transform: translateX(-100%);
   opacity: 1;
   z-index: 2;
 }
-.loginformjs .social-links {
+.joinformjs .social-links {
   margin: 20px 0;
 }
-.loginformjs form h1 {
+.joinformjs form h1 {
   font-weight: bold;
   margin: 0;
   color: #000;
 }
 
-.loginformjs p {
+.joinformjs p {
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
 }
-.loginformjs span {
+.joinformjs span {
   font-size: 12px;
   color: #000;
   letter-spacing: 0.5px;
   margin-bottom: 10px;
 }
-.loginformjs .social-links div {
+.joinformjs .social-links div {
   width: 40px;
   height: 40px;
   display: inline-flex;
@@ -163,9 +163,9 @@
   box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
   cursor: pointer;
 }
-.loginformjs .social-links a {
+.joinformjs .social-links a {
   color: #000;
 }
-.loginformjs .social-links div:active {
+.joinformjs .social-links div:active {
   box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
 }

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import './LoginJoinForm.css';
+import './LoginFormJS.css';
 
-const LoginJoinForm = () => {
-
+const LoginFormJS = () => {
+   
    useEffect(() => {
       const signUpBtn = document.getElementById("signUp");
       const signInBtn = document.getElementById("signIn");
@@ -27,7 +27,7 @@ const LoginJoinForm = () => {
    return (
    <div className="loginformjs">
       <div className="wrapper">
-         <div className="container right-panel-active">
+         <div className="container">
             <div className="sign-up-container">
             <form>
                <h1>Create Account</h1>
@@ -88,4 +88,4 @@ const LoginJoinForm = () => {
    );
 };
 
-export default LoginJoinForm;
+export default LoginFormJS;

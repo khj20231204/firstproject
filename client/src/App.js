@@ -17,10 +17,10 @@ function App() {
          <Route path="/" element={<PharmacyPage></PharmacyPage>}></Route>
          {/* PharmacyPage안에 Header와 PharMain에서도 context적용 */}
          <Route path="/about" element={<About></About>}></Route>
-         <Route path="/loginjoin" element={<LoginJoin></LoginJoin>}></Route>
          <Route path="/user" element={<User></User>}></Route>
-         {/* <Route path="/join" element={<Join></Join>}></Route>
-         <Route path="/login" element={<Login></Login>}></Route> */}
+         <Route path="/join" element={<Join></Join>}></Route>
+         <Route path="/login" element={<Login></Login>}></Route>
+         {/* <Route path="/loginjoin" element={<LoginJoin></LoginJoin>}></Route> */}
       </Routes>
       </LoginContextProvider>
     </BrowserRouter>

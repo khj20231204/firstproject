@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header/Header';
-import JoinForm from '../components/Join/JoinForm';
+import JoinFormJS from '../components/Join/JoinFormJS';
 
 const Join = () => {
    return (
       <>
          <Header/>
          <div className='container'>
-            <JoinForm/>
+            <JoinFormJS/>
          </div>
       </>
    );
