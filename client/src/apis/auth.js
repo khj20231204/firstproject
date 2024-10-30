@@ -7,13 +7,15 @@ import api from './api';
 export const login = (username, password) => api.post(`/login?username=${username}&password=${password}`);
 
 //사용자 정보
-export const info = () => api.get(`/users/info`);
+export const info = () => api.get(`/users/info`); //그대로
 
 //회원가입
 export const join = (data) => api.post(`/users/join`, data)
+//export const join = (data) => api.post(`/users`, data
 
 //회원정보 수정
 export const update = (data) => api.put(`users/update`, data);
+//export const update = (data) => api.put(`users`, data);
 
 //회원탈퇴
 //@DeleteMapping("/{userId}")

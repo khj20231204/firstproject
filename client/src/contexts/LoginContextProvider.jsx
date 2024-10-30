@@ -2,16 +2,19 @@ import React, { createContext, useEffect, useState } from 'react';
 import api from './../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
+import LoginContextConsumer from './LoginContextConsumer';
 ;
 
 export const LoginContext = createContext();
 LoginContext.displayName = 'LoginContextName'
 
 /*
-   로그인 
-   로그인 체크 : 컴포넌트가 마운트 됐을 때 로그인이 되어있는지 아닌지 체크
-   로그인 요청
-   로그아웃
+   1) 로그인 요청: 사용자가 아이디와 비밀번호를 입력하고 로그인 버튼을 누르면, 클라이언트(브라우저)는 서버로 로그인 요청을 보냅니다.
+   2) 서버 인증: 서버는 받은 아이디와 비밀번호를 데이터베이스나 다른 저장소에 저장된 정보와 비교하여 유효성을 검증합니다.
+   3) 액세스 토큰 발급 (또는 세션 생성): 인증이 성공하면 서버는 클라이언트에게 액세스 토큰을 발급하거나, 세션을 생성하여 클라이언트에게 세션 ID를 보냅니다. 액세스 토큰은 클라이언트가 자신을 식별하고 보호된 자원에 접근할 수 있도록 하는 일종의 증명서 역할을 합니다.
+   4) 클라이언트 저장: 클라이언트는 받은 액세스 토큰(또는 세션 ID)을 로컬 스토리지(localStorage, sessionStorage) 또는 쿠키에 저장합니다.
+   5) 로그인 성공: 클라이언트는 받은 토큰을 헤더에 포함하여 서버에 요청을 보내면, 서버는 토큰을 검증하고 사용자를 인증합니다. 이후 사용자는 로그인된 상태로 서비스를 이용할 수 있습니다.
+   6) 로그인 상태 유지: 클라이언트는 매 요청마다 토큰을 포함하여 서버에 보내고, 서버는 토큰의 유효성을 검증하여 사용자의 로그인 상태를 유지합니다.
 
    로그인이 된 상태를 체크하는 기능 : state를 어떻게 바꿀 것이냐
    로그아웃이 된 상태를 체크하는 기능 : state를 어떻게 바꿀 것이냐
@@ -40,20 +43,46 @@ const LoginContextProvider = ({ children }) => {
    const [remberUserId, setRemberUserId] = useState();
 
    //로그인 체크
+   //쿠키에 jwtㄱ가 있늕 
    /* 
       처음 로그인을 하면 jwt토큰 응답을 받은 상태, 
       토큰을 가지고 다시 서버측에 유저 정보를 응답해주는 요청을 전송 
       쿠키를 가져와서 쿠키 안에 유저 정보를 요청하는 것도 여기서 실행 
       쿠키에 jwt가 있는지 확인
       jwt로 사용자 정보를 요청
+
+      /login     --- id,pw --->  server : ok
+      쿠키에 저장 <---jwt---      server가 jwt 전송
+      /user/info --- jwt--->     server
+      :jwt에서 토큰을 header에 담아야 server로 보낼 수 있다
+                 <--- {user} ---   server
    */
    const loginCheck = async () => {
 
-      let response
-      let data
+      //쿠키에서 jwt 토큰 가져오기
+      const accessToken = Cookies.get("accessToken");
+      console.log('accessToken:' + accessToken);
 
-      //response = await auth.info
+      //------ header에 jwt 담기 ------
+      //accessToken(jwt)이 없음
+      if(!accessToken){
+         console.log("쿠키에 accessToken이 없음");
+         logoutSetting()
+         return;
+      }
 
+      //accessToken(jwt)이 있음 - 바로 header에 담는다
+      api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+      
+      
+      let response = await auth.info();
+      let data = response.data;
+
+      console.log(`data : ${data}`);
+
+      //인증 성공
+      //로그인 세팅
+      loginSetting(data, accessToken)
    }
 
    // 로그인 : 로그인 버튼을 누르면 호출됨
@@ -78,10 +107,17 @@ const LoginContextProvider = ({ children }) => {
       //로그인 성공
       //status가 200으로 응답하면 로그인 성공
       if(status === 200){
-        //토큰자체에는 암호화 되어서 들어있다, header, payload, signure가 들어있다
-        //로그인 체크 (/users/{userId} <--- userData)
+         //토큰자체에는 암호화 되어서 들어있다, header, payload, signure가 들어있다
+         //로그인 체크 (/users/{userId} <--- userData)
+         
+         //쿠키에 accessToken(jwt) 저장 : access , 토큰이 없는 경우 filter에서 이미 거른다
+         //로그인이 성공되었을 때 jwt를 받아서 쿠키에 저장해야 사용자 정보가 쿠키에 들어가 있다
+         Cookies.set("accessToken", accessToken)
+         
+         //로그인 체크 ( /users/{userId} <-- userData)
+         loginCheck();
 
-        alert("로그인 성공");
+         alert("로그인 성공");
       }
    }
 
@@ -97,9 +133,6 @@ const LoginContextProvider = ({ children }) => {
 
       //axios 객체의 header(Authorization를 jwt토큰으로 셋팅 => Authorization : 'Bearer ${accessToken}`)
       api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
-      //쿠키에 accessToken(jwt) 저장 : access , 토큰이 없는 경우 filter에서 이미 거른다
-      Cookies.set("accessToken", accessToken)
 
       //로그인 여부 : true
       setLogin(true);
@@ -149,7 +182,7 @@ const LoginContextProvider = ({ children }) => {
 
    return (
       <div>
-         <LoginContext.Provider value={{isLogin, logout}}>
+         <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout}}>
             {children}
          </LoginContext.Provider>
       </div>

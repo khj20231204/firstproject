@@ -13,7 +13,7 @@ const Header = () => {
    
    //isLogin : 로그인 여부 - Y(true), N(false)
 
-   const { isLogin, logout } = useContext(LoginContext);
+   const { isLogin, login, logout } = useContext(LoginContext);
 
    const navigate = useNavigate();
 
