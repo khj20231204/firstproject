@@ -58,6 +58,7 @@ const LoginContextProvider = ({ children }) => {
                  <--- {user} ---   server
    */
    const loginCheck = async () => {
+      console.log("-------------- loginCheck ------------------");
 
       //쿠키에서 jwt 토큰 가져오기
       const accessToken = Cookies.get("accessToken");
@@ -87,6 +88,8 @@ const LoginContextProvider = ({ children }) => {
 
    // 로그인 : 로그인 버튼을 누르면 호출됨
    const login = async(username, password) => {
+      console.log("-------------- login ------------------");
+
       console.log(`username : ${username}`);
       console.log(`password : ${password}`);
 
@@ -128,6 +131,10 @@ const LoginContextProvider = ({ children }) => {
 
    //로그인 세팅
    const loginSetting = (userData, accessToken) => { //사용자 정보와 토큰값으로 로그인 유무 확인, assessToken => JWT가 된다
+
+      console.log("-------------- loginSetting ------------------");
+
+
       const {no, userId, authList} = userData;
       const roleList = authList.map((auth) => auth.auth);
 
@@ -159,6 +166,9 @@ const LoginContextProvider = ({ children }) => {
 
    //로그아웃 셋팅
    const logoutSetting = () => {
+
+      console.log("-------------- logoutSetting ------------------");
+
       //axios 헤더 초기화
       api.defaults.headers.common.Authorization = undefined;
 
