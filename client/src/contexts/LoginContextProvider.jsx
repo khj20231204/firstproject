@@ -92,11 +92,16 @@ const LoginContextProvider = ({ children }) => {
 
       const response = await auth.login(username, password);
 
+      console.log("------client ContextProvider login에서 response : " + response);
+      console.log(response);
+      console.log("------client ContextProvider login에서 response.data : " + response.data);
+
       const data = response.data;
       const status = response.status;
       const headers = response.headers;
-      const authorization = response.authorization;
-      const accessToken = headers.replace("Bearer", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
+
+      const authorization = headers.authorization;
+      const accessToken = authorization.replace("Bearer ", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
       
       console.log(`data: ${data}`);
       console.log(`status: ${status}`);
@@ -174,12 +179,6 @@ const LoginContextProvider = ({ children }) => {
       setLogin(false);
    }
    
-  useEffect(() => {
-   setTimeout(() => {
-      setLogin(true) //3초뒤 setLogin이 true로 
-   }, 3000);
-  },[])
-
    return (
       <div>
          <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout}}>
