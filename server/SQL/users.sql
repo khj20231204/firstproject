@@ -1,4 +1,4 @@
--- Active: 1729210488806@@127.0.0.1@3306@membersdb
+-- Active: 1729199178977@@127.0.0.1@3306@membersdb
 
 -- user: 회원 테이블
 CREATE TABLE `user` (
@@ -24,6 +24,8 @@ DELETE FROM USER;
 INSERT INTO user (user_id, user_pw, name, email )
 VALUES ('admin', '$2a$12$TrN..KcVjciCiz.5Vj96YOBljeVTTGJ9AUKmtfbGpgc9hmC7BXQ92', '관리자', 'admin@mail.com' );
 
-SELECT * FROM `user`;
+SELECT * FROM user;
+
+select * from user;
 
 DELETE FROM USER;
