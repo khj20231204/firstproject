@@ -3,6 +3,7 @@ import api from './../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
 import LoginContextConsumer from './LoginContextConsumer';
+import { useNavigate } from 'react-router-dom';
 ;
 
 export const LoginContext = createContext();
@@ -42,8 +43,10 @@ const LoginContextProvider = ({ children }) => {
    //아이디 저장
    const [remberUserId, setRemberUserId] = useState();
 
-   //로그인 체크
-   //쿠키에 jwtㄱ가 있늕 
+   const navigate = useNavigate();
+
+   const [ch, setCh] = useState();
+
    /* 
       처음 로그인을 하면 jwt토큰 응답을 받은 상태, 
       토큰을 가지고 다시 서버측에 유저 정보를 응답해주는 요청을 전송 
@@ -68,6 +71,7 @@ const LoginContextProvider = ({ children }) => {
       //accessToken(jwt)이 없음
       if(!accessToken){
          console.log("쿠키에 accessToken이 없음");
+         //로그아웃 세팅
          logoutSetting()
          return;
       }
@@ -75,9 +79,17 @@ const LoginContextProvider = ({ children }) => {
       //accessToken(jwt)이 있음 - 바로 header에 담는다
       api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
       
+      //사용자 정보 요청
+      let response
+      let data
       
-      let response = await auth.info();
-      let data = response.data;
+
+      //헤더에 토큰을 저장하고 
+
+         response = await auth.info();
+
+
+      data = response.data;
 
       console.log(`data : ${data}`);
 
@@ -126,6 +138,9 @@ const LoginContextProvider = ({ children }) => {
          loginCheck();
 
          alert("로그인 성공");
+
+         //메인 페이지로 이동
+         navigate("/");
       }
    }
 
@@ -133,7 +148,6 @@ const LoginContextProvider = ({ children }) => {
    const loginSetting = (userData, accessToken) => { //사용자 정보와 토큰값으로 로그인 유무 확인, assessToken => JWT가 된다
 
       console.log("-------------- loginSetting ------------------");
-
 
       const {no, userId, authList} = userData;
       const roleList = authList.map((auth) => auth.auth);
@@ -185,8 +199,17 @@ const LoginContextProvider = ({ children }) => {
       setRoles(null);
    }
 
+   //로그 아웃
    const logout = () => {
-      setLogin(false);
+
+      if(window.confirm("로그아웃 하시겠습니까?")){
+
+         //로그아웃 세팅
+         logoutSetting();
+
+         //홈으로 이동
+         navigate("/");
+      }
    }
    
    return (
