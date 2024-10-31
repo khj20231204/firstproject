@@ -1,4 +1,4 @@
--- Active: 1729199178977@@127.0.0.1@3306@membersdb
+-- Active: 1729210488806@@127.0.0.1@3306@membersdb
 
 -- user: 회원 테이블
 CREATE TABLE `user` (
