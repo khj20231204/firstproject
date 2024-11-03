@@ -35,11 +35,13 @@ const Header = () => {
                      <>
                      <Nav.Link onClick={() => {navigate("/user")}} style={{padding:10}}>마이페이지</Nav.Link>
                      <Nav.Link onClick={() => { logout() }} style={{padding:10}}>로그아웃</Nav.Link>
+                     <Nav.Link onClick={() => {navigate("/admin")}} style={{padding:10}}>관리자</Nav.Link>
                      </> 
                      :
                      <>
                      <Nav.Link onClick={() => {navigate("/login")}} style={{padding:10}}>로그인</Nav.Link>
                      <Nav.Link onClick={() => {navigate("/join")}} style={{padding:10}}>회원가입</Nav.Link>
+                     <Nav.Link onClick={() => {navigate("/admin")}} style={{padding:10}}>관리자</Nav.Link>
                      {/* <Nav.Link onClick={() => { navigate("/loginjoin") }} style={{padding:10}}>로그인</Nav.Link> */}
                      </>
                   }

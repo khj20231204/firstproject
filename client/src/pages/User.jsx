@@ -10,9 +10,12 @@ const User = () => {
    const [userInfo, setUserInfo] = useState();
 
    //비밀번호 수정 시 비밀번호를 수정하고 logout을 호출하기 위해서 useContext에서 logout 함수를 받아온다
-   const {logout} = useContext(LoginContext);
+   const {logout, loginCheck, isLogin, roles } = useContext(LoginContext);
 
    let navigate = useNavigate();
+
+   //새로고침 했을 때 토큰이 있는 경우 403에러를 방지하기 위해사용
+   useEffect(() => {loginCheck()},[]);
 
    /* 
    이 페이지에 올 때마다 수정된 사용자 정보를 가져와서 UserForm으로 내려준다.
@@ -21,6 +24,12 @@ const User = () => {
 
    //회원 정보 조회 - /user/info
    const getUserInfo = async () => {
+
+      //토큰이 없는 경우 바로 주소창에 /user을 쳐서 403에러가 떴을 경우 메인으로 이동
+      if(!isLogin || !roles.isUser){
+         navigate("/");
+         return;
+      }
 
       const response = await auth.info();
       const data = response.data;
