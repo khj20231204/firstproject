@@ -4,7 +4,7 @@ import SignUp from '../LoginJoin/SignUp';
 import SignIn from '../LoginJoin/SignIn';
 import OverlayContainer from '../LoginJoin/OverlayContainer';
 
-const LoginFormJS = () => {
+const LoginFormJS = ({join}) => {
    
    useEffect(() => {
       const signUpBtn = document.getElementById("signUp");
@@ -31,7 +31,7 @@ const LoginFormJS = () => {
       <div className="loginformjs">
          <div className="wrapper">
             <div className="container">
-            <SignUp/>
+            <SignUp join={join}/>
             <SignIn/>
             <OverlayContainer/>
             </div>

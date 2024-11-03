@@ -4,7 +4,7 @@ import SignUp from '../LoginJoin/SignUp';
 import SignIn from '../LoginJoin/SignIn';
 import OverlayContainer from '../LoginJoin/OverlayContainer';
 
-const JoinFormJs = () => {
+const JoinFormJs = ({join}) => {
 
    useEffect(() => {
       const signUpBtn = document.getElementById("signUp");
@@ -13,7 +13,6 @@ const JoinFormJs = () => {
          
       signUpBtn.addEventListener("click", () => {
          container.classList.add("right-panel-active");
-         
       });
       
       signInBtn.addEventListener("click", () => {
@@ -31,7 +30,7 @@ const JoinFormJs = () => {
    <div className="joinformjs">
       <div className="wrapper">
          <div className="container right-panel-active">
-            <SignUp/>
+            <SignUp join={join}/>
             <SignIn/>
             <OverlayContainer/>
          </div>

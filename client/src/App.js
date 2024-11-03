@@ -7,7 +7,6 @@ import About from './pages/About';
 import Join from './pages/Join';
 import User from './pages/User';
 import LoginContextProvider from './contexts/LoginContextProvider';
-import LoginJoin from './pages/LoginJoin';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
          <Route path="/user" element={<User></User>}></Route>
          <Route path="/join" element={<Join></Join>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
-         {/* <Route path="/loginjoin" element={<LoginJoin></LoginJoin>}></Route> */}
       </Routes>
       </LoginContextProvider>
     </BrowserRouter>

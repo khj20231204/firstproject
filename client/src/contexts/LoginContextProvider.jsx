@@ -21,6 +21,15 @@ LoginContext.displayName = 'LoginContextName'
    로그아웃이 된 상태를 체크하는 기능 : state를 어떻게 바꿀 것이냐
 */
 
+/*
+   로그인
+   - 로그인 체크
+   - 로그인
+   - 로그 아웃
+
+   로그인 세팅
+   로그아웃 세팅
+ */
 const LoginContextProvider = ({ children }) => {
 
    /*
@@ -30,6 +39,8 @@ const LoginContextProvider = ({ children }) => {
       - 권한 정보
       - 아이디 저장
    */
+
+   /*---------------------- [State] ----------------------*/
 
    //context value : 로그인 여부, 로그아웃 함수
    const[isLogin, setLogin] = useState(false);
@@ -60,6 +71,14 @@ const LoginContextProvider = ({ children }) => {
       :jwt에서 토큰을 header에 담아야 server로 보낼 수 있다
                  <--- {user} ---   server
    */
+
+   /*
+      로그인 시 진짜 해야할 일은 토큰을 쿠키에 저장하고 사용자 정보를 세팅하는 일이다.
+      login에서는 위에 과정이 끝난 후 알림만 띄우게 된다.
+      login -> loginCheck -> loginSetting 순서로 하게 되는데 새로고침을 했을 경우 데이터가 없어지기 때문에 
+      알림이 없는 loginCheck 부분부터 밑에 uesEffect에서 호출해준다. 
+      그러면 새로고침해도 기존 데이터를 다시 가져오기 때문에 로그인 상태를 유지할 수 있다
+    */
    const loginCheck = async () => {
       console.log("-------------- loginCheck ------------------");
 
@@ -82,18 +101,30 @@ const LoginContextProvider = ({ children }) => {
       //사용자 정보 요청
       let response
       let data
-      
 
-      //헤더에 토큰을 저장하고 
-
+      /*
+      사용자 정보를 요청시 서버가 잘 동작하지 않거나 토큰이 변조된채로 요청을 한 경우,
+      요청이 실패하게 되는 경우 대시 try catch
+      */
+      try{
          response = await auth.info();
-
+      }catch(error){
+         console.log(`error : ${error}`)
+         console.log(`status : ${response.status}`)
+         return;
+      }
 
       data = response.data;
-
       console.log(`data : ${data}`);
 
+      //인증 실패
+      if(data == 'UNAUTHRIZED' || response.status == 401){
+         console.error(`accessToken (jwt)가 만료되었거나 인증에 실패`)
+         return;
+      }
+
       //인증 성공
+      console.log(`accessToke (jwt) 토큰으로 사용자 인증정보 요청 성공!`);
       //로그인 세팅
       loginSetting(data, accessToken)
    }
@@ -105,44 +136,64 @@ const LoginContextProvider = ({ children }) => {
       console.log(`username : ${username}`);
       console.log(`password : ${password}`);
 
-      const response = await auth.login(username, password);
+      try{
+         const response = await auth.login(username, password);
 
-      console.log("------client ContextProvider login에서 response : " + response);
-      console.log(response);
-      console.log("------client ContextProvider login에서 response.data : " + response.data);
+         console.log("------client ContextProvider login에서 response : " + response);
+         console.log(response);
+         console.log("------client ContextProvider login에서 response.data : " + response.data);
 
-      const data = response.data;
-      const status = response.status;
-      const headers = response.headers;
+         const data = response.data;
+         const status = response.status;
+         const headers = response.headers;
 
-      const authorization = headers.authorization;
-      const accessToken = authorization.replace("Bearer ", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
-      
-      console.log(`data: ${data}`);
-      console.log(`status: ${status}`);
-      console.log(`headers: ${headers}`);
-      console.log(`authorization: ${authorization}`);
-      console.log(`accessToken: ${accessToken}`);
-
-      //로그인 성공
-      //status가 200으로 응답하면 로그인 성공
-      if(status === 200){
-         //토큰자체에는 암호화 되어서 들어있다, header, payload, signure가 들어있다
-         //로그인 체크 (/users/{userId} <--- userData)
+         const authorization = headers.authorization;
+         const accessToken = authorization.replace("Bearer ", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
          
-         //쿠키에 accessToken(jwt) 저장 : access , 토큰이 없는 경우 filter에서 이미 거른다
-         //로그인이 성공되었을 때 jwt를 받아서 쿠키에 저장해야 사용자 정보가 쿠키에 들어가 있다
-         Cookies.set("accessToken", accessToken)
-         
-         //로그인 체크 ( /users/{userId} <-- userData)
-         loginCheck();
+         console.log(`data: ${data}`);
+         console.log(`status: ${status}`);
+         console.log(`headers: ${headers}`);
+         console.log(`authorization: ${authorization}`);
+         console.log(`accessToken: ${accessToken}`);
 
-         alert("로그인 성공");
+         //로그인 성공
+         //status가 200으로 응답하면 로그인 성공
+         if(status === 200){
+            //토큰자체에는 암호화 되어서 들어있다, header, payload, signure가 들어있다
+            //로그인 체크 (/users/{userId} <--- userData)
+            
+            //쿠키에 accessToken(jwt) 저장 : access , 토큰이 없는 경우 filter에서 이미 거른다
+            //로그인이 성공되었을 때 jwt를 받아서 쿠키에 저장해야 사용자 정보가 쿠키에 들어가 있다
+            Cookies.set("accessToken", accessToken)
+            
+            //로그인 체크 ( /users/{userId} <-- userData)
+            loginCheck();
 
-         //메인 페이지로 이동
-         navigate("/");
+            alert("로그인 성공");
+
+            //메인 페이지로 이동
+            navigate("/");
+         }
+      }catch (error){
+         //로그인 실패
+         //아이디 또는 패스워드가 일치하지 않는 경우
+         alert('로그인 실패');
       }
+      
    }
+
+   //로그 아웃
+   const logout = () => {
+
+   if(window.confirm("로그아웃 하시겠습니까?")){
+
+      //로그아웃 세팅
+      logoutSetting();
+
+      //홈으로 이동
+      navigate("/");
+   }
+}
 
    //로그인 세팅
    const loginSetting = (userData, accessToken) => { //사용자 정보와 토큰값으로 로그인 유무 확인, assessToken => JWT가 된다
@@ -198,19 +249,11 @@ const LoginContextProvider = ({ children }) => {
       //권한 정보 초기화
       setRoles(null);
    }
-
-   //로그 아웃
-   const logout = () => {
-
-      if(window.confirm("로그아웃 하시겠습니까?")){
-
-         //로그아웃 세팅
-         logoutSetting();
-
-         //홈으로 이동
-         navigate("/");
-      }
-   }
+ 
+   useEffect(() => {
+      //로그인 체크 - 리액트에서 새로고침을 하면 일반적으로 컴포넌트들이 가지고 있던 정보는 모두 사라집니다. 컴포넌트의 생명주기에 의해 컴포넌트들이 DOM에서 제거되었다가 처음부터 다시 생성됩니다. 다시 생성되었을 때 
+      loginCheck();
+   },[])
    
    return (
       <div>

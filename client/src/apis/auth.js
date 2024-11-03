@@ -5,7 +5,7 @@ import api from './api';
 
 //로그인
 export const login = (username, password) => api.post(`/login?username=${username}&password=${password}`);
-//http://localhost:8088/login?username=user&password=1234//
+//http://localhost:8088/login?username=user&password=1234 다음과 같은 형식으로 전달
 
 //사용자 정보
 export const info = () => api.get(`/users/info`); //그대로
