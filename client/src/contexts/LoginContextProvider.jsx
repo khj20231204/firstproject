@@ -105,12 +105,11 @@ const LoginContextProvider = ({ children }) => {
       /*
       사용자 정보를 요청시 서버가 잘 동작하지 않거나 토큰이 변조된채로 요청을 한 경우,
       요청이 실패하게 되는 경우 대시 try catch
-      */
+      */ 
       try{
          response = await auth.info();
       }catch(error){
          console.log(`error : ${error}`)
-         console.log(`status : ${response.status}`)
          return;
       }
 
@@ -118,7 +117,8 @@ const LoginContextProvider = ({ children }) => {
       console.log(`data : ${data}`);
 
       //인증 실패
-      if(data == 'UNAUTHRIZED' || response.status == 401){
+      //UNAUTHORIZED : 서버 UserController의 userInfo메소드에서 리턴
+      if(data === 'UNAUTHORIZED' || response.status == 401){
          console.error(`accessToken (jwt)가 만료되었거나 인증에 실패`)
          return;
       }
@@ -185,14 +185,11 @@ const LoginContextProvider = ({ children }) => {
    //로그 아웃
    const logout = () => {
 
-   if(window.confirm("로그아웃 하시겠습니까?")){
-
       //로그아웃 세팅
       logoutSetting();
 
       //홈으로 이동
       navigate("/");
-   }
 }
 
    //로그인 세팅

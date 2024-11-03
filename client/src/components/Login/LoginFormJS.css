@@ -23,7 +23,7 @@
   box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
   position: absolute;
   width: 768px;
-  min-height: 480px;
+  min-height: 570px;
   overflow: hidden;
 }
 .loginformjs form {

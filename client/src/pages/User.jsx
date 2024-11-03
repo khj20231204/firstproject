@@ -24,6 +24,7 @@ const User = () => {
 
       const response = await auth.info();
       const data = response.data;
+      console.log("getUserInfo ----------------")
       console.log(data);
 
       setUserInfo(data);
@@ -31,6 +32,7 @@ const User = () => {
 
    //회원 정보 수정
    const updateUser = async (form) => {
+      console.log("user.jsx의 updateUser함수")
       console.log(form)
 
       let response;
@@ -53,7 +55,7 @@ const User = () => {
       if(status === 200){
          console.log('회원정보 수정 성공');
          alert('회원정보 수정 성공')
-         navigate('/user');
+         navigate('/');
 
          //비밀번호 수정이면 logout처리
          //logout();
@@ -65,6 +67,11 @@ const User = () => {
 
    //회원 탈퇴
    const deleteUser = async (userId) => {
+
+      let answer = window.confirm("계정을 삭제하시겠습니까?");
+
+      if(!answer) return;
+
       console.log("delete userId : " + userId);
 
       let response;
@@ -78,14 +85,13 @@ const User = () => {
          return;
       }
 
-      data = response;
-      let status = data.status;
+      data = response.data;
+      let status = response.status;
 
       if(status === 200){
          console.log('회원삭제 성공');
          alert('회원삭제 성공')
 
-         //비밀번호 수정이면 logout처리
          logout();
       }else{
          console.log('회원삭제 실패');
@@ -101,7 +107,7 @@ const User = () => {
       <>
          <Header/>
          <div className='container'>
-            <UserForm useInfo={userInfo} updateUser={updateUser} deleteUser={deleteUser}/>
+            <UserForm userInfo={userInfo} updateUser={updateUser} deleteUser={deleteUser}/>
          </div>
       </>
    );

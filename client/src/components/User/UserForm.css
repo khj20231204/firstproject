@@ -13,7 +13,7 @@
   box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
   position: absolute;
   width: 768px;
-  min-height: 480px;
+  min-height: 600px; /*안쪽 배경 크기*/
   overflow: hidden;
 }
  .userform form {
