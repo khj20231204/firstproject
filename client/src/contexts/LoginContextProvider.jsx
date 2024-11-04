@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
 import LoginContextConsumer from './LoginContextConsumer';
 import { useNavigate } from 'react-router-dom';
-;
+import * as Swal from '../apis/alert'
 
 export const LoginContext = createContext();
 LoginContext.displayName = 'LoginContextName'
@@ -80,7 +80,6 @@ const LoginContextProvider = ({ children }) => {
       그러면 새로고침해도 기존 데이터를 다시 가져오기 때문에 로그인 상태를 유지할 수 있다
     */
    const loginCheck = async () => {
-      console.log("-------------- loginCheck ------------------");
 
       //쿠키에서 jwt 토큰 가져오기
       const accessToken = Cookies.get("accessToken");
@@ -109,12 +108,10 @@ const LoginContextProvider = ({ children }) => {
       try{
          response = await auth.info();
       }catch(error){
-         console.log(`error : ${error}`)
          return;
       }
 
       data = response.data;
-      console.log(`data : ${data}`);
 
       //인증 실패
       //UNAUTHORIZED : 서버 UserController의 userInfo메소드에서 리턴
@@ -131,17 +128,11 @@ const LoginContextProvider = ({ children }) => {
 
    // 로그인 : 로그인 버튼을 누르면 호출됨
    const login = async(username, password) => {
-      console.log("-------------- login ------------------");
-
       console.log(`username : ${username}`);
       console.log(`password : ${password}`);
 
       try{
          const response = await auth.login(username, password);
-
-         console.log("------client ContextProvider login에서 response : " + response);
-         console.log(response);
-         console.log("------client ContextProvider login에서 response.data : " + response.data);
 
          const data = response.data;
          const status = response.status;
@@ -169,7 +160,7 @@ const LoginContextProvider = ({ children }) => {
             //로그인 체크 ( /users/{userId} <-- userData)
             loginCheck();
 
-            alert("로그인 성공");
+            Swal.alert("로그인 성공","메인 화면으로 갑니다","success", () => { navigate("/") });
 
             //메인 페이지로 이동
             navigate("/");
@@ -177,7 +168,9 @@ const LoginContextProvider = ({ children }) => {
       }catch (error){
          //로그인 실패
          //아이디 또는 패스워드가 일치하지 않는 경우
-         alert('로그인 실패');
+
+         //alert('로그인 실패');
+         Swal.alert("로그인 실패","아이디 또는 비밀번호가 일치하지 않습니다.","error");
       }
       
    }
@@ -185,17 +178,21 @@ const LoginContextProvider = ({ children }) => {
    //로그 아웃
    const logout = () => {
 
-      //로그아웃 세팅
-      logoutSetting();
+      Swal.confirm("로그아웃","로그아웃 하시겠습니까","warning",
+         (resuslt) => { //reuslt가 확인인 경우 true를 취소인 경우 fals가 반환
+            if(resuslt.isConfirmed){
+               //로그아웃 세팅
+               logoutSetting();
 
-      //홈으로 이동
-      navigate("/");
+               //홈으로 이동
+               navigate("/");
+            }
+         }
+      );
 }
 
    //로그인 세팅
    const loginSetting = (userData, accessToken) => { //사용자 정보와 토큰값으로 로그인 유무 확인, assessToken => JWT가 된다
-
-      console.log("-------------- loginSetting ------------------");
 
       const {no, userId, authList} = userData;
       const roleList = authList.map((auth) => auth.auth);
@@ -229,8 +226,6 @@ const LoginContextProvider = ({ children }) => {
    //로그아웃 셋팅
    const logoutSetting = () => {
 
-      console.log("-------------- logoutSetting ------------------");
-
       //axios 헤더 초기화
       api.defaults.headers.common.Authorization = undefined;
 
@@ -254,7 +249,7 @@ const LoginContextProvider = ({ children }) => {
    
    return (
       <div>
-         <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout, loginCheck}}>
+         <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout, loginCheck, logoutSetting}}>
             {children}
          </LoginContext.Provider>
       </div>

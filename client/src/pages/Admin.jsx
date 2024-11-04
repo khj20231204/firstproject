@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import {LoginContext} from '../contexts/LoginContextProvider';
 import { useNavigate } from 'react-router-dom';
+import * as Swal from '../apis/alert';
 
 const Admin = () => {
 
@@ -14,23 +15,25 @@ const Admin = () => {
       //if(!userInfo) return;
 
       if(!isLogin){
-         alert(`로그인이 필요합니다.`);
-         navigate('/login');
+         Swal.alert("로그인이 필요합니다.","관리자 권한으로 로그인하세요","warning",() => {navigate("/login")});
+         //alert("로그인이 필요합니다.");
+         //navigate('/login');
          return;
       }
 
       if(!roles.isAdmin){
-         alert(`권한이 없습니다.`);
-         navigate(-1);
+         Swal.alert("권한이 없습니다.","관리자 권한으로 로그인하세요.","warning", () => {navigate("/login")});
+         //alert("권한이 없습니다.");
+         //navigate('/')
          return;
       }
 
-   }, [])
+   },[])
 
    return (
       <>
       {
-         isLogin && roles &&
+        /*  isLogin && roles && */
          <>
          <Header/>
          <div className='container'>

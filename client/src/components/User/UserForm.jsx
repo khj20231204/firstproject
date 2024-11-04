@@ -1,10 +1,7 @@
 import React from 'react';
 import './UserForm.css';
 
-const UserForm = ({userInfo, updateUser, deleteUser}) => {
-
-   console.log("UserForm 에서 userInof출몰")
-   console.log(userInfo)
+const UserForm = ({userInfo, updateUser, deleteUser2}) => {
 
    const onUpdate = (e) => {
       e.preventDefault(); //submit이라서 막는다
@@ -16,7 +13,6 @@ const UserForm = ({userInfo, updateUser, deleteUser}) => {
       const userPw = form.password.value;
       const email = form.email.value;
 
-      console.log(`userId = ${userId}, userPw=${userPw}, email=${email}`)
       updateUser({userId, userPw, email})
    }
 
@@ -37,7 +33,7 @@ const UserForm = ({userInfo, updateUser, deleteUser}) => {
             <input type="password" name="password" placeholder="password"/>
             <input type="text" name="email" placeholder="email" defaultValue={userInfo?.email}/>
             <button type="submit" className="form_btn">Update Now</button>
-            <button onClick={() => {deleteUser(userInfo.userId)}}>Delete Account</button>
+            <button type="button" onClick={() => {deleteUser2(userInfo.userId)}}>Delete Account</button>
          </form>
       </div>
          </div>

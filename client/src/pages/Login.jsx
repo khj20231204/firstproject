@@ -3,6 +3,7 @@ import Header from '../components/Header/Header';
 import LoginFormJS from '../components/Login/LoginFormJS';
 import * as auth from '../apis/auth'
 import { useNavigate } from 'react-router-dom';
+import * as Swal from '../apis/alert';
 
 
 const Login = () => {
@@ -13,9 +14,7 @@ const Login = () => {
 
    //회원가입 요청
    const join = async(form) => {
-      console.log("pages/Join.jsx");
-      console.log(form);
-
+      
       let response
       let data 
       try{
@@ -32,12 +31,10 @@ const Login = () => {
 
       if(status === 200){
          console.log('회원 가입 성공!');
-         alert("회원가입 성공!");
-         navigate("/");
-
+         Swal.alert("회원가입 성공","메인 화면으로 이동합니다.", "success", () => { navigate("/") });
       }else{
          console.log(`회원 가입 실패`);
-         alert("회원가입 실패");
+         Swal.alert("회원가입 실패","회원가입에 실패하였습니다.","error");
       }
    };
    /*--------------------------------------------*/

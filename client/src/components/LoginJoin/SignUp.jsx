@@ -11,11 +11,11 @@ const SignUp = ({join}) => {
       const userPw = form.password.value;
       const email = form.email.value;
 
-      console.log(`userId=${userId}, userPw=${userPw}, email=${email}`)
+      if(userId === ''){alert('아이디를 입력하세요'); return}
+      if(userPw === ''){alert('비밀번호를 입력하세요'); return}
+      if(email === ''){alert('이메일을 입력하세요'); return}
 
-      console.log("LoginJoin/SignUp.jsx : join 호출 전");
       join({userId, userPw, email})
-      console.log("LoginJoin/SignUp.jsx : join 호출 후");
   }
 
    return (

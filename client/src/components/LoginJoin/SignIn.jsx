@@ -13,11 +13,8 @@ const SignIn = () => {
       //그렇기 때문에 이벤트 속성 e를 통해서 form을 가져올 수 있다
       const username = form.username.value;
       const password = form.password.value;
-      console.log(e);
       //to-do : username와 password의 유효성 검증 추가
 
-      console.log(username + " ," + password);
-      console.log('login 클릭')
       login(username, password);
    }
 
