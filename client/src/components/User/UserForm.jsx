@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './UserForm.css';
 
 const UserForm = ({userInfo, updateUser, deleteUser2}) => {
+
+   const usernameInput = useRef();
+   const passwordInput = useRef();
 
    const onUpdate = (e) => {
       e.preventDefault(); //submit이라서 막는다
@@ -14,6 +17,11 @@ const UserForm = ({userInfo, updateUser, deleteUser2}) => {
       const email = form.email.value;
 
       updateUser({userId, userPw, email})
+   }
+
+   const onDelete = () => {
+      console.log(usernameInput.current.value + " , " + passwordInput.current.value);
+      deleteUser2(usernameInput.current.value, passwordInput.current.value);
    }
 
    return (
@@ -29,11 +37,11 @@ const UserForm = ({userInfo, updateUser, deleteUser2}) => {
                <div><a href="#"><i className="fa fa-linkedin" aria-hidden="true"></i></a></div>
             </div>
             <span>update your personal information</span>
-            <input type="text" name="username" placeholder="username" readOnly defaultValue={userInfo?.userId}/>
-            <input type="password" name="password" placeholder="password"/>
-            <input type="text" name="email" placeholder="email" defaultValue={userInfo?.email}/>
+            <input type="text" ref={usernameInput} name="username" placeholder="username" readOnly defaultValue={userInfo?.userId}/>
+            <input type="password" ref={passwordInput} name="password" placeholder="변경할 password"/>
+            <input type="text" name="email" placeholder="변경할 email" defaultValue={userInfo?.email}/>
             <button type="submit" className="form_btn">Update Now</button>
-            <button type="button" onClick={() => {deleteUser2(userInfo.userId)}}>Delete Account</button>
+            <button type="button" onClick={() => onDelete()}>Delete Account</button>
          </form>
       </div>
          </div>

@@ -15,6 +15,9 @@ const SignIn = () => {
       const password = form.password.value;
       //to-do : username와 password의 유효성 검증 추가
 
+      if(username === ''){alert('아이디를 입력하세요'); return}
+      if(password === ''){alert('비밀번호를 입력하세요'); return}
+
       login(username, password);
    }
 

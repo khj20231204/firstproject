@@ -46,6 +46,11 @@ const User = () => {
       console.log("user.jsx의 updateUser함수")
       console.log(form)
 
+      if(form.userPw ==='' || form.email === ''){
+         alert("패스워드와 이메일을 입력하세요")
+         return;
+      }
+
       let response;
       let data;
 
@@ -84,18 +89,41 @@ const User = () => {
    앞쪽 자식 컴포넌트에서 값을 넘겨받아야 한다. 
    */
 
-   const deleteUser2 = (userId) =>{ //자식 컴포넌트에서 userId를 넘겨받았다
+   const deleteUser2 = async (userId, userPw) =>{ //자식 컴포넌트에서 userId를 넘겨받았다
+
+      if(userPw === '') {
+         Swal.alert("","로그인에 사용된 비밀번호를 입력하세요","error");
+         //alert('로그인에 사용된 비밀번호를 입력하세요'); return
+      }
+
+      try{
+
+         let response = await auth.login(userId, userPw);
+         const status = response.status;
+         
+         setUserId(userId); //넘겨받은 userId를 state에 저장
+         Swal.confirm("계정 삭제","계정을 삭제하시겠습니까?","success",(result) => {
+            if(result.isConfirmed) { 
+               setDelanswer(true); 
+               //Swal의 값이 true로 변화가 있을 때마다 Delanser을 변경시켜서 useEffect가 실행되도록 했다
+            }
+         });
+
+      }catch(error){
+         Swal.alert("","비밀번호가 일치하지 않습니다.","error");
+      }
+      
+      /*
       setUserId(userId); //넘겨받은 userId를 state에 저장
       Swal.confirm("계정 삭제","계정을 삭제하시겠습니까?","success",(result) => {
          if(result.isConfirmed) { 
             setDelanswer(true); 
             //Swal의 값이 true로 변화가 있을 때마다 Delanser을 변경시켜서 useEffect가 실행되도록 했다
          }
-      }); 
+      }); */
    }
 
    useEffect(() => {
-      getUserInfo();
       deleteUser();
    }, [delAnswer]) //Swal에서 확인을 누르면 deleteUser가 실행
 
@@ -128,7 +156,6 @@ const User = () => {
    }
 
    useEffect(() => {
-      alert("useEffect getUserInfo")
       getUserInfo();
    },[])
 

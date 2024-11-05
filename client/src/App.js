@@ -8,6 +8,7 @@ import Join from './pages/Join';
 import User from './pages/User';
 import LoginContextProvider from './contexts/LoginContextProvider';
 import Admin from './pages/Admin';
+import Board from './pages/Board';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
          <Route path="/join" element={<Join></Join>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
          <Route path="/admin" element={<Admin></Admin>}></Route>
+         <Route path="/board" element={<Board></Board>}></Route>
       </Routes>
       </LoginContextProvider>
     </BrowserRouter>
