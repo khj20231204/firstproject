@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header/Header';
 import BoardForm from '../components/Board/BoardForm';
+import axios from 'axios';
 
 
 const Board = () => {
+
+   const [list, setList] = useState();
+
+   useEffect(() => {
+      console.log("board.jsx userEffect")
+      //const list = () => axios.get(`/board/list`);
+      axios.get('http://localhost:8088/board/list')
+      .then((r) => {console.log(r)})
+   }, [])
+
    return (
       <>
       <Header/>

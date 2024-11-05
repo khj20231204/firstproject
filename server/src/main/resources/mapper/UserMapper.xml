@@ -5,7 +5,12 @@
 
 <mapper namespace="com.hjcompany.server.mapper.UserMapper">
 
-    <!-- Users 매핑-->
+    <!-- 
+    type: 어떤 객체에 데이터를 담을 것인지, 자바 객체의 클래스명
+    id: 이 resultMap을 무엇이라고 부를 것인지, resultMap 자체를 식별하기 위한 고유한 이름 
+	-->
+
+    <!-- Users 매핑 : Users클래스에 담고 userMap라고 부르겠다 -->
     <resultMap type="Users" id="userMap">
         <id property="no" column="no" />
         

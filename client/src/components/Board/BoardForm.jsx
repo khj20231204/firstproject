@@ -1,32 +1,22 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import './BoardForm.css';
+import { Link } from 'react-router-dom';
 
 const BoardForm = () => {
    return (
       <>
          <div className='board'>
             <Table striped="columns">
-               <thead>
-               <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-               </tr>
-               </thead>
                <tbody>
                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                  <td rowSpan={2} style={{width:100}}>이미지</td>
+                  <td colSpan={3}><Link to={"/list/1"} className='btn btn-outline-success' style={{width:'100%'}} variant="success">질문 있어요</Link></td>
                </tr>
-               <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
+               <tr style={{fontSize:12}}>
+                  <td>작성자</td>
+                  <td>날짜</td>
+                  <td>readme</td>
                </tr>
                </tbody>
             </Table>

@@ -5,8 +5,13 @@
 
 <mapper namespace="com.hjcompany.server.mapper.BoardMapper">
 
-    <!-- Users 매핑-->
-    <resultMap id="boardResult"      type="board">
+	<!-- 
+	type: 어떤 객체에 데이터를 담을 것인지, 자바 객체의 클래스명
+	id: 이 resultMap을 무엇이라고 부를 것인지, resultMap 자체를 식별하기 위한 고유한 이름 
+	-->
+
+    <!-- Users 매핑 : board클래스에 담고 boardResult라고 부르겠다 -->
+    <resultMap type="board" id="boardResult">
 		<result property="num"	     column="num" />
 		<result property="writer"    column="writer" />
 		<result property="subject"   column="subject" />
@@ -23,7 +28,7 @@
 	</resultMap>
         
    <!-- List 목록 가져오기  -->
-   <select id="getAllArticles" resultMap="BoardMap">
+   <select id="list" resultMap="boardResult">
         select *
         from board
         <where>
