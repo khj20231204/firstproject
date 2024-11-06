@@ -122,12 +122,6 @@ public class UserController {
          return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
       } 
    }
-
-   @GetMapping("/list")
-   public ResponseEntity<?> list(@RequestBody Users user) throws Exception {
-      System.out.println("board/list");
-      return new ResponseEntity<>(null);
-   }
 }
 
 /* public ResponseEntity<?> list(String pageNum, Board board, Model model) { */
