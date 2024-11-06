@@ -9,20 +9,31 @@ const Board = () => {
 
    const api2 = axios.create();
 
-   useEffect(() => {
-      /* console.log("board.jsx userEffect")
-      axios.get(`/users/list`)
-      .then((r) => {console.log(r)}) */
+   const list2 = async() => {
 
-      list();
-   }, [])
-
-
-   const list = async() => {
-      let response = await auth.list();
+       let response = await auth.list();
+      try{
+      }catch(error){
+         console.log(error);
+      }
       console.log("--------------- list async --------------------")
-      //console.log(response.data);
+      //console.log(response.data); 
     }
+
+   useEffect(() => {
+
+    /*  fetch('http://localhost:8088/users/list')
+      .then((res) => {
+         console.log(1, res)
+      });
+ */
+      
+      axios.get('http://localhost:8088/users/list')
+      .then((result)=>{
+         console.log('success')
+         console.log(result)
+      })
+    }, []);
 
    return (
       <>
@@ -40,6 +51,7 @@ const Board = () => {
             console.log(result)
          })
       }}>요청</button>
+      <button onClick={list2}>list3</button>
    </>
    );
 };
