@@ -22,4 +22,4 @@ export const update = (data) => api.put(`users/update`, data);
 //@DeleteMapping("/{userId}")
 export const remove = (userId) => api.delete(`/users/${userId}`)
 
-export const list = () => api.get(`/users/list`)
+export const list = () => api.get(`/board/list`)
