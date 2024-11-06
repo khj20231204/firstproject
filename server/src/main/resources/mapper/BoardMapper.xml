@@ -28,7 +28,7 @@
 	</resultMap>
         
    <!-- List 목록 가져오기  -->
-   <select id="list" resultMap="boardResult">
+   <select id="getList" parameterType="board" resultMap="boardResult">
         select *
         from board
         <where>
@@ -42,6 +42,9 @@
 		</where>
         limit #{startRow},#{endRow}
       </select>
-    
-   <!-- List 목록 가져오기  -->
+
+   <!-- 데이터 전체 갯수 -->
+   <select id="getTotalCount" resultType="int">
+      select count(*) from board
+   </select>
 </mapper>
