@@ -10,8 +10,6 @@ const BoardForm = (props) => {
 
    const date = moment(reg_date).format('MMMM Do YYYY, h:mm:ss');
 
-   console.log(date);
-
    return (
       <Table striped="columns" key={key}>
          <tbody>

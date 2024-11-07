@@ -10,11 +10,13 @@ import LoginContextProvider from './contexts/LoginContextProvider';
 import Admin from './pages/Admin';
 import Board from './pages/Board';
 import DetailBoard from './pages/DetailBoard';
+import BoardContextProvider from './contexts/BoardContextProvider';
 
 function App() {
   return (
     <BrowserRouter>
       <LoginContextProvider>
+        <BoardContextProvider>
       <Routes>
          <Route path="/" element={<PharmacyPage></PharmacyPage>}></Route>
          {/* PharmacyPage안에 Header와 PharMain에서도 context적용 */}
@@ -26,6 +28,7 @@ function App() {
          <Route path="/board" element={<Board></Board>}></Route>
          <Route path="/detailboard" element={<DetailBoard></DetailBoard>}></Route>
       </Routes>
+      </BoardContextProvider>
       </LoginContextProvider>
     </BrowserRouter>
   );

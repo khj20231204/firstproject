@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header/Header';
 import BoardForm from '../components/Board/BoardForm';
 import * as boardapi from '../apis/boardapi';
 import SearchForm from '../components/Board/SearchForm';
 import Button from 'react-bootstrap/Button';
 import Pagenation from '../components/Board/Pagenation';
+import { BoardContext } from '../contexts/BoardContextProvider';
 
 const Board = () => {
 
@@ -12,14 +13,17 @@ const Board = () => {
    let [boardList, setBoardList] = useState([]);
 
    //현재 페이지
-   let [page, setPage] = useState(1);
+   //let [page, setPage] = useState(1);
 
    //전체 페이지
    let [totalPage, setTotalPage] = useState();
 
    //검색
-   let [search, setSearch] = useState('');
-   let [keyword, setKeyword] = useState('');
+   //let [search, setSearch] = useState('');
+   //let [keyword, setKeyword] = useState('');
+
+   //search, keyword
+   let {page, search, keyword, setPageFunc, setSearchFunc, setKeywordFunc} = useContext(BoardContext);
 
    useEffect(() => {
 
@@ -44,15 +48,14 @@ const Board = () => {
 
    const getList = async (page) => {
       
+      console.log("page:"+page + " ,search:"+search+ " ,keyword:"+keyword)
+
       const board = {
          search : null,
          keyword : null,
-      };
+      }; 
  
       let response;
-
-      if(page === '' || page === null)
-         page = 1;
 
       try{
          response = await boardapi.list(page, board);
@@ -61,7 +64,9 @@ const Board = () => {
          console.log(error);
       }
 
-      setPage(response.data.currentPage);
+      //context의 page사용
+      setPageFunc(response.data.currentPage);
+
       setTotalPage(response.data.pp.totalPage)
       setBoardList([...response.data.list]); //흩뿌리기
    }
@@ -71,7 +76,7 @@ const Board = () => {
       <Header/>
       <div className='container'>
          <div style={{display:'flex',justifyContent:'space-between',margin:50}}>
-            <SearchForm/>
+            <SearchForm getList={getList}/>
             <Button variant="outline-primary">글쓰기</Button>
          </div>
          <div>
