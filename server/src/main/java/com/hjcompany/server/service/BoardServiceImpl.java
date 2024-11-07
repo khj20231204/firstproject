@@ -15,8 +15,8 @@ public class BoardServiceImpl implements BoardService {
    private BoardMapper boardMapper;
 
    @Override
-   public int getTotalCount() {
-     return boardMapper.getTotalCount();
+   public int getTotalCount(Board board) {
+     return boardMapper.getTotalCount(board);
    }
 
    @Override

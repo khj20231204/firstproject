@@ -9,7 +9,7 @@ import com.hjcompany.server.dto.Board;
 @Mapper
 public interface BoardMapper {
 
-   int getTotalCount();
+   int getTotalCount(Board board);
 
    List<Board> getList(Board board);
 

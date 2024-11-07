@@ -9,7 +9,7 @@ import com.hjcompany.server.dto.Board;
 @Service
 public interface BoardService {
 
-   int getTotalCount();
+   int getTotalCount(Board board);
 
    List<Board> getList(Board board);
    
