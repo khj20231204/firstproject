@@ -7,12 +7,10 @@ const SearchForm = () => {
 
    const submitSearch = (e) => {
       e.preventDefault();
-
-      
    }
 
    return (
-      <div className='searchContainer' style={{margin:50}}>
+      <div className='searchContainer'>
       <form onSubmit={(e) => {submitSearch(e)}}>
          <table>
             <tbody>

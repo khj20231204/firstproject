@@ -9,6 +9,7 @@ import User from './pages/User';
 import LoginContextProvider from './contexts/LoginContextProvider';
 import Admin from './pages/Admin';
 import Board from './pages/Board';
+import DetailBoard from './pages/DetailBoard';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
          <Route path="/login" element={<Login></Login>}></Route>
          <Route path="/admin" element={<Admin></Admin>}></Route>
          <Route path="/board" element={<Board></Board>}></Route>
+         <Route path="/detailboard" element={<DetailBoard></DetailBoard>}></Route>
       </Routes>
       </LoginContextProvider>
     </BrowserRouter>
