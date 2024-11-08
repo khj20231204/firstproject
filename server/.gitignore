@@ -10,6 +10,9 @@ build/
 .application.properties
 /src/main/resources/application.properties
 
+### .gitignore ###
+.gitignore
+
 ### STS ###
 .apt_generated
 .classpath
