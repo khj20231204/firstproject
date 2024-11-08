@@ -16,9 +16,9 @@ public class Board {
 	private String email;
 	private int readcount;
 	private String passwd;
-	private int ref;
+	/* private int ref;
 	private int re_step;
-	private int re_level;
+	private int re_level; */
 	private String ip;
 	private Timestamp reg_date;
 	private String del;
