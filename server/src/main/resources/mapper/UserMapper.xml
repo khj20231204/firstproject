@@ -12,9 +12,9 @@
 
     <!-- Users 매핑 : Users클래스에 담고 userMap라고 부르겠다 -->
     <resultMap type="Users" id="userMap">
-        <id property="no" column="no" />
+        <!-- <id property="no" column="no" />
         
-        <result property="no" column="no" />
+        <result property="no" column="no" /> -->
         <result property="userId" column="user_id" />
         <result property="userPw" column="user_pw" />
         <result property="name" column="name" />
@@ -34,7 +34,7 @@
 
     <!-- 회원 등록 -->
     <insert id="insert">
-        INSERT INTO user( user_id, user_pw, name, email )
+        INSERT INTO user(user_id, user_pw, name, email )
         VALUES ( #{userId}, #{userPw}, #{name} ,#{email} )
     </insert>
 
@@ -49,8 +49,7 @@
     <!-- 회원 조회 - id -->
     <select id="login" resultMap="userMap">
         SELECT 
-            <!-- u.no -->
-            ,u.user_id
+            u.user_id
             ,user_pw
             ,name
             ,email

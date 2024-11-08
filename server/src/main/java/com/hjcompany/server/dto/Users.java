@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class Users {
    
-   private int no;
    private String userId;
    private String userPw;
    private String userPwCheck; //비밀번호 체크

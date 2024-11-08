@@ -5,91 +5,29 @@ flush privileges;
 
 create database membersdb;
 
---  -------------시큐리티 회원가입 ----------------------------------------- 
--- ------------------- 권한
-
--- 기존 데이블이 존재하면 삭제
-DROP TABLE IF EXISTS USER_AUTH;
-
-create table user_auth(
-	user_id varchar(30),
-    auth varchar(30)
-);
-drop table user_auth;
-
--- 사용자 권한 : USER
-insert into user_auth(user_id, auth) values('user','USER');
-
--- 관리자 권한 : USER, ADMIN
-insert into user_auth(user_id, auth) values('admin','USER');
-insert into user_auth(user_id, auth) values('admin','ADMIN');
-
--- ---------------------- 사용자
--- 기존 데이블이 존재하면 삭제
-DROP TABLE IF EXISTS USER;
-
-create table user(
-	no int auto_increment primary key,
-	user_id varchar(30),
-   user_pw varchar(300),
-	name varchar(30),
-	email varchar(30),
-	reg_date timestamp default current_timestamp,
-	upd_date timestamp default current_timestamp,
-	enabled int default 1
-);
-drop table user;
-
-INSERT INTO user( user_id, user_pw, name, email ) VALUES ( 'user', '$2a$12$g83EyNzxlRC/wS/V1ion2OXG7a9fy5BTCwUA7nCzCMHmi5N3KQ/Ze', '길동 군' ,'kildong@goole.com' );
-INSERT INTO user( user_id, user_pw, name, email ) VALUES ( 'user2', '$2a$12$g83EyNzxlRC/wS/V1ion2OXG7a9fy5BTCwUA7nCzCMHmi5N3KQ/Ze', '순신 군' ,'kildong@goole.com' );
-INSERT INTO user( user_id, user_pw, name, email ) VALUES ( 'user3', '$2a$12$g83EyNzxlRC/wS/V1ion2OXG7a9fy5BTCwUA7nCzCMHmi5N3KQ/Ze', '겅남 군' ,'kildong@goole.com' );
-
-select * from user;
-delete from user where no in (23,24);
-
-SELECT u.no
-	  ,u.user_id
-	  ,user_pw
-	  ,name
-	  ,email
-	  ,enabled
-	  ,reg_date
-	  ,upd_date
-	  ,auth
-FROM user u LEFT OUTER JOIN user_auth auth 
-			ON u.user_id = auth.user_id
-WHERE u.user_id = 'user';
-
--- ------------- 게시판 --------------------------------------- --
-
 create table board(
-	num int
-	, writer varchar(100) not null
+	num int AUTO_INCREMENT PRIMARY key
+	, user_id varchar(30) not null 
 	, subject varchar(100) not null
 	, content varchar(4000) not null
-   /*  , email varchar(300) */
-	#, passwd varchar(100) not null -- 로그인한 상태에서 글을 작성하기 때문에 passwd는 없어도 될 것 같다
-    , readcount int 
-    
-/* 	, re_ref int -- 같은 묶음
-	, re_lev int -- 같은 묶음 안에서 순서
-	, re_step int -- 들여쓰기 */
-	
+   , readcount int 
 	, reg_date TIMESTAMP default current_timestamp 
-    
-    , del varchar(10) default 'Y'
-    
-    , startRow int 
-    , endRow int
-    
-    , search varchar(100)
-    , keyword varchar(100)
+   , del varchar(10) default 'N'
+   -- page
+   , startRow int 
+   , endRow int
+   -- search
+   , search varchar(100)
+   , keyword varchar(100)
+   , FOREIGN key(user_id) REFERENCES user(user_id)
 );
 
 drop table board;
 
-insert into board(num, writer, subject, content, email, readcount,  re_ref, re_lev, re_step)
-	values(1, 'hjcompany', '화창한 봄날', '날아다니는 똥파리','hj@email.com' , 0, 0, 0, 0);
+select * from board;
+
+insert into board(num, user_id, subject, content, email, readcount)
+	values(1, 'hjcompany', '화창한 봄날', '솟아오르는 잠자리 떼','hj@email.com' , 0);
     
 delete from board;
 
@@ -99,13 +37,6 @@ select * from board where num=3;
 
 select * from board order by num desc limit 1,100;
 
-select * from board where subject like '%봄날2%' order by num desc limit 1, 100; 	
-select * from board where subject like '%봄날20%' order by num desc limit 1, 100; 	
-select * from board where subject like '%봄날200%' order by num desc limit 1, 100; 	
-
-select * from board where content like '%자리 떼%' order by num desc limit 1, 1000;	#검색 가능
-# like 검색은 전체 문서에서 mysql이 하는 거고 그 결과값을 limit로 제한한다.
-
 select * from board where subject like concat('%','200','%') order by num desc;	#검색 가능
 
 
@@ -113,12 +44,12 @@ delete from board where num in (604, 603, 602);
 
 update board set del='N';
 
-update board set content='날아다니는 솟아오르는 잠자리 떼';
+update board set content='솟아오르는 잠자리 떼';
 
 call new_procedure2;
 
-insert into board(num, writer, subject, content, email, readcount,  re_ref, re_lev, re_step) 
-values((SELECT ifnull(MAX(b.num),0)+1 AS num from board b), 'hjcompany602', '화창한 봄날602', '날아다니는 똥파리','hj@email.com' , 0, 0, 0, 0);
+insert into board(num, user_id, subject, content, email, readcount) 
+values((SELECT ifnull(MAX(b.num),0)+1 AS num from board b), 'hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼','hj@email.com' , 0);
 
 select max(num) from board;
 select ifnull(max(num),0)+1 from board;
@@ -176,8 +107,8 @@ select * from board order by board_re_ref desc, board_re_seq asc limit 600, 10;
         where title
         like concat('%',#{keyword},'%')
         </if>
-        <if test="condition=='writer'">
-        where writer
+        <if test="condition=='user_id'">
+        where user_id
         like concat('%',#{keyword},'%')
         </if>
         <if test="condition=='content'">
@@ -202,8 +133,8 @@ select * from board order by board_re_ref desc, board_re_seq asc limit 600, 10;
         where title
         like concat('%',#{keyword},'%')
         </if>
-        <if test="condition=='writer'">
-        where writer
+        <if test="condition=='user_id'">
+        where user_id
         like concat('%',#{keyword},'%')
         </if>
         <if test="condition=='content'">
@@ -225,7 +156,7 @@ BEGIN
 	declare i int default 0;
     while i<=600 do
 		set i = i+1;
-        insert into board(num, writer, subject, content, email, readcount,  re_ref, re_lev, re_step) values(ifnull(max(num),0)+i, concat('hjcompany',i), concat('화창한 봄날', 100+i), '날아다니는 똥파리','hj@email.com' , 0, 0, 0, 0);
+        insert into board(num, user_id, subject, content, email, readcount) values(ifnull(max(num),0)+i, concat('hjcompany',i), concat('화창한 봄날', 100+i), '솟아오르는 잠자리 떼','hj@email.com' , 0);
     end while;
 END
 

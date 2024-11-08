@@ -110,7 +110,7 @@ public class UserController {
    @DeleteMapping("/{userId}")
    public ResponseEntity<?> destory(@PathVariable("userId") String userId) throws Exception{
       log.info("UserController.java - destory 주소 /{userId}");
-
+      System.out.println("-------------------------userid:"+userId);
       int result = userService.delete(userId);
 
       if(result > 0){

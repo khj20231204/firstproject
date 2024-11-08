@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import './UserForm.css';
 
-const UserForm = ({userInfo, updateUser, deleteUser2}) => {
+const UserForm = ({userInfo, updateUser, deleteUser2}) => { //User.jsx에서 넘겨준 props
 
    const usernameInput = useRef();
    const passwordInput = useRef();
