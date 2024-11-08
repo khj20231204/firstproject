@@ -1,6 +1,6 @@
 package com.hjcompany.server.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
@@ -20,7 +20,7 @@ public class Board {
 	private int re_step;
 	private int re_level;
 	private String ip;
-	private Date reg_date;
+	private Timestamp reg_date;
 	private String del;
 
 	// page

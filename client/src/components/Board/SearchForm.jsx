@@ -4,11 +4,9 @@ import Button from 'react-bootstrap/Button';
 import './SearchForm.css';
 import { BoardContext } from '../../contexts/BoardContextProvider';
 
-const SearchForm = (props) => {
+const SearchForm = () => {
 
-   const {getList} = props; //Board.jsx에서 받은 getList
-
-   let {page, search, keyword, setPageFunc, setSearchFunc, setKeywordFunc} = useContext(BoardContext);
+   let {setSearchFunc,setKeywordFunc} = useContext(BoardContext);
 
    const submitSearch = (e) => {
       e.preventDefault();
@@ -18,11 +16,8 @@ const SearchForm = (props) => {
       const search = form.search.value;
       const keyword = form.keyword.value;
 
-      console.log("search:"+search+ " ,keyword:"+ keyword+" ,page:"+page);
       setSearchFunc(search);
       setKeywordFunc(keyword);
-
-      getList(page);
    }
 
    return (

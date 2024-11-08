@@ -58,8 +58,8 @@
 		</where>
    </select>
 
-   <!-- num에 해당하는 값 가져오기 -->
-   <select id="select" parameterType="int" resultType="board">
+   <!-- detailboard 가져오기 -->
+   <select id="getDetailBoard" parameterType="int" resultMap="boardResult">
 		select * from board where num=#{num}
 	</select>
 
@@ -67,6 +67,7 @@
 	<select id="getMaxNum" resultType="int">
 		select ifnull(max(num),0)+1 from board
 	</select>
-	
+
+
 
 </mapper>

@@ -13,4 +13,5 @@ public interface BoardMapper {
 
    List<Board> getList(Board board);
 
+   Board getDetailBoard(int num);
 }

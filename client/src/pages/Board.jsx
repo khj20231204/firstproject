@@ -12,21 +12,16 @@ const Board = () => {
    //보드에 보여줄 list
    let [boardList, setBoardList] = useState([]);
 
-   //현재 페이지
-   //let [page, setPage] = useState(1);
-
    //전체 페이지
    let [totalPage, setTotalPage] = useState();
 
-   //검색
-   //let [search, setSearch] = useState('');
-   //let [keyword, setKeyword] = useState('');
+   //board의 pk num값
+   let [num, setNum] = useState();
 
-   //search, keyword
+   //page, search, keyword는 항상 들고 다녀야하기 때문에 context로 선언
    let {page, search, keyword, setPageFunc, setSearchFunc, setKeywordFunc} = useContext(BoardContext);
 
    useEffect(() => {
-
       /*
       axios.get('http://localhost:8088/board/list')
          .then(response => {
@@ -43,16 +38,18 @@ const Board = () => {
 
       getList(page);
       
-    }, []);
+    }, [page, search, keyword]); //SearchForm에서 search와 keyword값만 변경하면 의존성배열에서 탐지
 
 
    const getList = async (page) => {
-      
-      console.log("page:"+page + " ,search:"+search+ " ,keyword:"+keyword)
 
+      //공백으로 처리하면 서버쪽에서 오류남
+      if(search === '') search = null;
+      if(keyword === '') keyword = null;
+      
       const board = {
-         search : null,
-         keyword : null,
+         search : search,
+         keyword : keyword,
       }; 
  
       let response;
@@ -76,7 +73,7 @@ const Board = () => {
       <Header/>
       <div className='container'>
          <div style={{display:'flex',justifyContent:'space-between',margin:50}}>
-            <SearchForm getList={getList}/>
+            <SearchForm />
             <Button variant="outline-primary">글쓰기</Button>
          </div>
          <div>
@@ -84,13 +81,13 @@ const Board = () => {
                {boardList.map((v, i) => {
                return(  //return 사용하기
                   <div key={i}>
-                     <BoardForm subject={v.subject} writer={v.writer} readcount={v.readcount} reg_date={v.reg_date} /> 
+                     <BoardForm subject={v.subject} writer={v.writer} readcount={v.readcount} reg_date={v.reg_date} num={v.num}/> 
                   </div>
                   )
                })}
             </div>
             <div style={{display:'flex'}}>
-               <Pagenation style={{margin:'auto auto'}} getList={getList} totalPage={totalPage}/>
+               <Pagenation style={{margin:'auto 0'}} getList={getList} totalPage={totalPage}/>
             </div>
          </div>
       </div>
