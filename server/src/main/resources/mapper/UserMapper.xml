@@ -42,12 +42,14 @@
     <select id="select" resultType="Users">
         SELECT *
         FROM user
-        WHERE no = #{no}
+        <!-- WHERE no = #{no} -->
+        WHERE user_id = #{user_id}
     </select>
 
     <!-- 회원 조회 - id -->
     <select id="login" resultMap="userMap">
-        SELECT u.no
+        SELECT 
+            <!-- u.no -->
             ,u.user_id
             ,user_pw
             ,name
