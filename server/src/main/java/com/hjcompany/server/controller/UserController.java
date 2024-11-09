@@ -70,13 +70,6 @@ public class UserController {
    @PostMapping("/join") //회원가입은 누구나 들어와야 하기 때문에 따로 권한지정을 하지 않았다
    public ResponseEntity<?> join(@RequestBody Users user) throws Exception {
       log.info("UserController.java - join 주소 /");
-      
-      Users userIdCheck = userService.select(user.getUserId());
-      if(userIdCheck != null){
-         log.info("회원 아이디가 존재합니다.");
-         return new ResponseEntity<>("IDCHECK",HttpStatus.OK);
-         //return ResponseEntity.status(HttpStatus.CONFLICT).body("existingID");
-      }
 
       log.info("[post] - users : " + user);
       int result = userService.insert(user);
@@ -117,7 +110,7 @@ public class UserController {
    @DeleteMapping("/{userId}")
    public ResponseEntity<?> destory(@PathVariable("userId") String userId) throws Exception{
       log.info("UserController.java - destory 주소 /{userId}");
-      System.out.println("-------------------------userid:"+userId);
+
       int result = userService.delete(userId);
 
       if(result > 0){

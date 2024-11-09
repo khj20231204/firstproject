@@ -12,7 +12,5 @@ public interface BoardService {
    int getTotalCount(Board board);
 
    List<Board> getList(Board board);
-
-   Board getDetailBoard(int num);
    
 }

@@ -1,4 +1,4 @@
--- Active: 1729210488806@@127.0.0.1@3306@membersdb
+-- Active: 1731150471586@@127.0.0.1@3306@membersdb
 create user hjcompany@'%' identified by 'hjpass';  
 grant all privileges on membersdb.* to hjcompany@'%' with grant option;  
 flush privileges;  

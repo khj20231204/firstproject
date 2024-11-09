@@ -1,25 +1,26 @@
--- Active: 1729210488806@@127.0.0.1@3306@membersdb
+-- Active: 1731150471586@@127.0.0.1@3306@membersdb
 
 -- USER_AUTH : 권한 테이블
-DROP TABLE IF EXISTS USER_AUTH;
 
 CREATE TABLE USER_AUTH(
-	auth_no INT NOT NULL auto_increment PRIMARY KEY   -- 권한 번호
-   , user_id VARCHAR(100) NOT NULL                   -- 아이디
-   , auth VARCHAR(100) NOT NULL                         -- 권한(USER, ADMIN)
-   , FOREIGN key(user_id) references user(user_id) ON DELETE CASCADE
+	AUTH_NO INT NOT NULL auto_increment PRIMARY KEY   -- 권한 번호
+   , USER_ID VARCHAR(100) NOT NULL                     -- 아이디
+   , AUTH VARCHAR(100) NOT NULL                         -- 권한(USER, ADMIN)
+   , FOREIGN KEY(USER_ID) REFERENCES USER(USER_ID)
 );
 
-SELECT * FROM user_auth;
+DROP TABLE USER_AUTH;
 
-DROP table user_auth;
+SELECT * FROM USER_AUTH;
+
 -- 사용자 권한 : USER
-insert into user_auth(user_id, auth) values('user','USER');
+INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('USER', 'ROLE_USER');
 
 -- 관리자 권한 : USER, ADMIN
-insert into user_auth(user_id, auth) values('admin','USER');
-insert into user_auth(user_id, auth) values('admin','ADMIN');
+INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('ADMIN', 'ROLE_ADMIN');
+INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('ADMIN', 'ROLE_USER');
 
+SELECT * FROM user_auth;
 
 
 

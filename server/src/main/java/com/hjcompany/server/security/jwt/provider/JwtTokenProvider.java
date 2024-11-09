@@ -53,9 +53,7 @@ import lombok.extern.slf4j.Slf4j;
    //토큰 생성
    public String createToken(int userNo, String userId, List<String> roles) {
 
-         userNo = 123; //no를 삭제했기 때문에 임시번호 입력
         log.info("JwtTokenProvider.java의 createToken 메소드");
-         System.out.println("-----------------------------------------------------------------JwtTokenProvider userNo:"+userNo);
 
        // JWT 토큰 생성
        String jwt = Jwts.builder()
@@ -105,7 +103,7 @@ import lombok.extern.slf4j.Slf4j;
 
            log.info("parsedToken : " + parsedToken);
 
-           // 인증된 사용자 번호, no테이블을 삭제해서 1234로 userNo값은 고정
+           // 인증된 사용자 번호
            String userNo = parsedToken.getPayload().get("uno").toString();
            int no = ( userNo == null ? 0 : Integer.parseInt(userNo) );
            log.info("userNo : " + userNo);
@@ -126,7 +124,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
            Users user = new Users();
-           //user.setNo(no);
+           user.setNo(no);
            user.setUserId(userId);
            // 권한도 바로 Users 객체에 담아보기
            List<UserAuth> authList = ((List<?>) roles )
@@ -144,8 +142,7 @@ import lombok.extern.slf4j.Slf4j;
            // 토큰 유효하면
            // name, email 도 담아주기
            try {
-               //Users userInfo = userMapper.select(no); no삭제 user_id로 검색
-               Users userInfo = userMapper.select(userId);
+               Users userInfo = userMapper.select(no);
                if( userInfo != null ) {
                    user.setName(userInfo.getName());
                    user.setEmail(userInfo.getEmail());

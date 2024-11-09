@@ -12,9 +12,8 @@
 
     <!-- Users 매핑 : Users클래스에 담고 userMap라고 부르겠다 -->
     <resultMap type="Users" id="userMap">
-        <!-- <id property="no" column="no" />
+        <id property="userId" column="user_id" />
         
-        <result property="no" column="no" /> -->
         <result property="userId" column="user_id" />
         <result property="userPw" column="user_pw" />
         <result property="name" column="name" />
@@ -22,6 +21,7 @@
         <result property="enabled" column="enabled" />
         <result property="regDate" column="reg_date" />
         <result property="updDate" column="upd_date" />
+        <result property="no" column="no" />
         
         <collection property="authList" resultMap="authMap"></collection>
     </resultMap>
@@ -34,21 +34,21 @@
 
     <!-- 회원 등록 -->
     <insert id="insert">
-        INSERT INTO user(user_id, user_pw, name, email )
-        VALUES ( #{userId}, #{userPw}, #{name} ,#{email} )
+        INSERT INTO user( user_id, user_pw, name, email, no)
+        VALUES ( #{userId}, #{userPw}, #{name} ,#{email}, (SELECT ifnull(MAX(b.no),0)+1 AS num from user b))
     </insert>
 
     <!-- 회원 조회 -->
     <select id="select" resultType="Users">
         SELECT *
         FROM user
-        WHERE user_id = #{userId}
+        WHERE no = #{no}
     </select>
 
     <!-- 회원 조회 - id -->
     <select id="login" resultMap="userMap">
-        SELECT 
-            u.user_id
+        SELECT u.no
+            ,u.user_id
             ,user_pw
             ,name
             ,email

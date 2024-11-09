@@ -14,8 +14,8 @@ const WriteBoardForm = () => {
    let [userId, setUserId] = useState();
 
    useEffect(() => {   
-         const localdata = localStorage.getItem('userInfo');
-         setUserId(JSON.parse(localdata).userId);
+      const localdata = localStorage.getItem('userInfo');
+      setUserId(JSON.parse(localdata).userId);
    }, [userId])
 
    const naviate = useNavigate();

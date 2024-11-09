@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class Users {
    
+   private int no;
    private String userId;
    private String userPw;
    private String userPwCheck; //비밀번호 체크
@@ -26,7 +27,7 @@ public class Users {
 
    public Users(Users user){
       
-      //this.no = user.getNo();
+      this.no = user.getNo();
       this.userId = user.getUserId();
       this.userPw = user.getUserPw();
       this.name = user.getName();
