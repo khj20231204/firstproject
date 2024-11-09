@@ -33,15 +33,21 @@ public class BoardController {
 
    @PostMapping("/list")
    public ResponseEntity<Map<String, Object>> list(@RequestParam(value="page", defaultValue="1") int page, @RequestBody Board board) throws Exception {
-      System.out.println("page:"+page);
-      System.out.println("board:"+board);
 
       int rowPerPage = 5;
 
       int total = boardService.getTotalCount(board); //전체 게시물 갯수
 
+      /*
       int startRow = (page - 1) * rowPerPage + 1;
-      int endRow = startRow + rowPerPage - 1;
+      마지막에 1을 더하면 1개인 경우 나타나지 않는다, 0부터 시작
+      limit 0,5 => 데이터가 한 개인 경우 출력
+      limit 1,5 => 데이터가 한 개인 경우 출력되지 않는다.
+      */
+      int startRow = (page - 1) * rowPerPage ;
+      
+      //mysql에서 endRow는 필요없다. 변수가 있기 때문에 놔둔다
+      int endRow = startRow + rowPerPage - 1; 
 
       PagingPgm pp = new PagingPgm(total, rowPerPage, page);
 
@@ -49,8 +55,9 @@ public class BoardController {
 		board.setEndRow(endRow);
 
 		// List<Board> list = bs.list(startRow, endRow);
-		int no = total - startRow + 1;		// 화면 출력 번호
+		int no = total - (startRow+1) + 1;		// 화면 출력 번호
 
+      System.out.println("밑에 board:"+board);
 		List<Board> list = boardService.getList(board);
 
       System.out.println("list:"+list);

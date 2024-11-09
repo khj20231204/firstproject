@@ -22,14 +22,19 @@ create table board(
    , FOREIGN key(user_id) REFERENCES user(user_id)
 );
 
-drop table board;
+--drop table board;
+
+commit;
 
 select * from board;
+
+select * from board where null like concat('%','  ','%');
+
 
 insert into board(num, user_id, subject, content, email, readcount)
 	values(1, 'hjcompany', '화창한 봄날', '솟아오르는 잠자리 떼','hj@email.com' , 0);
     
-select * from board order by num desc limit 1,100;
+select * from board order by num desc limit 0,5;
 
 select * from board where subject like concat('%','200','%') order by num desc;	#검색 가능
 
@@ -50,20 +55,10 @@ select 2+3 from board;  	-- 결과값 : 5
 select sum(2+3) from board;  -- 결과값:3010
 select sum(2,3) from board;  -- Error Code : 1064
 
-select * from (select a.*,rowNum rn from (
-			select * from board
-		<where>
-			<if test="keyword != null and search!='subcon'">
-				${search} like '%'||#{keyword}||'%'
-			</if>
-			<if test="keyword != null and search=='subcon'">
-				subject like '%'||#{keyword}||'%' or
-				content like '%'||#{keyword}||'%'
-			</if>
-		</where>			
-			 order by ref desc,re_step) a )
-			where rn between #{startRow} and #{endRow}
-
+select *
+from board
+order by num desc
+limit 0, 5;
 -- ---------------------------------------------------------------- 페이지
 select * from board limit 4,5; #목록 갯수 4부터 5개를 가져와라
 

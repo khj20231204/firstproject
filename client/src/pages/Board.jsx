@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header/Header';
+import Table from 'react-bootstrap/Table';
 import BoardForm from '../components/Board/BoardForm';
 import * as boardapi from '../apis/boardapi';
 import SearchForm from '../components/Board/SearchForm';
@@ -20,6 +21,9 @@ const Board = () => {
 
    //board의 pk num값
    let [num, setNum] = useState();
+
+   //글 번호
+   let [no, setNo] = useState();
 
    //page, search, keyword는 항상 들고 다녀야하기 때문에 context로 선언
    let {page, search, keyword, setPageFunc, setSearchFunc, setKeywordFunc} = useContext(BoardContext);
@@ -43,7 +47,7 @@ const Board = () => {
          .then((res) => {
             console.log(1, res)
       });*/
-
+      
       getList(page);
       
     }, [page, search, keyword]); //SearchForm에서 search와 keyword값만 변경하면 의존성배열에서 탐지
@@ -60,6 +64,7 @@ const Board = () => {
          keyword : keyword,
       }; 
  
+      console.log(board)
       let response;
 
       try{
@@ -68,10 +73,10 @@ const Board = () => {
       }catch(error){
          console.log(error);
       }
-
+      console.log(response)
       //context의 page사용
       setPageFunc(response.data.currentPage);
-
+      setNo(response.data.no);
       setTotalPage(response.data.pp.totalPage)
       setBoardList([...response.data.list]); //흩뿌리기
    }
@@ -94,15 +99,24 @@ const Board = () => {
             <Button variant="outline-primary" onClick={write}>글쓰기</Button>
          </div>
          <div>
-            <div>
-               {boardList.map((v, i) => {
+            <Table striped="columns">
+            <thead>
+               <tr align='center'>
+                  <th>글 번호</th>
+                  <th>제목</th>
+                  <th>작성자</th>
+                  <th>작성일</th>
+                  <th>조회수</th>
+               </tr>
+            </thead>
+            <tbody>
+            {boardList.map((v, i) => {
                return(  //return 사용하기
-                  <div key={i}>
-                     <BoardForm subject={v.subject} writer={v.writer} readcount={v.readcount} reg_date={v.reg_date} num={v.num}/> 
-                  </div>
+                  <BoardForm subject={v.subject} userId={v.userId} readcount={v.readcount} regDate={v.regDate} num={v.num} /> 
                   )
                })}
-            </div>
+            </tbody>
+            </Table>
             <div style={{display:'flex'}}>
                <Pagenation style={{margin:'auto 0'}} getList={getList} totalPage={totalPage}/>
             </div>

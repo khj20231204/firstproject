@@ -71,6 +71,13 @@ public class UserController {
    public ResponseEntity<?> join(@RequestBody Users user) throws Exception {
       log.info("UserController.java - join 주소 /");
 
+      Users userIdCheck = userService.select(user.getUserId());
+      if(userIdCheck != null){
+         log.info("회원 아이디가 존재합니다.");
+         return new ResponseEntity<>("IDCHECK",HttpStatus.OK);
+      }
+
+
       log.info("[post] - users : " + user);
       int result = userService.insert(user);
 
