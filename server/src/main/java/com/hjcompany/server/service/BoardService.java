@@ -13,4 +13,7 @@ public interface BoardService {
 
    List<Board> getList(Board board);
    
+   Board getDetailBoard(int num);
+
+   int writeBoard(Board board);
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +66,34 @@ public class BoardController {
       map.put("keyword", board.getKeyword());
       return new ResponseEntity<>(map, HttpStatus.OK);
    }
+
+   
+   @GetMapping("/detailboard/{num}")
+   public ResponseEntity<Map<String, Object>> detailBoard(@PathVariable("num") int num) throws  Exception{
+
+      Board board = boardService.getDetailBoard(num);
+      System.out.println(board);
+      Map<String, Object> map = new HashMap<>();
+
+      map.put("detailboard", board);
+      return new ResponseEntity<>(map, HttpStatus.OK);
+   }
+
+   @PostMapping("/writeboard")
+   public ResponseEntity<Map<String, Object>> writeBorad(@RequestBody Board board) {
+      
+      System.out.println("board:"+board);
+
+      int result = boardService.writeBoard(board);
+      
+      System.out.println("result:"+result);
+
+      Map<String, Object> map = new HashMap<>();
+
+       return new ResponseEntity<>(map, HttpStatus.OK);
+   } 
+   
+   
 }
 
 

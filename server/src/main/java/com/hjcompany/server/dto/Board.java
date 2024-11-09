@@ -1,6 +1,6 @@
 package com.hjcompany.server.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
@@ -10,17 +10,11 @@ import lombok.Data;
 @Alias("board")
 public class Board {
    private int num;
-	private String writer;
+	private String userId;
 	private String subject;
 	private String content;
-	private String email;
 	private int readcount;
-	private String passwd;
-	private int ref;
-	private int re_step;
-	private int re_level;
-	private String ip;
-	private Date reg_date;
+	private Timestamp regDate;
 	private String del;
 
 	// page

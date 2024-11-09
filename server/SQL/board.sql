@@ -29,24 +29,14 @@ select * from board;
 insert into board(num, user_id, subject, content, email, readcount)
 	values(1, 'hjcompany', '화창한 봄날', '솟아오르는 잠자리 떼','hj@email.com' , 0);
     
-delete from board;
-
-select * from board;
-
-select * from board where num=3;
-
 select * from board order by num desc limit 1,100;
 
 select * from board where subject like concat('%','200','%') order by num desc;	#검색 가능
 
 
-delete from board where num in (604, 603, 602);
+insert into board(user_id, subject, content) 
+values('hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼');
 
-update board set del='N';
-
-update board set content='솟아오르는 잠자리 떼';
-
-call new_procedure2;
 
 insert into board(num, user_id, subject, content, email, readcount) 
 values((SELECT ifnull(MAX(b.num),0)+1 AS num from board b), 'hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼','hj@email.com' , 0);

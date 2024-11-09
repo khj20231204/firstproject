@@ -39,8 +39,9 @@ const WriteBoardForm = () => {
       const form = e.target;
 
       //const 
-      const user_id = form.user_id.value;
-      const reg_date = form.reg_date.value;
+      const userId = form.userId.value;
+      //const reg_date = form.reg_date.value;
+      //날짜는 sql쿼리문 default로 입력
       const subject = form.subject.value;
       const content = form.content.value;
 
@@ -55,8 +56,9 @@ const WriteBoardForm = () => {
       }
 
       let board = {
-         user_id : user_id,
-         reg_date : reg_date,
+         userId : userId,
+         /* reg_date : reg_date, 
+         날짜는 sql쿼리문 default로 입력*/
          subject : subject,
          content : content
       }
@@ -67,7 +69,14 @@ const WriteBoardForm = () => {
 
    const writeBoard = async (board) => {
 
-      const resposne = await boardapi.writeboard(userId, board)
+      //board에 userId가 포함되어 있다
+      /* const resposne = await boardapi.writeboard(userId, board, {headers: {
+            'Content-Type': 'application/JSON'
+         }
+      }) */
+      const resposne = await boardapi.writeboard(board);
+
+      
    }
 
    const cancle = ()  => {
@@ -82,7 +91,7 @@ const WriteBoardForm = () => {
         <Form onSubmit={(e) => {writeOn(e)}}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                <Form.Label>작성자</Form.Label>
-               <Form.Control name="user_id" type="text" readOnly style={{backgroundColor:'whitesmoke'}} value={userId}/>
+               <Form.Control name="userId" type="text" readOnly style={{backgroundColor:'whitesmoke'}} value={userId}/>
                <Form.Label>작성일자</Form.Label>
                <Form.Control name="reg_date" type="text" readOnly style={{backgroundColor:'whitesmoke'}} value={formattedDate}/>
             </Form.Group>

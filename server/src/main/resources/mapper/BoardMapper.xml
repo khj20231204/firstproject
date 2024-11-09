@@ -13,17 +13,11 @@
     <!-- Users 매핑 : board클래스에 담고 boardResult라고 부르겠다 -->
     <resultMap type="board" id="boardResult">
 		<result property="num"	     column="num" />
-		<result property="writer"    column="writer" />
+		<result property="userId"    column="user_id" />
 		<result property="subject"   column="subject" />
 		<result property="content"   column="content" />
-		<result property="email"     column="email" />
 		<result property="readcount" column="readcount" />
-		<result property="passwd"    column="passwd" />
-		<result property="ref"     column="ref" />
-		<result property="re_step"	 column="re_step" />
-		<result property="re_level"  column="re_level" />
-		<result property="ip"  		 column="ip" />
-		<result property="reg_date"	 column="reg_date" />
+		<result property="regDate"	 column="reg_date" />
 		<result property="del" 		 column="del" />
 	</resultMap>
         
@@ -58,8 +52,8 @@
 		</where>
    </select>
 
-   <!-- num에 해당하는 값 가져오기 -->
-   <select id="select" parameterType="int" resultType="board">
+   <!-- detailboard 가져오기 -->
+   <select id="getDetailBoard" parameterType="int" resultMap="boardResult">
 		select * from board where num=#{num}
 	</select>
 
@@ -68,5 +62,9 @@
 		select ifnull(max(num),0)+1 from board
 	</select>
 	
+	<insert id="writeBoard" parameterType="board">
+		insert into board(user_id, subject, content) 
+		values(#{userId}, #{subject}, #{content})
+	</insert>
 
 </mapper>

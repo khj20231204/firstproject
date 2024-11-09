@@ -24,4 +24,14 @@ public class BoardServiceImpl implements BoardService {
       return boardMapper.getList(board);
    }
 
+   @Override
+   public Board getDetailBoard(int num) {
+      return boardMapper.getDetailBoard(num);
+   }
+
+   @Override
+   public int writeBoard(Board board) {
+      return boardMapper.writeBoard(board);
+   }
+
 }
