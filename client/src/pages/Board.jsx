@@ -64,7 +64,6 @@ const Board = () => {
          keyword : keyword,
       }; 
  
-      console.log(board)
       let response;
 
       try{
@@ -73,7 +72,6 @@ const Board = () => {
       }catch(error){
          console.log(error);
       }
-      console.log(response)
       //context의 page사용
       setPageFunc(response.data.currentPage);
       setNo(response.data.no);

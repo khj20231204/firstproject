@@ -10,8 +10,6 @@ const BoardForm = (props) => {
 
    const date = moment(regDate).format('YYYY-MM-DD, h:mm:ss');
 
-   console.log("boarForm:"+num);
-
    return (
       <tr align='center'>
          <td style={{width:100}}>{num}</td>

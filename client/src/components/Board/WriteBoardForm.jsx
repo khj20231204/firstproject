@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import * as boardapi from '../../apis/boardapi';
-import Swal from 'sweetalert2';
+import * as Swal from '../apis/alert';
 
 const WriteBoardForm = () => {
 
@@ -64,7 +64,6 @@ const WriteBoardForm = () => {
          content : content
       }
 
-      console.log(board);
       writeBoard(board);
    }
 
@@ -83,10 +82,13 @@ const WriteBoardForm = () => {
       }catch(error){
          console.log(error);
       }
-
+      alert("aaa")
+      
       //console.log(response);
       if(response.status === '200'){
-         Swal.alert("SUCCESS","글 작성이 성공했습니다.",naviate(-1));
+         alert("aaa")
+         Swal.alert("SUCCESS","글 작성이 성공했습니다.", "success", () => {naviate(-1)});
+         //Swal.alert("로그인이 필요합니다.","로그인하세요","warning",() => {});
       }else{
 
       }

@@ -40,7 +40,6 @@ const DetailBoard = () => {
       }catch(error){
          console.log(error)
       }
-      console.log(response.data.detailboard)
       setBoard({...response.data.detailboard});
    }
 

@@ -142,7 +142,7 @@ import lombok.extern.slf4j.Slf4j;
            // 토큰 유효하면
            // name, email 도 담아주기
            try {
-               Users userInfo = userMapper.select(no);
+               Users userInfo = userMapper.select(userId);
                if( userInfo != null ) {
                    user.setName(userInfo.getName());
                    user.setEmail(userInfo.getEmail());

@@ -13,7 +13,6 @@ const Join = () => {
    const join = async(form) => {
 
       console.log("pages/Join.jsx");
-      console.log(form);
 
       try{
          let response = await auth.join(form);
