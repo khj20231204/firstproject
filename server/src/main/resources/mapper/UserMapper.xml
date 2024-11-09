@@ -42,8 +42,7 @@
     <select id="select" resultType="Users">
         SELECT *
         FROM user
-        <!-- WHERE no = #{no} -->
-        WHERE user_id = #{user_id}
+        WHERE user_id = #{userId}
     </select>
 
     <!-- 회원 조회 - id -->

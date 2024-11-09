@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import Board from './pages/Board';
 import DetailBoard from './pages/DetailBoard';
 import BoardContextProvider from './contexts/BoardContextProvider';
+import WriteBoard from './pages/WriteBoard';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
          <Route path="/admin" element={<Admin></Admin>}></Route>
          <Route path="/board" element={<Board></Board>}></Route>
          <Route path="/detailboard" element={<DetailBoard></DetailBoard>}></Route>
+         <Route path="/writeboard" element={<WriteBoard></WriteBoard>}></Route>
       </Routes>
       </BoardContextProvider>
       </LoginContextProvider>

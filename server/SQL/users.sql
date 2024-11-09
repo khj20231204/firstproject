@@ -29,10 +29,10 @@ INSERT INTO user( user_id, user_pw, name, email ) VALUES ( 'user2', '$2a$12$g83E
 INSERT INTO user( user_id, user_pw, name, email ) VALUES ( 'user3', '$2a$12$g83EyNzxlRC/wS/V1ion2OXG7a9fy5BTCwUA7nCzCMHmi5N3KQ/Ze', '겅남 군' ,'kildong@goole.com' );
 
 select * from user;
-delete from user where no in (23,24);
+delete from user where user_id in ('user1', 'user2', 'user3', 'user4');
 
 SELECT 
-	  ,u.user_id
+	  u.user_id
 	  ,user_pw
 	  ,name
 	  ,email

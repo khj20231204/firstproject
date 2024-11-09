@@ -4,9 +4,9 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -196.0152,
-    "scrollLeft": -642.5994,
-    "zoomLevel": 0.79,
+    "scrollTop": -119.037,
+    "scrollLeft": -5.224,
+    "zoomLevel": 1,
     "show": 431,
     "database": 4,
     "databaseName": "",
@@ -220,25 +220,6 @@
         "meta": {
           "updateAt": 1731060328156,
           "createAt": 1730730450274
-        }
-      },
-      "QL_yZdnj_3xXaI9VtsgDd": {
-        "id": "QL_yZdnj_3xXaI9VtsgDd",
-        "name": "UserPath",
-        "comment": "사용자 경로",
-        "columnIds": [],
-        "seqColumnIds": [],
-        "ui": {
-          "x": 373,
-          "y": 324.3332,
-          "zIndex": 63,
-          "widthName": 60,
-          "widthComment": 65,
-          "color": ""
-        },
-        "meta": {
-          "updateAt": 1730730880553,
-          "createAt": 1730730486264
         }
       },
       "qWBfJTMWJrEDvquCg3gtP": {
@@ -1569,15 +1550,6 @@
       {
         "name": 1730730464682,
         "comment": 1730730478525
-      }
-    ],
-    "QL_yZdnj_3xXaI9VtsgDd": [
-      "tableEntities",
-      1730730486263,
-      1731058766240,
-      {
-        "name": 1730730498846,
-        "comment": 1730730505172
       }
     ],
     "Jjxe9hjTLLddsZe9Q0R_N": [

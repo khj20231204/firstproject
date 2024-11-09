@@ -47,7 +47,8 @@ const LoginContextProvider = ({ children }) => {
 
    //유저 정보
    const [userInfo, setUserInfo] = useState({}); //유저 정보를 객체로 관리
-
+   localStorage.setItem('userInfo',JSON.stringify(userInfo));//userId를 로컬에 저장
+   
    //권한 정보
    const [roles, setRoles] = useState({isUser : false, isAdmin : false}); //사용자인지 관리자인지 객체로 저장
 
@@ -141,12 +142,6 @@ const LoginContextProvider = ({ children }) => {
          const authorization = headers.authorization;
          const accessToken = authorization.replace("Bearer ", ""); //JWT, jwt만으로는 유저 정보를 알 수 없음, 위에 loginCheck가 필요한 이유
          
-         console.log(`data: ${data}`);
-         console.log(`status: ${status}`);
-         console.log(`headers: ${headers}`);
-         console.log(`authorization: ${authorization}`);
-         console.log(`accessToken: ${accessToken}`);
-
          //로그인 성공
          //status가 200으로 응답하면 로그인 성공
          if(status === 200){
@@ -196,11 +191,6 @@ const LoginContextProvider = ({ children }) => {
 
       const {no, userId, authList} = userData;
       const roleList = authList.map((auth) => auth.auth);
-
-      console.log(`no : ${no}`);
-      console.log(`userId : ${userId}`);
-      console.log(`authList : ${authList}`);
-      console.log(`roleList : ${roleList}`);
 
       //axios 객체의 header(Authorization를 jwt토큰으로 셋팅 => Authorization : 'Bearer ${accessToken}`)
       api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;

@@ -114,8 +114,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
          log.info("인증 성공");
 
          CustomUser user = (CustomUser) authentication.getPrincipal();
-         //int userNo = user.getUser().getNo();
-         int userNo = 1234; //userNo를 삭제하고 임시로 적은 번호, 토큰 생성을 위해 삭제 안함
+         
+         //int userNo = user.getUser().getNo(); userNo를 삭제하고 임시로 적은 번호, 토큰 생성을 위해 삭제 안함
+         //JwtTokenProvider에서 클라이언트로부터 받은 토큰을 디코딩할 때 사용
+         int userNo = 1234; 
          String userId = user.getUser().getUserId();
 
          List<String> roles = user.getUser().getAuthList().stream()

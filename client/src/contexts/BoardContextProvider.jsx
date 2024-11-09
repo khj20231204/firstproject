@@ -19,10 +19,10 @@ const BoardContextProvider = ({children}) => {
    const setKeywordFunc = (v) => {
       setKeyword(v);
    }
+
    return (
       <div>
-         <BoardContext.Provider value={{page, search, keyword, setPageFunc , setSearchFunc, setKeywordFunc
-         }}>
+         <BoardContext.Provider value={{page, search, keyword, setPageFunc , setSearchFunc, setKeywordFunc}}>
             {children}
          </BoardContext.Provider>
       </div>

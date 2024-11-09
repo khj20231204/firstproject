@@ -62,6 +62,6 @@
 		select ifnull(max(num),0)+1 from board
 	</select>
 
-
+   <inset
 
 </mapper>

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
       //회원 등록
       int result = userMapper.insert(users);
-
+      
       //권한 등록
       if(result > 0){
          UserAuth userAuth = new UserAuth();
@@ -62,11 +62,11 @@ public class UserServiceImpl implements UserService {
 
    //회원 조회
    @Override
-   public Users select(int userNo) throws Exception {
+   public Users select(String userId) throws Exception {
 
       log.info("UserServiceImpl.java의 select 메소드");
 
-      return userMapper.select(userNo);
+      return userMapper.select(userId);
    }
 
    //로그인

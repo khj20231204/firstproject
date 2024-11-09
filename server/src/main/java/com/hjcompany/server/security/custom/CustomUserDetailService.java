@@ -35,7 +35,9 @@ public class CustomUserDetailService implements UserDetailsService {
       
       log.info("login - loadUserByUsername 클래스 : " + username);
 
+      System.out.println("================================ error 전========================================");
       Users user = userMapper.login(username);
+      System.out.println("================================ error 후========================================");
 
       if(user == null){ //없는 사용자로 로그인 요청을 보낸 경우
          log.info("사용자 없음.. (일치하는 아이디가 없습니다)");

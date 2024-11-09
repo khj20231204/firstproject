@@ -77,6 +77,18 @@ public class BoardController {
       map.put("detailboard", board);
       return new ResponseEntity<>(map, HttpStatus.OK);
    }
+
+/* 
+   @PostMapping("/writeboard")
+   public ResponseEntity<Map<String, Object>> writeBorad(@RequestBody String userid, @RequestBody Board board) {
+      
+      System.out.println("userid:"+userid + " ,board:"+board);
+      
+      Map<String, Object> map = new HashMap<>();
+
+       return new ResponseEntity<>(map, HttpStatus.OK);
+   } */
+   
    
 }
 
