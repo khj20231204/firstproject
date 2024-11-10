@@ -16,4 +16,6 @@ public interface BoardMapper {
    Board getDetailBoard(int num);
 
    int writeBoard(Board board);
+
+   int setReadCount(int num);
 }

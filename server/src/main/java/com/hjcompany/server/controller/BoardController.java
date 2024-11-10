@@ -44,7 +44,7 @@ public class BoardController {
       limit 0,5 => 데이터가 한 개인 경우 출력
       limit 1,5 => 데이터가 한 개인 경우 출력되지 않는다.
       */
-      int startRow = (page - 1) * rowPerPage ;
+      int startRow = (page - 1) * rowPerPage;
       
       //mysql에서 endRow는 필요없다. 변수가 있기 때문에 놔둔다
       int endRow = startRow + rowPerPage - 1; 
@@ -55,7 +55,7 @@ public class BoardController {
 		board.setEndRow(endRow);
 
 		// List<Board> list = bs.list(startRow, endRow);
-		int no = total - (startRow+1) + 1;		// 화면 출력 번호
+		int no = total - (startRow+1) + 1; // 화면 출력 번호
 
       System.out.println("밑에 board:"+board);
 		List<Board> list = boardService.getList(board);
@@ -79,7 +79,9 @@ public class BoardController {
    public ResponseEntity<Map<String, Object>> detailBoard(@PathVariable("num") int num) throws  Exception{
 
       Board board = boardService.getDetailBoard(num);
-      System.out.println(board);
+      //num인 글 조회수 증가
+      int result = boardService.setReadCount(num);
+      
       Map<String, Object> map = new HashMap<>();
 
       map.put("detailboard", board);
@@ -89,8 +91,6 @@ public class BoardController {
    @PostMapping("/writeboard")
    public ResponseEntity<Map<String, Object>> writeBorad(@RequestBody Board board) {
       
-      System.out.println("board:"+board);
-
       int result = boardService.writeBoard(board);
       
       System.out.println("result:"+result);

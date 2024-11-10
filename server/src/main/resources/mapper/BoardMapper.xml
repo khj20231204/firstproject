@@ -66,9 +66,14 @@
 		select ifnull(max(num),0)+1 from board
 	</select>
 	
+	<!-- 글 쓰기 -->
 	<insert id="writeBoard" parameterType="board">
 		insert into board(user_id, subject, content) 
 		values(#{userId}, #{subject}, #{content})
 	</insert>
 
+	<!-- 조회수 증가 -->
+	<update id="setReadCount" parameterType="int">
+		update board set readcount = ifnull(readcount,0)+1 where num = #{num}
+	</update>
 </mapper>

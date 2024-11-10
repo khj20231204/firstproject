@@ -34,4 +34,9 @@ public class BoardServiceImpl implements BoardService {
       return boardMapper.writeBoard(board);
    }
 
+   @Override
+   public int setReadCount(int num) {
+     return boardMapper.setReadCount(num);
+   }
+
 }
