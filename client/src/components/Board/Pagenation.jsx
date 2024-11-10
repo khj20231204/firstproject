@@ -3,9 +3,9 @@ import { Pagination, PaginationItem } from "@mui/material";
 import Stack from '@mui/material/Stack';
 
 
-const Pagenation = (props) => {
+const Pagenation = (props) => { //Board.jsx에서 넘겨주는 props
 
-   let {getList, totalPage} = props;
+   let {getList, totalPage, page} = props;
 
    const [currentPage, setCurrentPage] = useState(1);
 
@@ -17,7 +17,7 @@ const Pagenation = (props) => {
    return (
       <div>
          <Stack spacing={2}>
-            <Pagination count={totalPage} color="secondary" onChange={handlePageChange}/>
+            <Pagination count={totalPage} page={page} color="secondary" onChange={handlePageChange}/>
          </Stack>
          {/* 
             count : 총 페이지수 

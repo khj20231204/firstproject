@@ -200,7 +200,10 @@ const LoginContextProvider = ({ children }) => {
 
       //유저정보 세팅
       const updateUserInfo = {no, userId, roleList};
+      //updateUserInfo {no: 2, userId: 'user2', roleList: Array(1)} 가 객체가 된다
       setUserInfo(updateUserInfo);
+      //board에서 새로고침시 아이디를 가져오기 위해서 로컬에 정보를 저장
+      localStorage.setItem('updateUserInfo',JSON.stringify(updateUserInfo));
 
       //권한정보 세팅
       const updateRoles = {isUser : false, isAdmin : false}

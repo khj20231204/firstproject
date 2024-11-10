@@ -17,7 +17,9 @@ const User = () => {
    let navigate = useNavigate();
 
    //새로고침 했을 때 토큰이 있는 경우 403에러를 방지하기 위해사용
-   useEffect(() => {loginCheck()},[]);
+   useEffect(() => {
+      loginCheck();
+   },[]);
 
    /* 
    이 페이지에 올 때마다 수정된 사용자 정보를 가져와서 UserForm으로 내려준다.
@@ -93,7 +95,7 @@ const User = () => {
 
       if(userPw === '') {
          Swal.alert("","로그인에 사용된 비밀번호를 입력하세요","error");
-         //alert('로그인에 사용된 비밀번호를 입력하세요'); return
+         return;
       }
 
       try{

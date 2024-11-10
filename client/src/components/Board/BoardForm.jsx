@@ -13,7 +13,7 @@ const BoardForm = (props) => {
    return (
       <tr align='center'>
          <td style={{width:100}}>{num}</td>
-         <td style={{width:400}}>{subject}</td>
+         <td style={{width:400}}><Link to='/detailboard' state={{num:num}}>{subject}</Link></td>
          <td style={{width:200}}>{userId}</td>
          <td style={{width:300}}>{date}</td>
          <td style={{width:100}}>{readcount}</td>

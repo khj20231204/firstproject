@@ -31,7 +31,8 @@ const SearchForm = () => {
                   <option></option>
                   <option value="subject">제목</option>
                   <option value="content">내용</option>
-                  <option value="writer">작성자</option>
+                  <option value="user_id">작성자</option>
+                  {/* user_id는 db 컬럼을 가리킨다 */}
                   <option value="subcon">제목+내용</option>
                </Form.Select>
                </td>

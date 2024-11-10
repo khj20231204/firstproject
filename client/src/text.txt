@@ -1,20 +1,23 @@
-{/* <Form>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-         <Form.Label>작성자</Form.Label>
-         <Form.Control type="text" readOnly/>
-         <Form.Label>작성일자</Form.Label>
-         <Form.Control type="text" readOnly/>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-         <Form.Label>제목</Form.Label>
-         <Form.Control type="text" placeholder="제목을 입력하세요" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-         <Form.Label>내용</Form.Label>
-         <Form.Control as="textarea" rows={3} />
-      </Form.Group>
-      <div>
-         <Button variant="success" style={{margin:10}}>글쓰기</Button>
-         <Button variant="secondary">취소</Button>
+return (
+      <>
+      <Header/>
+      <div style={{margin:130}}>
+      <div className="detailboard-container">
+         <div className="detailboard-header">
+               <div className="profile-icon"><img src={process.env.PUBLIC_URL + 'img/profile_man.png'} width={50}/></div>
+               <div className="detailboard-info">
+                  <span className="username">{board.writer}</span>
+                  <span className="timestamp">{board.reg_date}</span>
+               </div>
+         </div>
+         <div className="detailboard-content">{board.subject}</div>
+         <div className="detailboard-detail">{board.content}</div>
+         <div className="reply-box">
+            <input type="text" className="reply-input" placeholder="댓글을 입력하세요." />
+            <button className="submit-button" onClick={commentRegister}>등록</button>
+         </div>
       </div>
-   </Form> */}
+      <Comment/>
+      </div>
+      </>
+   );

@@ -72,11 +72,19 @@ const Board = () => {
       }catch(error){
          console.log(error);
       }
-      //context의 page사용
+      //context의 page, keywoar, search사용
       setPageFunc(response.data.currentPage);
+      //setKeywordFunc(keyword);
+      //setSearchFunc(search)
+
       setNo(response.data.no);
       setTotalPage(response.data.pp.totalPage)
       setBoardList([...response.data.list]); //흩뿌리기
+
+      //새로고침시 정보 삭제 방지
+      localStorage.setItem("page", response.data.currentPage);
+      localStorage.setItem("no", response.data.no);
+      localStorage.setItem("totalPage", response.data.pp.totalPage);
    }
 
    const write = () => {
@@ -116,7 +124,7 @@ const Board = () => {
             </tbody>
             </Table>
             <div style={{display:'flex'}}>
-               <Pagenation style={{margin:'auto 0'}} getList={getList} totalPage={totalPage}/>
+               <Pagenation style={{margin:'auto 0'}} getList={getList} totalPage={totalPage} page={page}/>
             </div>
          </div>
       </div>
