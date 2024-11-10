@@ -3,17 +3,25 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Header.css'
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
 
-   
    //isLogin : 로그인 여부 - Y(true), N(false)
    //logout() : 로그아웃 함수 - setLogin(false)
-   const { isLogin, login, logout } = useContext(LoginContext);
+   const { isLogin, login, logout, userInfo } = useContext(LoginContext);
+
+   let [userId, setUserId] = useState();
+
+   useEffect(() => {
+      //로그인하면 userInfo에 값이 들어가고 userInfo가 null아니면 상단에 userId표시
+      if(userInfo) {
+         setUserId(userInfo.userId);
+      }
+   },[userInfo])
 
    const navigate = useNavigate();
 
@@ -33,6 +41,7 @@ const Header = () => {
                   {
                      isLogin ? 
                      <>
+                     <u style={{margin:10}}>{userId}</u>
                      <Nav.Link onClick={() => {navigate("/user")}} style={{padding:10}}>마이페이지</Nav.Link>
                      <Nav.Link onClick={() => { logout() }} style={{padding:10}}>로그아웃</Nav.Link>
                      <Nav.Link onClick={() => {navigate("/admin")}} style={{padding:10}}>관리자</Nav.Link>

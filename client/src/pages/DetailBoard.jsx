@@ -12,26 +12,29 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/esm/Button';
+import WriteBoard from './WriteBoard';
 
 //DetailBoard에서 현재페이지와 search, keyword를 가져와야 한다.
 const DetailBoard = () => {
    let {page, search, keyword} = useContext(BoardContext);
-   const { isLogin, roles, userInfo } = useContext(LoginContext)
+   const { isLogin, roles, userInfo } = useContext(LoginContext) //로그인 정보
 
    const location = useLocation(); //BoardForm에서 Link to로 같이 넘기 데이터를 받는다.
    const num = location.state.num;
 
    let [board, setBoard] = useState({});
 
-   /* let [writer, setWriter] = useState();
-   let [email, setEmail] = useState();
-   let [reg_date, setReg_date] = useState();
-   let [readcount, setReadcount] = useState();
-   let [subject, setSubject] = useState();
-   let [content, setcontent] = useState(); */
+   let [checkModify , setCheckModify] = useState(false);
+
+   let [writer ,setWriter] = useState(); //글 작성자
+
+   let [userId, setUserId] = useState(); //로그인 사용자
 
    useEffect(() => {
-      console.log("DetailBoard num:"+num);
+
+      if(localStorage.getItem('updateUserInfo')) //localStorage에 updateUserInfo 존재성 판단
+         setUserId(JSON.parse(localStorage.getItem('updateUserInfo')).userId);
+
       getDetailBoard(num);
    },[])
 
@@ -45,16 +48,41 @@ const DetailBoard = () => {
          console.log(error)
       }
       console.log(response.data.detailboard);
+      setWriter(response.data.detailboard.userId);
       setBoard({...response.data.detailboard});
    }
 
    const commentRegister = () => {
+      
       if(!isLogin){
          Swal.alert("로그인이 필요합니다.","로그인하세요","warning",() => {});
          return;
       }
    }
 
+   const modifyBoard = () => {
+
+      if(!isLogin){
+         Swal.alert("로그인이 필요합니다.","로그인하세요","warning",() => {});
+         return;
+      }
+
+      //글 작성자 체크 : userInfo에 있는 userId와 response로 받은 userId와 비교
+      if(userId !== writer){
+         Swal.alert("수정 실패","글 작성자가 아닙니다.","warning",() => {});
+         return;
+      }   
+         
+      if(checkModify){
+         setCheckModify(false); //true이면 글 수정
+      }else{
+         setCheckModify(true);
+      }
+   }
+
+   const modifyBoardComplete = () => {
+
+   }
    return (
       <>
       <Header/>
@@ -65,10 +93,30 @@ const DetailBoard = () => {
             <Link to='/board'>게시판으로..</Link>
             <div className="detailboard-container">
                <div className="detailboard-header">
-                     <div className="profile-icon"><img src={process.env.PUBLIC_URL + 'img/profile_man.png'} width={50}/></div>
                      <div className="detailboard-info">
-                        <span className="username">{board.userId}</span>
-                        <span className="timestamp">{moment(board.regDate).format('YYYY-MM-DD, h:mm:ss')}</span>
+                        <Row>
+                           <Col xs={1}>
+                           <div className="profile-icon" style={{margin:10}}><img src={process.env.PUBLIC_URL + 'img/profile_man.png'} width={50}/></div>
+                           </Col>
+                           <Col xs={5} style={{textAlign:'left', display:'flex', flexDirection:'column', marginTop:10, marginLeft:15}}>
+                              <span className="username">{board.userId}</span>
+                              <span className="timestamp">{moment(board.regDate).format('YYYY-MM-DD, h:mm:ss')}</span>
+                           </Col>
+
+                           {checkModify ? 
+                           
+                           <Col xs={5} style={{textAlign:'right'}}> 
+                           <div onClick={() => {modifyBoardComplete()}} style={{cursor:'pointer'}}><u>수정 완료</u></div>
+                           <div onClick={() => {modifyBoard()}} style={{cursor:'pointer'}}><u>취소</u></div>
+                           </Col>
+                           
+                           : 
+                           
+                           <Col xs={5} style={{textAlign:'right'}}> <div onClick={() => {modifyBoard()}} style={{cursor:'pointer'}}><u>글 수정</u></div></Col>
+                           }
+
+                           
+                        </Row>
                      </div>
                </div>
                <div className="detailboard-content">{board.subject}</div>

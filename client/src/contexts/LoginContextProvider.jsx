@@ -233,6 +233,16 @@ const LoginContextProvider = ({ children }) => {
 
       //권한 정보 초기화
       setRoles(null);
+
+      //로컬에 사용자 정보 삭제
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('updateUserInfo');
+      localStorage.removeItem('no');
+      localStorage.removeItem('totalPage');
+      localStorage.removeItem('page');
+
+
+
    }
  
    useEffect(() => {
