@@ -24,30 +24,28 @@ const CommentForm = (props) => {
    const date = moment(reg_date).format('YYYY-HH-DD hh:mm:ss');
 
    return (
-      <table>
+      <center style={{marginLeft:(re_step-1)*70}}>
+      <table width={700} border={1}>
          <tr>
-            <td>작성자</td>
+            <td>{user_id}</td>
          </tr>
          <tr>
-            <td>내용</td>
+            <td>{content}</td>
          </tr>
          <tr>
-            <td>일자</td>
+            <td>{date}</td>
+         </tr>
+         <tr>
+            <td>
+            <Button variant="outline-secondary" style={{width:50,height:30,fontSize:11,margin:3}} onClick={deleteReply}>삭제</Button>
+            <Button variant="outline-secondary" style={{width:50,height:30,fontSize:11,margin:3}} onClick={showReply}>등록</Button>
+            </td>
          </tr>
       </table>
-      {/* <div style={{margin:30,alignItems:'center'}}>
-      <div>
-         <div></div>
-         <span style={{fontSize:16,fontFamily:'sans-serif'}}>{content}</span>
-         <span className="username" style={{fontSize:13}}>{user_id}</span>
-         <span> — {date}</span>
-         <Button variant="outline-secondary" style={{width:50,height:30,fontSize:11,margin:3}} onClick={deleteReply}>삭제</Button>
-         <Button variant="outline-secondary" style={{width:50,height:30,fontSize:11,margin:3}} onClick={showReply}>등록</Button>
-      </div>
       <div className="reply-box" style={{display: isVisible ? '' : 'none'}}>
          <input type="text" className="reply-input" placeholder="댓글을 입력하세요." />
       </div>
-   </div> */}
+      </center>
    );
 };
 

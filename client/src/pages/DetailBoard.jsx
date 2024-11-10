@@ -8,13 +8,13 @@ import * as commentapi from '../apis/commentapi';
 import { LoginContext } from '../contexts/LoginContextProvider';
 import moment from 'moment'; 
 import * as Swal from '../apis/alert';
-import Comment from './Comment';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/esm/Button';
 import WriteBoard from './WriteBoard';
 import CommentForm from './../components/Comment/CommentForm';
+
 
 
 //DetailBoard에서 현재페이지와 search, keyword를 가져와야 한다.
@@ -233,15 +233,12 @@ const DetailBoard = () => {
             <Col></Col>
          </Row>
       </Container>
-      <div style={{textAlign:'center'}}>
       {commentList.map((v,i) => {
-               console.log(v.content);
-               return(
-                  
-                   <CommentForm re_num={v.re_num} re_lev={v.re_lev} content={v.content} user_id={v.user_id} reg_date={v.reg_date}/>
-               )
-            })}
-         </div>
+         console.log(v.re_step);
+         return(
+         <CommentForm re_num={v.re_num} re_lev={v.re_lev} content={v.content} re_step={v.re_step} user_id={v.user_id} reg_date={v.reg_date}/>
+         )
+      })}
       </>
    );
 };
