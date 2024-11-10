@@ -76,4 +76,9 @@
 	<update id="setReadCount" parameterType="int">
 		update board set readcount = ifnull(readcount,0)+1 where num = #{num}
 	</update>
+
+	<!-- 글 내용 수정 -->
+	<update id="updateBoard" parameterType="board">
+		update board set subject=#{subject}, content=#{content}, reg_date=CURRENT_TIMESTAMP where num = #{num}
+	</update>
 </mapper>

@@ -18,4 +18,8 @@ public interface BoardService {
    int writeBoard(Board board);
 
    int setReadCount(int num);
+
+   int updateBoard(Board board);
+
+;
 }

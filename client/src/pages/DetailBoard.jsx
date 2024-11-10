@@ -19,8 +19,9 @@ const DetailBoard = () => {
    let {page, search, keyword} = useContext(BoardContext);
    const { isLogin, roles, userInfo } = useContext(LoginContext) //로그인 정보
 
-   const location = useLocation(); //BoardForm에서 Link to로 같이 넘기 데이터를 받는다.
+   const location = useLocation(); //BoardForm에서 Link to로 같이 넘길 데이터를 받는다.
    const num = location.state.num;
+   //let [num, setNum] = useState(location.state.num);
 
    let [board, setBoard] = useState({});
 
@@ -81,7 +82,6 @@ const DetailBoard = () => {
          setCheckModifyForm(false);
       }else{
          //글수정
-         
          setCheckModify(true);
          setCheckModifyForm(true);
       }
@@ -89,19 +89,28 @@ const DetailBoard = () => {
 
    const modifyBoardComplete = async (e) => {
       e.preventDefault();
-      //userId, subject, content
-      console.log(e.target)
 
       const form = e.target;
 
       const board = {
-         userId : userId,
+         num : num,
+         //userId : userId, 이미 userId가 일치한 상태로 수정이 가능하기 때문에 필요없다.
          subject : form.subject.value,
          content : form.content.value
       }
       
+      let response = await boardapi.updateboard(board);
 
-      //let reponse = await boardapi.updateBoard()
+      if(response.status === 200){
+         Swal.alert("SUCCESS.","글이 수정되었습니다.","success",() => {});
+      }else{
+         alert("글 수정 오류 발생");
+      }
+
+      getDetailBoard(num);
+      setCheckModify(false); 
+      setCheckModifyForm(false);
+
    }
    return (
       <>
@@ -167,7 +176,7 @@ const DetailBoard = () => {
                
                <div className="reply-box">
                   <input type="text" className="reply-input" name="commentText" placeholder="댓글을 입력하세요." />
-                  <button className="submit-button" onClick={commentRegister}>등록</button>
+                  <button type="button" className="submit-button" onClick={commentRegister}>등록</button>
                </div>
             </form>
             </Col>

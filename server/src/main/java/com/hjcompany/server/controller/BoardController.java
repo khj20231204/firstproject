@@ -57,7 +57,6 @@ public class BoardController {
 		// List<Board> list = bs.list(startRow, endRow);
 		int no = total - (startRow+1) + 1; // 화면 출력 번호
 
-      System.out.println("밑에 board:"+board);
 		List<Board> list = boardService.getList(board);
 
       Map<String, Object> map = new HashMap<>();
@@ -100,14 +99,19 @@ public class BoardController {
    
    @PostMapping("/updateboard")
    public ResponseEntity<String> updateBoard(@RequestBody Board board) {
+      System.out.println("update board:"+board);
       
-      int result = boardService.updateboard(board);
+      int result = boardService.updateBoard(board);
+
+      System.out.println("update result:"+result);
       
       if(result == 1){
          return new ResponseEntity<>("success", HttpStatus.OK);
       }else{
          return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
       }
+
+      //return new ResponseEntity<>("success", HttpStatus.OK);
    } 
 }
 

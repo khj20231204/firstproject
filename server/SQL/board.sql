@@ -30,23 +30,7 @@ select * from board;
 
 select * from board where user_id like concat('%','user1','%');
 
-
-insert into board(num, user_id, subject, content, email, readcount)
-	values(1, 'hjcompany', '화창한 봄날', '솟아오르는 잠자리 떼','hj@email.com' , 0);
-    
-update board set readcount = ifnull(readcount,0)+1 where num = 3;
-
-select * from board order by num desc limit 0,5;
-
 select * from board where subject like concat('%','200','%') order by num desc;	#검색 가능
-
-
-insert into board(user_id, subject, content) 
-values('hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼');
-
-
-insert into board(num, user_id, subject, content, email, readcount) 
-values((SELECT ifnull(MAX(b.num),0)+1 AS num from board b), 'hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼','hj@email.com' , 0);
 
 select max(num) from board;
 select ifnull(max(num),0)+1 from board;
@@ -57,10 +41,18 @@ select 2+3 from board;  	-- 결과값 : 5
 select sum(2+3) from board;  -- 결과값:3010
 select sum(2,3) from board;  -- Error Code : 1064
 
-select *
-from board
-order by num desc
-limit 0, 5;
+insert into board(num, user_id, subject, content, email, readcount)
+	values(1, 'hjcompany', '화창한 봄날', '솟아오르는 잠자리 떼','hj@email.com' , 0);
+    
+insert into board(user_id, subject, content) 
+values('hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼');
+
+insert into board(num, user_id, subject, content, email, readcount) 
+values((SELECT ifnull(MAX(b.num),0)+1 AS num from board b), 'hjcompany602', '화창한 봄날602', '솟아오르는 잠자리 떼','hj@email.com' , 0);
+
+update board set readcount = ifnull(readcount,0)+1 where num = 3;
+
+update board set subject='수정 제목', content='수정 내용', reg_date=CURRENT_TIMESTAMP where num = 9;
 -- ---------------------------------------------------------------- 페이지
 select * from board limit 4,5; #목록 갯수 4부터 5개를 가져와라
 
