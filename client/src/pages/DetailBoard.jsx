@@ -30,6 +30,8 @@ const DetailBoard = () => {
 
    let [userId, setUserId] = useState(); //로그인 사용자
 
+   let [checkModifyForm, setCheckModifyForm] = useState(); //수정 폼으로 변환
+
    useEffect(() => {
 
       if(localStorage.getItem('updateUserInfo')) //localStorage에 updateUserInfo 존재성 판단
@@ -74,24 +76,42 @@ const DetailBoard = () => {
       }   
          
       if(checkModify){
-         setCheckModify(false); //true이면 글 수정
+         //수정 취소
+         setCheckModify(false); 
+         setCheckModifyForm(false);
       }else{
+         //글수정
+         
          setCheckModify(true);
+         setCheckModifyForm(true);
       }
    }
 
-   const modifyBoardComplete = () => {
+   const modifyBoardComplete = async (e) => {
+      e.preventDefault();
+      //userId, subject, content
+      console.log(e.target)
 
+      const form = e.target;
+
+      const board = {
+         userId : userId,
+         subject : form.subject.value,
+         content : form.content.value
+      }
+      
+
+      //let reponse = await boardapi.updateBoard()
    }
    return (
       <>
       <Header/>
       <Container>
-         <Row>
+         <Row style={{height: checkModifyForm ? 500 : 400}}> 
             <Col></Col>
             <Col xs={7} style={{textAlign:'center', height:300, marginTop:50}}>
             <Link to='/board'>게시판으로..</Link>
-            <div className="detailboard-container">
+            <form className="detailboard-container" onSubmit={(e) => {modifyBoardComplete(e)}}>
                <div className="detailboard-header">
                      <div className="detailboard-info">
                         <Row>
@@ -99,39 +119,63 @@ const DetailBoard = () => {
                            <div className="profile-icon" style={{margin:10}}><img src={process.env.PUBLIC_URL + 'img/profile_man.png'} width={50}/></div>
                            </Col>
                            <Col xs={5} style={{textAlign:'left', display:'flex', flexDirection:'column', marginTop:10, marginLeft:15}}>
-                              <span className="username">{board.userId}</span>
+                              <span className="username" name="userId">{board.userId}</span>
                               <span className="timestamp">{moment(board.regDate).format('YYYY-MM-DD, h:mm:ss')}</span>
                            </Col>
 
                            {checkModify ? 
-                           
                            <Col xs={5} style={{textAlign:'right'}}> 
-                           <div onClick={() => {modifyBoardComplete()}} style={{cursor:'pointer'}}><u>수정 완료</u></div>
+                           <input type='submit' style={{cursor:'pointer'}} value='수정 완료'/>
                            <div onClick={() => {modifyBoard()}} style={{cursor:'pointer'}}><u>취소</u></div>
                            </Col>
-                           
                            : 
-                           
                            <Col xs={5} style={{textAlign:'right'}}> <div onClick={() => {modifyBoard()}} style={{cursor:'pointer'}}><u>글 수정</u></div></Col>
                            }
-
-                           
                         </Row>
                      </div>
                </div>
-               <div className="detailboard-content">{board.subject}</div>
-               <div className="detailboard-detail">{board.content}</div>
+              
+              <div style={{height: checkModifyForm ? 200 : 100}}>
+               {checkModifyForm ? 
+                  <>
+                  <div className="detailboard-content">제목 : <input type='text' name="subject" defaultValue={board.subject} style={{
+                     width: 500,
+                     height: 32,
+                     fontSize: 15,
+                     border: 0,
+                     borderRadius: 15,
+                     outline: 'none',
+                     paddingLeft: 10,
+                     backgroundColor:' rgb(233, 233, 233)'
+                  }}/></div>
+                  <div className="detailboard-detail"><textarea defaultValue={board.content} name="content" rows={6} cols={90} style={{
+                    fontSize: 15,
+                    border: 0,
+                    borderRadius: 15,
+                    outline: 'none',
+                    paddingLeft: 10,
+                    backgroundColor:' rgb(233, 233, 233)'
+                  }}></textarea></div>
+                  </>
+                  : 
+                  <>
+                  <div className="detailboard-content">{board.subject}</div>
+                  <div className="detailboard-detail">{board.content}</div>
+                  </>
+               }
+               </div>
+               
                <div className="reply-box">
-                  <input type="text" className="reply-input" placeholder="댓글을 입력하세요." />
+                  <input type="text" className="reply-input" name="commentText" placeholder="댓글을 입력하세요." />
                   <button className="submit-button" onClick={commentRegister}>등록</button>
                </div>
-            </div>
+            </form>
             </Col>
             <Col></Col>
          </Row>
-         <Row>
+         <Row style={{marginTop:40}}>
             <Col xs={3}></Col>
-            <Col xs={8}><Comment/></Col>
+            <Col xs={8}> <Comment/></Col>
          </Row>
       </Container>
       </>

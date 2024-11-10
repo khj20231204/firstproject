@@ -60,8 +60,6 @@ public class BoardController {
       System.out.println("밑에 board:"+board);
 		List<Board> list = boardService.getList(board);
 
-      System.out.println("list:"+list);
-
       Map<String, Object> map = new HashMap<>();
       map.put("list", list);
       map.put("currentPage", page);
@@ -89,18 +87,28 @@ public class BoardController {
    }
 
    @PostMapping("/writeboard")
-   public ResponseEntity<Map<String, Object>> writeBorad(@RequestBody Board board) {
+   public ResponseEntity<String> writeBorad(@RequestBody Board board) {
       
       int result = boardService.writeBoard(board);
       
-      System.out.println("result:"+result);
-
-      Map<String, Object> map = new HashMap<>();
-
-       return new ResponseEntity<>(map, HttpStatus.OK);
+      if(result == 1){
+         return new ResponseEntity<>("success", HttpStatus.OK);
+      }else{
+         return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+      }
    } 
    
-   
+   @PostMapping("/updateboard")
+   public ResponseEntity<String> updateBoard(@RequestBody Board board) {
+      
+      int result = boardService.updateboard(board);
+      
+      if(result == 1){
+         return new ResponseEntity<>("success", HttpStatus.OK);
+      }else{
+         return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+      }
+   } 
 }
 
 
