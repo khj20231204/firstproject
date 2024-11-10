@@ -1,6 +1,3 @@
-
-select * from board;
-
 create table comment(
    comment_num int AUTO_INCREMENT PRIMARY key
    , re_num int default 1
@@ -15,7 +12,9 @@ create table comment(
 
 -- drop table comment;
 
- delete from comment;
+ -- delete from comment;
+
+commit;
 
 select * from comment;
 -- commnet_num 순으로 order by 한다 : 항상 최신 글이 위에
@@ -69,11 +68,11 @@ insert into comment(re_num, re_lev, re_step, content, user_id)
 select #{num}
    ,ifnull((select max(ifnull(re_lev,0))+1 from comment where re_num = #{num}),1)
    , 1 -- 댓글에 대한 re_step은 1고정
-   , '댓글2'
-   , 'user2';
+   , #{content}
+   , #{userId};
 
 
--- 원글3에 대한 댓글2 에 대한 대댓글 예제
+-- 원글3에 대한 댓글2에 대한 대댓글 예제
 -- 댓글2에 대한 대댓글 1
 insert into comment(re_num, re_lev, re_step, content, user_id) 
 select 3
@@ -104,8 +103,8 @@ insert into comment(re_num, re_lev, re_step, content, user_id)
 select #{mum}
 , #{re_lev}
 , ifnull((select max(ifnull(re_step,0))+1 from comment where re_lev=#{re_lev} and re_num=#{re_num}),1)
-, '2에대한 대댓글2'
-, 'user1';
+, #{content}
+, #{userId};
 
 -- 댓글은 전부 re_num 안에서 같은 re_lev 끼리의 관계이기 때문에 comment_num을 사용할 일이 없다.
 

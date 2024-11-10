@@ -5,6 +5,28 @@
 
 <mapper namespace="com.hjcompany.server.mapper.CommentMapper">
 
-   
+   <resultMap type="comment" id="commentResult">
+		<result property="comment_num" column="comment_num" />
+		<result property="re_num"    column="re_num" />
+		<result property="re_lev"   column="re_lev" />
+		<result property="re_step"   column="re_step" />
+		<result property="content" column="content" />
+		<result property="user_id"	 column="user_id" />
+		<result property="reg_date" column="reg_date" />
+	</resultMap>
 
+   <!-- 댓글 등록 -->
+   <insert id="writeOriginalComm" parameterType="comment">
+      insert into comment(re_num, re_lev, re_step, content, user_id) 
+      select #{re_num}
+      ,ifnull((select max(ifnull(re_lev,0))+1 from comment where re_num = #{re_num}),1)
+      , 1 
+      , #{content}
+      , #{user_id}
+   </insert>
+
+   <!-- 댓글 목록 가져오기 -->
+   <select id="getComment" parameterType="int" resultMap="commentResult">
+      select * from comment where re_num = #{re_num} order by re_lev asc, re_step asc
+   </select>
 </mapper>

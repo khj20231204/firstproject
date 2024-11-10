@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BoardContext } from '../contexts/BoardContextProvider';
 import './DetailBoard.css';
 import Header from '../components/Header/Header';
 import { Link, useLocation } from 'react-router-dom';
 import * as boardapi from '../apis/boardapi';
+import * as commentapi from '../apis/commentapi';
 import { LoginContext } from '../contexts/LoginContextProvider';
 import moment from 'moment'; 
 import * as Swal from '../apis/alert';
@@ -13,6 +14,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/esm/Button';
 import WriteBoard from './WriteBoard';
+import CommentForm from './../components/Comment/CommentForm';
+
 
 //DetailBoard에서 현재페이지와 search, keyword를 가져와야 한다.
 const DetailBoard = () => {
@@ -33,14 +36,21 @@ const DetailBoard = () => {
 
    let [checkModifyForm, setCheckModifyForm] = useState(); //수정 폼으로 변환
 
+   let [commentList, setCommentList] = useState([]);
+
+   let commentRef = useRef();
+
    useEffect(() => {
 
       if(localStorage.getItem('updateUserInfo')) //localStorage에 updateUserInfo 존재성 판단
          setUserId(JSON.parse(localStorage.getItem('updateUserInfo')).userId);
 
-      getDetailBoard(num);
+      getDetailBoard(num); //원문 글 가져오기
+
+      showComment(num); //댓글 글 가져오기
    },[])
 
+   //글 불러오기
    const getDetailBoard = async (num) => {
       
       let response;
@@ -55,14 +65,53 @@ const DetailBoard = () => {
       setBoard({...response.data.detailboard});
    }
 
-   const commentRegister = () => {
-      
+   //원글에 대한 댓글 등록
+   const commentRegister = async () => {
+
       if(!isLogin){
          Swal.alert("로그인이 필요합니다.","로그인하세요","warning",() => {});
          return;
       }
+
+      if(userId === writer){
+         Swal.alert("작성 실패","본인 글에는 댓글 작성을 못 합니다.","warning",() => {});
+         return;
+      }
+
+      const content = commentRef.current.value;
+
+      if(content === ''){
+         Swal.alert("작성 실패","댓글을 입력하세요.","warning",() => {});
+         return;
+      }
+
+      let comment = {
+         re_num : num,
+         user_id : userId,
+         content : content
+      }
+
+      //원문에 대한 댓글
+      let response = await commentapi.writeoriginalcomm(comment)
+
+      if(response.status === 200){
+         showComment(num);
+      }
    }
 
+   //댓글 목록 가져오기
+   const showComment = async (num) => {
+
+      let re_num = num;
+      let response = await commentapi.getComment(re_num);
+
+      setCommentList([...response.data.list]);
+
+      console.log(commentList)
+      console.log(response.data.list);
+   }
+
+   //수정 폼 보이게 하기
    const modifyBoard = () => {
 
       if(!isLogin){
@@ -77,16 +126,17 @@ const DetailBoard = () => {
       }   
          
       if(checkModify){
-         //수정 취소
+         //글수정 안보이게
          setCheckModify(false); 
          setCheckModifyForm(false);
       }else{
-         //글수정
+         //글수정 보이게
          setCheckModify(true);
          setCheckModifyForm(true);
       }
    }
 
+   //실제 글수정 작업
    const modifyBoardComplete = async (e) => {
       e.preventDefault();
 
@@ -110,8 +160,8 @@ const DetailBoard = () => {
       getDetailBoard(num);
       setCheckModify(false); 
       setCheckModifyForm(false);
-
    }
+
    return (
       <>
       <Header/>
@@ -175,18 +225,23 @@ const DetailBoard = () => {
                </div>
                
                <div className="reply-box">
-                  <input type="text" className="reply-input" name="commentText" placeholder="댓글을 입력하세요." />
-                  <button type="button" className="submit-button" onClick={commentRegister}>등록</button>
+                  <input type="text" className="reply-input" name="commentText" ref={commentRef} placeholder="댓글을 입력하세요." />
+                  <button type="button" className="submit-button" onClick={(e) => {commentRegister(e)}}>등록</button>
                </div>
             </form>
             </Col>
             <Col></Col>
          </Row>
-         <Row style={{marginTop:40}}>
-            <Col xs={3}></Col>
-            <Col xs={8}> <Comment/></Col>
-         </Row>
       </Container>
+      <div style={{textAlign:'center'}}>
+      {commentList.map((v,i) => {
+               console.log(v.content);
+               return(
+                  
+                   <CommentForm re_num={v.re_num} re_lev={v.re_lev} content={v.content} user_id={v.user_id} reg_date={v.reg_date}/>
+               )
+            })}
+         </div>
       </>
    );
 };

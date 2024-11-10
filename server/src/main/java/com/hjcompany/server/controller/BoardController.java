@@ -103,8 +103,6 @@ public class BoardController {
       
       int result = boardService.updateBoard(board);
 
-      System.out.println("update result:"+result);
-      
       if(result == 1){
          return new ResponseEntity<>("success", HttpStatus.OK);
       }else{

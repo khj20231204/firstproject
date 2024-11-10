@@ -24,18 +24,7 @@ const CommentForm = (props) => {
    const date = moment(reg_date).format('YYYY-HH-DD hh:mm:ss');
 
    return (
-      <table>
-         <tr>
-            <td>작성자</td>
-         </tr>
-         <tr>
-            <td>내용</td>
-         </tr>
-         <tr>
-            <td>일자</td>
-         </tr>
-      </table>
-      {/* <div style={{margin:30,alignItems:'center'}}>
+      <div style={{margin:30,alignItems:'center'}}>
       <div>
          <div></div>
          <span style={{fontSize:16,fontFamily:'sans-serif'}}>{content}</span>
@@ -47,7 +36,7 @@ const CommentForm = (props) => {
       <div className="reply-box" style={{display: isVisible ? '' : 'none'}}>
          <input type="text" className="reply-input" placeholder="댓글을 입력하세요." />
       </div>
-   </div> */}
+   </div>
    );
 };
 

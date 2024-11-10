@@ -155,7 +155,7 @@ const LoginContextProvider = ({ children }) => {
             //로그인 체크 ( /users/{userId} <-- userData)
             loginCheck();
 
-            Swal.alert("로그인 성공","메인 화면으로 갑니다","success", () => { navigate("/") });
+            Swal.alert("로그인 성공","메인 화면으로 이동합니다.","success", () => { navigate("/") });
 
             //메인 페이지로 이동
             navigate("/");
