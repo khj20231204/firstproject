@@ -60,6 +60,7 @@ public class SecurityConfig {
          .requestMatchers("/users/**").permitAll() //이미 controller에서 secured로 체크를 하니깐 permitall() 한다.
          .requestMatchers("/", "/login").permitAll()
          .requestMatchers("/board/**").permitAll()
+         .requestMatchers("/comment/**").permitAll()
          .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() 
          .anyRequest().authenticated());
       /* 

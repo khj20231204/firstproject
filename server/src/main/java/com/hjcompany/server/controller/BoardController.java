@@ -110,8 +110,6 @@ public class BoardController {
       }else{
          return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
       }
-
-      //return new ResponseEntity<>("success", HttpStatus.OK);
    } 
 }
 
