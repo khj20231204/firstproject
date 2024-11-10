@@ -28,7 +28,7 @@ commit;
 
 select * from board;
 
-select * from board where null like concat('%','  ','%');
+select * from board where user_id like concat('%','user1','%');
 
 
 insert into board(num, user_id, subject, content, email, readcount)
