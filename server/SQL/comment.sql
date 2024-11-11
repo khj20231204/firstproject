@@ -7,7 +7,7 @@ create table comment(
    , user_id varchar(30) not null
    , reg_date TIMESTAMP default current_timestamp
    , FOREIGN Key (re_num) REFERENCES board(num)
-   , FOREIGN key(user_id) REFERENCES board(user_id)
+   , FOREIGN key(user_id) REFERENCES user(user_id)
 )
 
 -- drop table comment;

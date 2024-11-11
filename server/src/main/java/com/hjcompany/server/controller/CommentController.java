@@ -32,7 +32,7 @@ public class CommentController {
    @PostMapping("/writeoriginalcomm")
    public ResponseEntity<String> writeOriginalComm(@RequestBody Comment comment) {
       
-      //System.out.println(comment);
+      System.out.println("comment:"+comment);
       int result = commentService.writeOriginalComm(comment);
 
       return new ResponseEntity<>("success",HttpStatus.ACCEPTED);
@@ -43,7 +43,7 @@ public class CommentController {
 
       List<Comment> list = commentService.getComment(re_num);
 
-      //System.out.println("comment:"+list);
+      System.out.println("getComment list:"+list);
 
       Map<String, Object> map = new HashMap<>();
       map.put("list",list);

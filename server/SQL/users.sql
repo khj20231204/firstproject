@@ -1,4 +1,4 @@
--- Active: 1731150471586@@127.0.0.1@3306@membersdb
+-- Active: 1731285396414@@127.0.0.1@3306@membersdb
 
 -- user: 회원 테이블
 CREATE TABLE `user` (
@@ -13,7 +13,7 @@ CREATE TABLE `user` (
 , PRIMARY KEY (`USER_ID`)
 );
 
-drop table user;
+-- drop table user;
 
 SELECT * FROM user;
 
