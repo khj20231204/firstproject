@@ -27,6 +27,21 @@
 
    <!-- 댓글 목록 가져오기 -->
    <select id="getComment" parameterType="int" resultMap="commentResult">
-      select * from comment where re_num = #{re_num} order by re_lev asc, re_step asc
+      select * from comment where re_num = #{re_num} order by re_lev asc, re_step asc, comment_num desc
    </select>
+
+   <!-- re_lev업데이트 -->
+   <update id="relevUpdate" parameterType="comment">
+      update comment set re_lev = re_lev+1 where re_lev <![CDATA[ > ]]> #{re_lev} and re_num = #{re_num}
+   </update>
+
+   <!-- 대댓글 등록 -->
+   <insert id="registerComm" parameterType="comment">
+      insert into comment(re_num, re_lev, re_step, content, user_id) 
+      select #{re_num}
+      , ifnull(#{re_lev},0)+1
+      , ifnull(#{re_step},0)+1
+      , #{content}
+      , #{user_id}
+   </insert>
 </mapper>

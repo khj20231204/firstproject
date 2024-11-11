@@ -19,8 +19,6 @@ import com.hjcompany.server.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @Slf4j
 @RestController
 @RequestMapping("/comment")
@@ -29,26 +27,44 @@ public class CommentController {
    @Autowired
    private CommentService commentService;
 
+   //원글에 대한 댓글 입력(첫번째 댓글이 된다)
    @PostMapping("/writeoriginalcomm")
    public ResponseEntity<String> writeOriginalComm(@RequestBody Comment comment) {
       
-      System.out.println("comment:"+comment);
       int result = commentService.writeOriginalComm(comment);
 
       return new ResponseEntity<>("success",HttpStatus.ACCEPTED);
    }
    
+   //댓글을 가져온다
    @GetMapping("/getComment")
    public ResponseEntity<Map<String, Object>> getComment(@RequestParam("re_num") int re_num) {
 
       List<Comment> list = commentService.getComment(re_num);
 
-      System.out.println("getComment list:"+list);
-
       Map<String, Object> map = new HashMap<>();
       map.put("list",list);
 
        return new ResponseEntity<>(map, HttpStatus.OK);
+   }
+
+   //댓글에 대한 댓글 입력
+   @PostMapping("/registercomm")
+   public ResponseEntity<String> registerComm(@RequestBody Comment comment) {
+
+      System.out.println("comment:"+comment);
+      
+      //자신이 들어갈 re_lev보다 큰 re_lev 전부 1씩 증가
+      int result = commentService.relevUpdate(comment);
+
+      System.out.println("relevUpdate result:"+result);
+
+      //자신이 입력된다
+      result = commentService.registerComm(comment);
+
+      System.out.println("registerComm result:"+result);
+      
+      return new ResponseEntity<>("ok", HttpStatus.OK);
    }
    
 }

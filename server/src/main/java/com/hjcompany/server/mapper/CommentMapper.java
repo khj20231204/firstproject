@@ -13,4 +13,7 @@ public interface CommentMapper {
 
    List<Comment> getComment(int re_num);
 
+   int registerComm(Comment comment);
+
+   int relevUpdate(Comment comment);
 }
