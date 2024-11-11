@@ -13,6 +13,7 @@
 		<result property="content" column="content" />
 		<result property="user_id"	 column="user_id" />
 		<result property="reg_date" column="reg_date" />
+		<result property="del" column="del" />
 	</resultMap>
 
    <!-- 댓글 등록 -->
