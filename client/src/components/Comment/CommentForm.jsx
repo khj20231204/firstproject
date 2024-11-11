@@ -22,6 +22,7 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
       }
    }
 
+   //대댓글 삭제
    const deleteReply = async () => {
       
       if(loginId !== user_id){
@@ -29,21 +30,26 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
          return;
       }
 
+      let result = window.confirm("댓글을 삭제하시겠습니까?");
+
+      if(!result) return;
+
       let comment = {
          comment_num : comment_num,
          re_num : re_num,
          re_lev : re_lev,
          re_step : re_step,
          content : content,
-         user_id : user_id
+         user_id : user_id 
       }
 
       let response = await commentapi.deleteComment(comment);
 
-      alert(response.status);   
+      if(response.status === 200)
+         refreshPage();
    }
 
-   //
+   //대댓글 등록
    const registerComment = async () => {
       let content = commentText.current.value;
 
@@ -57,7 +63,7 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
          re_lev : re_lev,
          re_step : re_step,
          content : content,
-         user_id : user_id
+         user_id : loginId //loginId가 입력해야 로그인 한 아이디가 된다. user_id는 작성자의 아이디
       }
       
       let response = await commentapi.registerComment(comment);
@@ -94,10 +100,14 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
             
          </tr>
          <tr>
-            <td colSpan="2">  
-            <Button variant="outline-secondary" style={{width:50,height:26,fontSize:11,margin:5}} onClick={deleteReply}>삭제</Button>
-            <Button variant="outline-secondary" style={{width:50,height:26,fontSize:11}} onClick={showReply}>답글</Button>
-            </td>
+            {del === 'Y' ?  
+               <td></td>
+            :
+               <td colSpan="2">  
+               <Button variant="outline-secondary" style={{width:50,height:26,fontSize:11,margin:5}} onClick={deleteReply}>삭제</Button>
+               <Button variant="outline-secondary" style={{width:50,height:26,fontSize:11}} onClick={showReply}>답글</Button>
+               </td>
+            }
          </tr>
       </table>
       <table style={{display: isVisible ? '' : 'none'}}>

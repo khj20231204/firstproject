@@ -106,6 +106,8 @@ const DetailBoard = () => {
       let response = await commentapi.getComment(re_num);
 
       setCommentList([...response.data.list]);
+      console.log("---------------------------------");
+      console.log(commentList);
       commentRef.current.value = "";
    }
 
