@@ -17,5 +17,8 @@ public interface CommentService {
 
    int relevUpdate(Comment comment);
 
+   int deleteComment(Comment comment);
+
+
 
 }

@@ -67,4 +67,16 @@ public class CommentController {
       return new ResponseEntity<>("ok", HttpStatus.OK);
    }
    
+   @PostMapping("/deleteComment")
+   public ResponseEntity<String> deleteComment(@RequestBody Comment comment) {
+
+      System.out.println("comment:"+comment);
+      
+      //삭제 시 del값을 'Y'로 변경
+      int result = commentService.deleteComment(comment);
+
+      System.out.println("relevUpdate result:"+result);
+      
+      return new ResponseEntity<>("ok", HttpStatus.OK);
+   }
 }

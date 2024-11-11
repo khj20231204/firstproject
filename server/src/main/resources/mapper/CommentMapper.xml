@@ -44,4 +44,9 @@
       , #{content}
       , #{user_id}
    </insert>
+
+   <!-- 삭제 del값을 'Y'로 변경-->   
+   <update id="deleteComment" parameterType="comment">
+      update comment set del='Y' where comment_num=#{comment_num}
+   </update>
 </mapper>

@@ -6,11 +6,12 @@ create table comment(
    , content varchar(300) not null
    , user_id varchar(30) not null
    , reg_date TIMESTAMP default current_timestamp
+   , del varchar(10) default 'N'
    , FOREIGN Key (re_num) REFERENCES board(num)
    , FOREIGN key(user_id) REFERENCES user(user_id)
 )
 
--- drop table comment;
+drop table comment;
 
  delete from comment;
 
@@ -75,7 +76,6 @@ select #{num}
 
 --------------------- 댓글에 대한 대댓글 -------------------------------
 
-
 -- 업데이트 먼저 시키고 --
 update comment set re_lev = re_lev+1 where re_lev > #{re_lev} and re_num = #{re_num};
 update comment set re_lev = re_lev+1 where re_lev > 1 and re_num = 2;
@@ -87,7 +87,6 @@ select #{re_mum}
 , ifnull(#{re_step},0)+1
 , #{content}
 , #{userId};
-
 
 re_lev : 1 2 3 4 가 있을 때 2에 댓글을 달면 자신은 3이되고 기존의 3 4 은 4 5이 된다
 
@@ -104,3 +103,8 @@ re_num 1 , re_lev 2 , re_step 1
 re_num 1 , re_lev 4 , re_step 1
 
 정렬은 re_lev로 하는데 들여쓰기로 구분
+
+
+update comment set re_lev = re_lev-1 where re_lev <![CDATA[ > ]]> #{re_lev} and re_num = #{re_num}
+
+update comment set del='Y' where comment_num=#{comment_num}

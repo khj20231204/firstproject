@@ -16,4 +16,7 @@ public interface CommentMapper {
    int registerComm(Comment comment);
 
    int relevUpdate(Comment comment);
+
+   int deleteComment(Comment comment);
+
 }
