@@ -237,9 +237,9 @@ const DetailBoard = () => {
          </Row>
       </Container>
       {commentList.map((v,i) => {
-         console.log(v.re_step);
+         console.log(v.del);
          return(
-         <CommentForm refreshPage={refreshPage} re_num={v.re_num} re_lev={v.re_lev} content={v.content} re_step={v.re_step} user_id={v.user_id} reg_date={v.reg_date}/>
+         <CommentForm refreshPage={refreshPage} comment_num={v.comment_num} del={v.del} re_num={v.re_num} re_lev={v.re_lev} content={v.content} re_step={v.re_step} user_id={v.user_id} reg_date={v.reg_date} loginId={userId}/>
          )
       })}
       </>

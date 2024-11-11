@@ -9,7 +9,8 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
 
    const [isVisible , setIsVisible] = useState(false);
 
-   const {re_num, re_lev, re_step, content, user_id, reg_date, refreshPage} = props;
+   const {comment_num, re_num, re_lev, re_step, content, loginId, user_id, reg_date, refreshPage, del} = props;
+   /* lgoinId는 현재 로그인한 아이디, user_id는 댓글 작성자 아이디, 삭제할 때 확인 체크를 위해 필요 */
 
    let commentText = useRef(null);
 
@@ -23,7 +24,13 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
 
    const deleteReply = async () => {
       
+      if(loginId !== user_id){
+         Swal.alert("삭제 실패","글 작성자가 아닙니다.","warning",() => {});
+         return;
+      }
+
       let comment = {
+         comment_num : comment_num,
          re_num : re_num,
          re_lev : re_lev,
          re_step : re_step,
@@ -31,9 +38,9 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
          user_id : user_id
       }
 
-      let response = await commentapi.registerComment(comment);
+      let response = await commentapi.deleteComment(comment);
 
-      alert(response.status);
+      alert(response.status);   
    }
 
    //
@@ -79,7 +86,12 @@ const CommentForm = (props) => { //DetailBoard.jsx에서 받는 props
             <td className='date'>{date}</td>
          </tr>
          <tr>
+            {del === 'Y' ? 
+            <td><span style={{color:'red', fontSize:14, backgroundColor:'lightgray'}}>삭제된 답글입니다.</span> </td>
+            : 
             <td colSpan="2" className='content'>{content}</td>
+            }
+            
          </tr>
          <tr>
             <td colSpan="2">  
