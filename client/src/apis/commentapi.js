@@ -8,3 +8,5 @@ export const writesecondecomm = (comment) => api.post(`/comment/writesecondcomm`
 
 //댓글 불러오기
 export const getComment = (re_num) => api.get(`/comment/getComment?re_num=${re_num}`);
+
+export const registerComment = (comment) => api.post('/comment/registercomm', comment);
