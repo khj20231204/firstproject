@@ -12,6 +12,7 @@ import Board from './pages/Board';
 import DetailBoard from './pages/DetailBoard';
 import BoardContextProvider from './contexts/BoardContextProvider';
 import WriteBoard from './pages/WriteBoard';
+import MapSearch from './pages/MapSearch';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
          <Route path="/board" element={<Board></Board>}></Route>
          <Route path="/detailboard" element={<DetailBoard></DetailBoard>}></Route>
          <Route path="/writeboard" element={<WriteBoard></WriteBoard>}></Route>
+         <Route path="/mapsearch" element={<MapSearch></MapSearch>}></Route>
       </Routes>
       </BoardContextProvider>
       </LoginContextProvider>
