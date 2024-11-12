@@ -43,10 +43,7 @@ out/
 ### gradle Setting ###
 **/src/main/resources/application.properties
 **/application.properties
-
-### gitignore ###
-**/.gitignore
-.gitignore
+application.properties
 
 ### index.html ###
 **/public/index.html
