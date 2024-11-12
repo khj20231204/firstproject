@@ -1,31 +1,31 @@
--- Active: 1731150471586@@127.0.0.1@3306@membersdb
+-- active: 1731407083250@@firstproject.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 
 -- user: 회원 테이블
-CREATE TABLE `user` (
-`USER_ID` varchar(100) NOT NULL
-, `USER_PW` varchar(200) NOT NULL
-, `NAME` varchar(100) NULL
-, `EMAIL` varchar (200) NOT NULL
-, `REG_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-, `UPD_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-, `ENABLED` int DEFAULT 1
-, `NO` int NOT NULL
-, PRIMARY KEY (`USER_ID`)
+create table `user` (
+`user_id` varchar(100) not null
+, `user_pw` varchar(200) not null
+, `name` varchar(100) null
+, `email` varchar (200) not null
+, `reg_date` timestamp not null default current_timestamp
+, `upd_date` timestamp not null default current_timestamp
+, `enabled` int default 1
+, `no` int not null
+, primary key (`user_id`)
 );
 
 drop table user;
 
-SELECT * FROM user;
+select * from user;
 
--- BCryptPasswordEncoder : 암호화 시
+-- bcryptpasswordencoder : 암호화 시
 -- 사용자
-INSERT INTO user (user_id, user_pw, name, email, no )
-VALUES ('user', '$2a$12$TrN..KcVjciciz.5Vj96YOBljeVTTGJ9AUKmtfbGpgc9hmC7BXQ92', '사용자', 'user@mail.com',(SELECT ifnull(MAX(b.no),0)+1 AS num from user b) );
+insert into user (user_id, user_pw, name, email, no )
+values ('user', '$2a$12$trn..kcvjciciz.5vj96yobljevttgj9aukmtfbgpgc9hmc7bxq92', '사용자', 'user@mail.com',(select ifnull(max(b.no),0)+1 as num from user b) );
 
 
 -- 관리자
-INSERT INTO user (user_id, user_pw, name, email, no )
-VALUES ('admin', '$2a$12$TrN..KcVjciCiz.5Vj96YOBljeVTTGJ9AUKmtfbGpgc9hmC7BXQ92', '관리자', 'admin@mail.com',(SELECT ifnull(MAX(b.no),0)+1 AS num from user b) );
+insert into user (user_id, user_pw, name, email, no )
+values ('admin', '$2a$12$trn..kcvjciciz.5vj96yobljevttgj9aukmtfbgpgc9hmc7bxq92', '관리자', 'admin@mail.com',(select ifnull(max(b.no),0)+1 as num from user b) );
 
 
-insert into user(USER_ID,USER_PW,NAME,EMAIL,no) values('userid2','1234','name','email',(SELECT ifnull(MAX(b.no),0)+1 AS num from user b));
+insert into user(user_id,user_pw,name,email,no) values('userid2','1234','name','email',(select ifnull(max(b.no),0)+1 as num from user b));

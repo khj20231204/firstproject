@@ -1,3 +1,4 @@
+
 create table comment(
    comment_num int AUTO_INCREMENT PRIMARY key
    , re_num int default 1
@@ -6,13 +7,14 @@ create table comment(
    , content varchar(300) not null
    , user_id varchar(30) not null
    , reg_date TIMESTAMP default current_timestamp
+   , del varchar(10) default 'N'
    , FOREIGN Key (re_num) REFERENCES board(num)
-   , FOREIGN key(user_id) REFERENCES board(user_id)
+   , FOREIGN key(user_id) REFERENCES user(user_id)
 )
 
--- drop table comment;
+drop table comment;
 
- -- delete from comment;
+delete from comment;
 
 commit;
 
@@ -38,7 +40,8 @@ re_num : 한 글에 대해 전부 같은 re_num을 가져오기 때문에 순서
 re_lev : asc
 re_step : asc
 
--- 원글에 대한 댓글 : 댓글은 숫자로 순서를 표시한다.
+--------------------- 원글에 대한 댓글 -------------------------------
+-- 댓글은 숫자로 순서를 표시한다.
 insert into comment(re_num, re_lev, re_step, content, user_id) 
 values('부모num','같은 re_rum 중 가장 큰 ref_lev+1', 1)
 
@@ -72,42 +75,37 @@ select #{num}
    , #{userId};
 
 
--- 원글3에 대한 댓글2에 대한 대댓글 예제
--- 댓글2에 대한 대댓글 1
-insert into comment(re_num, re_lev, re_step, content, user_id) 
-select 3
-, 2
-, ifnull((select max(ifnull(re_step,0))+1 from comment where re_lev=2 and re_num=3),1)
-, '원글3의 댓글2 대한 대댓글1'
-, 'user1';
+--------------------- 댓글에 대한 대댓글 -------------------------------
 
--- 댓글2에 대한 대댓글 2
+-- 업데이트 먼저 시키고 --
+update comment set re_lev = re_lev+1 where re_lev > #{re_lev} and re_num = #{re_num};
+update comment set re_lev = re_lev+1 where re_lev > 1 and re_num = 2;
+-- insert --
+-- 원글에 대한 댓글에서 re_lev와 re_step은 전부 1로 셋팅된다
 insert into comment(re_num, re_lev, re_step, content, user_id) 
-select 3
-, 2
-, ifnull((select max(ifnull(re_step,0))+1 from comment where re_lev=2 and re_num=3),1)
-, '원글3의 댓글2 대한 대댓글2'
-, 'user3';
-
--- 원글3에 대한 댓글1 에 대한 대댓글 예제
--- 댓글1에 대한 대댓글 1
-insert into comment(re_num, re_lev, re_step, content, user_id) 
-select 3
-, 1
-, ifnull((select max(ifnull(re_step,0))+1 from comment where re_lev=1 and re_num=3),1)
-, '원글3의 댓글1 대한 대댓글2'
-, 'user2';
-
--- mapper
-insert into comment(re_num, re_lev, re_step, content, user_id) 
-select #{mum}
-, #{re_lev}
-, ifnull((select max(ifnull(re_step,0))+1 from comment where re_lev=#{re_lev} and re_num=#{re_num}),1)
+select #{re_mum}
+, ifnull(#{re_lev},0)+1 -- 부모에 re_lev가 되고 자신은 re_lev+1
+, ifnull(#{re_step},0)+1
 , #{content}
 , #{userId};
 
--- 댓글은 전부 re_num 안에서 같은 re_lev 끼리의 관계이기 때문에 comment_num을 사용할 일이 없다.
+re_lev : 1 2 3 4 가 있을 때 2에 댓글을 달면 자신은 3이되고 기존의 3 4 은 4 5이 된다
 
--- 정렬
+select * from comment where re_num = #{re_num} order by re_lev asc;
 
-select * from comment where re_num = 3 order by re_lev asc, re_step asc;
+re_num 1 , re_lev 1 , re_step 1
+re_num 1 , re_lev 2 , re_step 1
+re_num 1 , re_lev 3 , re_step 1
+
+re_lev 2에 댓글을 단다 : 자신이 들어갈 re_lev보다 큰 re_lev 전부 1씩 증가
+re_num 1 , re_lev 1 , re_step 1
+re_num 1 , re_lev 2 , re_step 1
+=> re_num 1 , re_lev 3 , re_step 2
+re_num 1 , re_lev 4 , re_step 1  
+
+정렬은 re_lev로 하는데 들여쓰기로 구분
+
+
+update comment set re_lev = re_lev-1 where re_lev <![CDATA[ > ]]> #{re_lev} and re_num = #{re_num}
+
+update comment set del='Y' where comment_num=#{comment_num}

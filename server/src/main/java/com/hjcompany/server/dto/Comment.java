@@ -16,4 +16,5 @@ public class Comment {
    private String content;
    private String user_id;
    private Timestamp reg_date;
+   private String del;
 }

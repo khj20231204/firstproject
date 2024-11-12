@@ -13,4 +13,12 @@ public interface CommentService {
 
    List<Comment> getComment(int re_num);
 
+   int registerComm(Comment comment);
+
+   int relevUpdate(Comment comment);
+
+   int deleteComment(Comment comment);
+
+
+
 }

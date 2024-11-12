@@ -36,10 +36,19 @@ out/
 ### VS Code ###
 .vscode/
 
+### gitignore ###
+**/.gitignore
+.gitignore
+
 ### gradle Setting ###
-/src/main/resources/application.properties
-application.properties
+**/src/main/resources/application.properties
+**/application.properties
 
 ### gitignore ###
+**/.gitignore
 .gitignore
-./.gitignore
+
+### index.html ###
+**/public/index.html
+**/index.html
+index.html

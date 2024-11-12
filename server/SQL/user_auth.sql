@@ -1,31 +1,33 @@
--- Active: 1731150471586@@127.0.0.1@3306@membersdb
+-- active: 1731407083250@@firstproject.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 
--- USER_AUTH : 권한 테이블
+-- user_auth : 권한 테이블
 
-CREATE TABLE USER_AUTH(
-	AUTH_NO INT NOT NULL auto_increment PRIMARY KEY   -- 권한 번호
-   , USER_ID VARCHAR(100) NOT NULL                     -- 아이디
-   , AUTH VARCHAR(100) NOT NULL                         -- 권한(USER, ADMIN)
-   , FOREIGN KEY(USER_ID) REFERENCES USER(USER_ID)
+create table user_auth(
+	auth_no int not null auto_increment primary key   -- 권한 번호
+   , user_id varchar(100) not null                     -- 아이디
+   , auth varchar(100) not null                         -- 권한(user, admin)
+   , foreign key(user_id) references user(user_id)
 );
 
-DROP TABLE USER_AUTH;
+drop table user_auth;
 
-SELECT * FROM USER_AUTH;
+select * from user_auth;
 
--- 사용자 권한 : USER
-INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('USER', 'ROLE_USER');
+-- 사용자 권한 : user
+insert into user_auth(user_id, auth) values('user', 'role_user');
 
--- 관리자 권한 : USER, ADMIN
-INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('ADMIN', 'ROLE_ADMIN');
-INSERT INTO USER_AUTH(USER_ID, AUTH) VALUES('ADMIN', 'ROLE_USER');
+-- 관리자 권한 : user, admin
+insert into user_auth(user_id, auth) values('admin', 'role_admin');
+insert into user_auth(user_id, auth) values('admin', 'role_user');
 
-SELECT * FROM user_auth;
+select * from user_auth;
 
+select database();
+show tables;
 
+commit;
 
+select database();
+show tables;
 
-
-
-
-DELETE FROM user_auth;
+delete from user_auth;

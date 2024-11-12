@@ -24,4 +24,22 @@ public class CommentServiceImpl implements CommentService {
       return commentMapper.getComment(re_num);
    }
 
+   @Override
+   public int registerComm(Comment comment) {
+      return commentMapper.registerComm(comment);
+   }
+
+   @Override
+   public int relevUpdate(Comment comment) {
+      return commentMapper.relevUpdate(comment);
+   }
+
+   @Override
+   public int deleteComment(Comment comment) {
+      return commentMapper.deleteComment(comment);
+   }
+
+
+ 
+
 }
