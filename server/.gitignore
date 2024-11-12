@@ -43,3 +43,7 @@ application.properties
 ### gitignore ###
 .gitignore
 ./.gitignore
+
+### index.html ###
+**/public/index.html
+**/index.html

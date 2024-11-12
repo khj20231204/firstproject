@@ -3,9 +3,14 @@
 /node_modules
 node_modules
 
+### gradle Setting ###
+**/src/main/resources/application.properties
+**/application.properties
+
 ### gitignore ###
 .gitignore
 ./.gitignore
 
-/public/index.html
-public/index.html
+### index.html ###
+**/public/index.html
+**/index.html
