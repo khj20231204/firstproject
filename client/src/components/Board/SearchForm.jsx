@@ -37,9 +37,9 @@ const SearchForm = () => {
                </Form.Select>
                </td>
                <td>
-               <Form.Control style={{width:300, margin:3}} type="text" id="keyword" name="keyword"/>
+               <Form.Control style={{width:300, margin:3}} type="text" placeholder='검색할 내용을 입력하세요' id="keyword" name="keyword"/>
                </td>
-               <td><Button type="submit" variant="outline-dark">확인</Button></td>
+               <td><Button type="submit" variant="outline-dark" style={{width:100}}>확인</Button></td>
             </tr>
             </tbody>
          </table>

@@ -1,61 +1,49 @@
-.comment {
-   margin-left: 40px;
+
+table {
+   width: 70vh;
+   font-style: 'Montserrat';
+   font-family: Tahoma, sans-serif;
 }
 
-.comment-container {
-   font-family: Arial, sans-serif;
-   display: flex;
-   font-size: 18px;
-   color: #333;
-   width: 70%;
+tr td {
+   padding: 2px;
+   border-bottom: 2px solid #F5F5F5;
 }
-.comment-container .profile-icon {
-   width: 30px;
-   height: 30px;
-   border-radius: 50%;
-   margin-right: 8px;
-   background-image: url('https://via.placeholder.com/20'); /* 사용자 프로필 이미지 경로 */
-   background-size: cover;
-}
-.comment-container .comment-content {
-   color: #333;
-   margin-right: 16px;
-}
-.comment-container .username {
+
+.writer {
    font-weight: bold;
-   margin-right: 4px;
-   color: #555;
+   font-size: 13px;
 }
-.comment-container .timestamp {
-   font-size: 16px;
-   color: #888;
-   margin-left: 4px;
+
+.content {
+   font-size: 13px;
 }
-.comment-container .edit-link, .delete-link {
+
+.date {
    font-size: 12px;
-   color: #1a73e8;
-   margin-left: 8px;
-   cursor: pointer;
-   text-decoration: none;
-   margin: 0 30px;
-}
-.comment-container .edit-link:hover, .delete-link:hover {
-   text-decoration: underline;
 }
 
-.comment .reply-box {
-   display: flex;
-   align-items: center;
-   border-top: 1px solid #ddd;
-   width: 500px;
-}
-
-.comment .reply-input {
-   flex-grow: 1;
-   padding: 8px;
-   font-size: 14px;
+.replyText{
+   margin: 10px;
+   width: 400px;
    height: 30px;
-   border-width: 0 0 1px;
-   outline: none;
-   margin-right: 10px;
+   font-size: 12;
+   border: 2px solid rgb(194, 194, 238);
+   border-radius: 15px;
+   outline: 'none';
+   padding-left: 3px;
+}
+
+.replyText:hover{
+   border: 2px solid rgb(147, 147, 240);
+   outline: 'none';
+}
+
+
+
+.replyButton{
+   border: 0;
+   font-size: 13px;
+   width: 30px;
+   height: 15px;
 }

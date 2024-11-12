@@ -93,8 +93,8 @@ const DetailBoard = () => {
 
       //원문에 대한 댓글
       let response = await commentapi.writeoriginalcomm(comment)
-
-      if(response.status === 200){
+      if(response.status === 202){
+         //Swal.alert("작성 성공","댓글을 입력했습니다.","success",() => {});
          showComment(num);
       }
    }
@@ -106,9 +106,9 @@ const DetailBoard = () => {
       let response = await commentapi.getComment(re_num);
 
       setCommentList([...response.data.list]);
-
-      console.log(commentList)
-      console.log(response.data.list);
+      console.log("---------------------------------");
+      console.log(commentList);
+      commentRef.current.value = "";
    }
 
    //수정 폼 보이게 하기
@@ -160,6 +160,11 @@ const DetailBoard = () => {
       getDetailBoard(num);
       setCheckModify(false); 
       setCheckModifyForm(false);
+   }
+
+   //CommentForm에서 댓글입력시 이벤트를 줘서 새로고침을 해야하는데 자식 컴포넌트에 부모 컴포넌트의 함수를 전달하여 부모에서 새로고침하기 위한 함수
+   const refreshPage = () => {
+      window.location.reload();
    }
 
    return (
@@ -234,9 +239,9 @@ const DetailBoard = () => {
          </Row>
       </Container>
       {commentList.map((v,i) => {
-         console.log(v.re_step);
+         console.log(v.del);
          return(
-         <CommentForm re_num={v.re_num} re_lev={v.re_lev} content={v.content} re_step={v.re_step} user_id={v.user_id} reg_date={v.reg_date}/>
+         <CommentForm refreshPage={refreshPage} comment_num={v.comment_num} del={v.del} re_num={v.re_num} re_lev={v.re_lev} content={v.content} re_step={v.re_step} user_id={v.user_id} reg_date={v.reg_date} loginId={userId}/>
          )
       })}
       </>

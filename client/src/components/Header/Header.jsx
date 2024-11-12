@@ -55,7 +55,7 @@ const Header = () => {
                      </>
                   }
 
-                  <Nav.Link onClick={() => {navigate("/earth_search")}} style={{padding:10}}>지도로 검색</Nav.Link>
+                  <Nav.Link onClick={() => {navigate("/mapsearch")}} style={{padding:10}}>지도로 검색</Nav.Link>
                   <Nav.Link onClick={() => {navigate("/state_search")}} style={{padding:10}}>행정구역으로 검색</Nav.Link>
                   <Nav.Link onClick={() => {navigate("/board")}} style={{padding:10}}>게시판</Nav.Link>
 
