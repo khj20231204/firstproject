@@ -1,0 +1,49 @@
+
+table {
+   width: 70vh;
+   font-style: 'Montserrat';
+   font-family: Tahoma, sans-serif;
+}
+
+tr td {
+   padding: 2px;
+   border-bottom: 2px solid #F5F5F5;
+}
+
+.writer {
+   font-weight: bold;
+   font-size: 13px;
+}
+
+.content {
+   font-size: 13px;
+}
+
+.date {
+   font-size: 12px;
+}
+
+.replyText{
+   margin: 10px;
+   width: 400px;
+   height: 30px;
+   font-size: 12;
+   border: 2px solid rgb(194, 194, 238);
+   border-radius: 15px;
+   outline: 'none';
+   padding-left: 3px;
+}
+
+.replyText:hover{
+   border: 2px solid rgb(147, 147, 240);
+   outline: 'none';
+}
+
+
+
+.replyButton{
+   border: 0;
+   font-size: 13px;
+   width: 30px;
+   height: 15px;
+}

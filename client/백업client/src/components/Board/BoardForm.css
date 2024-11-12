@@ -1,0 +1,15 @@
+
+.board {
+   margin: 100px;
+}
+
+/* Link 태그는 가상의 태그, 컴파일하면 a 태그로 변경
+따라서, a 태그에 css를 지정 */
+a {
+   color: black;
+   text-decoration-line: none;
+}
+
+a:hover{
+   color : darkorchid;
+}
