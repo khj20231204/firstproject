@@ -1,9 +1,12 @@
--- Active: 1731285396414@@127.0.0.1@3306@membersdb
+-- Active: 1731399781134@@hjcompany.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 create user hjcompany@'%' identified by 'hjpass';  
-grant all privileges on membersdb.* to hjcompany@'%' with grant option;  
+grant all privileges on firstproject.* to hjcompany@'%' with grant option;  
 flush privileges;  
 
-create database membersdb;
+#create database membersdb;
+create database firstproject;
+
+commit;
 
 create table board(
 	num int AUTO_INCREMENT PRIMARY key

@@ -1,4 +1,4 @@
--- Active: 1731285396414@@127.0.0.1@3306@membersdb
+-- Active: 1731399781134@@hjcompany.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 
 -- user: 회원 테이블
 CREATE TABLE `user` (

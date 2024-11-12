@@ -1,4 +1,4 @@
--- Active: 1731285396414@@127.0.0.1@3306@membersdb
+-- Active: 1731399781134@@hjcompany.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 
 -- USER_AUTH : 권한 테이블
 
@@ -6,7 +6,7 @@ CREATE TABLE USER_AUTH(
 	AUTH_NO INT NOT NULL auto_increment PRIMARY KEY   -- 권한 번호
    , USER_ID VARCHAR(100) NOT NULL                     -- 아이디
    , AUTH VARCHAR(100) NOT NULL                         -- 권한(USER, ADMIN)
-   , FOREIGN KEY(USER_ID) REFERENCES USER(USER_ID)
+   , FOREIGN KEY(USER_ID) REFERENCES user(USER_ID)
 );
 
 -- DROP TABLE USER_AUTH;
