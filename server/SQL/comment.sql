@@ -1,3 +1,4 @@
+
 create table comment(
    comment_num int AUTO_INCREMENT PRIMARY key
    , re_num int default 1
@@ -13,7 +14,7 @@ create table comment(
 
 drop table comment;
 
- delete from comment;
+delete from comment;
 
 commit;
 
@@ -100,7 +101,7 @@ re_lev 2에 댓글을 단다 : 자신이 들어갈 re_lev보다 큰 re_lev 전�
 re_num 1 , re_lev 1 , re_step 1
 re_num 1 , re_lev 2 , re_step 1
 => re_num 1 , re_lev 3 , re_step 2
-re_num 1 , re_lev 4 , re_step 1
+re_num 1 , re_lev 4 , re_step 1  
 
 정렬은 re_lev로 하는데 들여쓰기로 구분
 

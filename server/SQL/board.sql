@@ -1,4 +1,4 @@
--- Active: 1731399781134@@hjcompany.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
+-- Active: 1731407083250@@firstproject.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 create user hjcompany@'%' identified by 'hjpass';  
 grant all privileges on firstproject.* to hjcompany@'%' with grant option;  
 flush privileges;  
