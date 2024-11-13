@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MapController {
    
-   @RequestMapping(value="mapsearch", method=RequestMethod.GET)
+   @RequestMapping(value="mapsearch2", method=RequestMethod.GET)
    public String requestMethodName(@RequestParam String param) {
 
       System.out.println("mapsearch");
