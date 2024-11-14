@@ -10,4 +10,3 @@ export const detailboard = (num) => api.get(`/board/detailboard/${num}`);
 export const writeboard = (board) => api.post(`/board/writeboard`, board);
 
 export const updateboard = (board) => api.post(`/board/updateboard`, board);
-

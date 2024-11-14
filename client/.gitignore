@@ -1,0 +1,16 @@
+
+### modules ###
+/node_modules
+node_modules
+
+### gradle Setting ###
+**/src/main/resources/application.properties
+**/application.properties
+
+### gitignore ###
+.gitignore
+./.gitignore
+
+### index.html ###
+**/public/index.html
+**/index.html

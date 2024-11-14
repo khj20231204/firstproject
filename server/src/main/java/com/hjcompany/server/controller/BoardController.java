@@ -108,7 +108,15 @@ public class BoardController {
       }else{
          return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
       }
-   } 
+   }
+   
+   @GetMapping("/mapsearch")
+   public String requestMethodName() {
+
+      System.out.println("mapsearch");
+
+       return "map";
+   }
 }
 
 
