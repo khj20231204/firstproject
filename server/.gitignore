@@ -40,12 +40,14 @@ out/
 **/src/main/resources/application.properties
 **/application.properties
 
-### gitignore ###
-.gitignore
-./.gitignore
+### .env ###
+**/.env
+.env
+./env
 
 ### index.html ###
-**/public/index.html
 **/index.html
+./index.html
+index.html
 
 

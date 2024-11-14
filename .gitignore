@@ -1,0 +1,15 @@
+
+### gradle Setting ###
+**/src/main/resources/application.properties
+**/application.properties
+application.properties
+
+### .env ###
+**/.env
+.env
+./env
+
+### index.html ###
+**/index.html
+./index.html
+index.html
