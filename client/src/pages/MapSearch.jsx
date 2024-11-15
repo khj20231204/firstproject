@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header/Header';
-import { Map, MapMarker } from "react-kakao-maps-sdk"
+/* import { Map, MapMarker } from "react-kakao\-maps-sdk" */
 import Location from '../components/Map/Location';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import { geolocationOptions } from '../constants/geolocationOptions';
@@ -73,76 +73,7 @@ const MapSearch = () => {
       <Location location={currentLocation} error={currentError} />
       <div className='mapContainer'>
 
-      <Map id="map" center={ state.center } style={{height:'700px', left:0, top:0}} level={3}
-         
-         //마커를 클릭 했을 때 클릭한 지점 위치 가져오기
-         /*
-         onClick={(map) => {
-            
-            const level = map.getLevel()
-            const latlng = map.getCenter()
-            console.log("level:"+level+ " ,latlng:"+latlng);
-
-            setData({
-              level: level,
-              position: {
-                lat: latlng.getLat(),
-                lng: latlng.getLng(),
-              },
-            })
-         }}*/
-         
-         
-         onClick ={(map) => {
-            const bound = map.getBounds();
-            
-            console.log(bound);
-            /*
-            ha : 127.04040107734225
-            oa : 127.06192411678124
-            pa : 37.495450595492855
-            qa : 37.48915286589599
-            */
-
-            //markerData라는 예시 lat, lng값에서 현재 지도에 보이는 bound에 해당하는지 하지 않는지 filter 수행
-            const visibleMarkers = markerData.filter((data) => {
-               const position = new kakao.maps.LatLng(data.lat, data.lng);
-               return bound.contain(position);
-            })
-            
-            //새로운 마커 추가
-
-         }}
-         
-   
-
-         >
-
-         <MapMarker // 나의 위치 마커 표시
-            position={{
-               // 마커가 표시될 위치입니다
-               lat: 37.5000015,
-               lng: 127.0305781,
-            }}
-
-            image={{
-               src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커이미지의 주소입니다
-               size: {
-                  width: 64,
-                  height: 69,
-               }, // 마커이미지의 크기입니다
-               options: {
-                  offset: {
-                  x: 27,
-                  y: 69,
-                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-               },
-            }} 
-         />
-
-         <MapMarker position={{ lat: 37.4913514, lng:  127.0292852}}/>
-
-      </Map>
+      
       </div>
       </>
    );

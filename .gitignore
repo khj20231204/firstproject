@@ -1,11 +1,8 @@
 
-### modules ###
-/node_modules
-node_modules
-
 ### gradle Setting ###
 **/src/main/resources/application.properties
 **/application.properties
+application.properties
 
 ### .env ###
 **/.env
