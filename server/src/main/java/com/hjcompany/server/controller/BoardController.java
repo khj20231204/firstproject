@@ -115,7 +115,7 @@ public class BoardController {
 
       System.out.println("mapsearch");
 
-       return "map";
+      return "map";
    }
 }
 
