@@ -61,6 +61,7 @@ public class SecurityConfig {
          .requestMatchers("/", "/login").permitAll()
          .requestMatchers("/board/**").permitAll()
          .requestMatchers("/comment/**").permitAll()
+         .requestMatchers("/pharm/**").permitAll()
          .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() 
          .anyRequest().authenticated());
       /* 

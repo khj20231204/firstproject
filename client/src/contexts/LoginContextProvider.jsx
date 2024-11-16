@@ -240,9 +240,6 @@ const LoginContextProvider = ({ children }) => {
       localStorage.removeItem('no');
       localStorage.removeItem('totalPage');
       localStorage.removeItem('page');
-
-
-
    }
  
    useEffect(() => {
