@@ -8,7 +8,6 @@ const {kakao} = window;
 
 const MapForm = () => {
 
-   //const xml2js = require('xml2js');
    const convert = require('xml-js');
 
   const [centerPos, setCenterPos] = useState({
@@ -22,17 +21,47 @@ const MapForm = () => {
 
   const [loading, setLoading] = useState(true); //db에서 list를 가져올 때 까지 map을 읽지 않는다
 
+  const [checkPharmData, setCheckPharmData] = useState(true); 
+  //전체약국 버튼 클릭시 true, 주말약국버튼 클릭시 false
+  //하나의 PharmData함수에서 처리
+
+  /*
+  getData() -> PharmData() -> makeMap
+  최초 로딩 useEffect()에서 getData() 함수 실행 -> DB에서 데이터를 다 가져오면 setList실행 
+  -> list로 입력이 완료되면 loading state를 false로 변경 : 데이터가 2만건이 넘기 때문에 딜레이 발생해서 loading을 따로두고
+  useEffect를 나눠서 실행
+  -> 첫 페이지는 PharmData에서 전체 약국을 기준으로 출력
+  -> 이후 "전체 약국", "주말 운영 약국" 을 클릭할 때마다 checkPharmData 값이 변하고 이때 재랜더링 될 때마다
+
+   useEffect(() => {
+   if(!loading){
+      PharmData();
+   }
+  }, [checkPharmData])
+  
+  가 실행
+
+  PharmData() -> 실제 맵을 그려주는 makeMap 호출
+  */
+
    useEffect(() => {
       //fetchData(); api데이터 DB에 입력하는 함수
       getData(); //DB에 있는 api데이터 가져오기
   }, []) //api데이터를 DB에 입력시 [page] 입력
 
-  //list를 완전히 받아왔는지 아닌지 loading으로 체크
+  
   useEffect(() => {
-      setLoading(false); //false이면 다운 완료
-      makeMap();
-  }, [list])
+      setLoading(false); //list를 완전히 받아왔는지 아닌지 loading으로 체크, false이면 다운 완료
+      PharmData(); //첫 페이지 로딩은 전체 약국으로
+  }, [list]) //checkPharmData 전체, 주말 약국 버튼을 클릭할 때마다 로딩
 
+  useEffect(() => {
+   if(!loading){
+      PharmData();
+   }
+  }, [checkPharmData])
+  
+  
   //DB에서 데이터 가져오기
   const getData = async () => {
 
@@ -44,22 +73,43 @@ const MapForm = () => {
       }
 
       setList([...response.data.list]);
+      console.log("RDS connect => list");
+      console.log(list);
   }
 
    //전국 약국
-   const allPharm = () => {
-      setLoading(true); //데이터를 가져오기 전에 먼저 loading 설정
-   
-     }
-   
-   //주말 운영 약국
-   const weekendPharm = () => {
-      setLoading(true); //데이터를 가져오기 전에 먼저 loading 설정
-     }
+   const PharmData = () => {
 
-     
+      var pharmData = new Array();
+
+      if(checkPharmData){//전국 약국
+         for(var i=0 ; i<list.length ; i++){
+            pharmData.push({
+               title : list[i].dutyname,
+               latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
+               dutyweekendat : list[i].dutyweekendat
+            })
+         }
+      }else{
+         for(var i=0 ; i<list.length ; i++){
+
+            if(list[i].dutyweekendat === "Y"){
+               pharmData.push({
+                  title : list[i].dutyname,
+                  latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
+                  dutyweekendat : list[i].dutyweekendat
+               })
+            }
+         }
+      }
+
+      console.log(pharmData);
+
+      makeMap(pharmData)
+   }
+   
   //맵 생성
-  const makeMap = () => { //전체약국, 주말운영약국을 나눠서 출력하기 위해서 position을 나눠서 입력 받는다
+  const makeMap = (pharmData) => { //전체약국, 주말운영약국을 나눠서 출력하기 위해서 position을 나눠서 입력 받는다
 
    if(loading) return;
 
@@ -117,29 +167,23 @@ const MapForm = () => {
       }
 
       //마커 표시 -------------------------------------------
-        var position = new Array();
-        
-         for(var i=0 ; i<list.length ; i++){
-            position.push({
-               title : list[i].dutyname,
-               latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon)
-            })
+
+        var imageSrc;
+        for(var i=0 ; i<pharmData.length ; i++){
+         console.log(pharmData.dutyweekendat);
+         if(pharmData[i].dutyweekendat === "Y"){
+            imageSrc = "https://github.com/khj20231204/firstproject/blob/main/redmarker.png?raw=true";
+         }else{
+            imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
          }
-
-        console.log(position);
-
-        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-
-        
-        for(var i=0 ; i<position.length ; i++){
 
          var markerSize = new kakao.maps.Size(24, 35); //마커 크기 설정
          var markerImage = new kakao.maps.MarkerImage(imageSrc, markerSize); //마커 이미지 설정
 
          var marker = new kakao.maps.Marker({
             map: map, //마커를 표시할 지도
-            position: position[i].latlng,
-            title: position[i].title,
+            position: pharmData[i].latlng,
+            title: pharmData[i].title,
             image: markerImage
          })
         }
@@ -208,10 +252,10 @@ const MapForm = () => {
    */}
       {
          loading ? 
-            <div style={{textAlign:'center'}}>loading...</div>
+            <div style={{alignItems:'center'}}>loading...</div>
          :
          <>
-         <Button variant="outline-secondary" style={{margin:10}} onClick={allPharm}>전체 약국 보기</Button><Button variant="outline-danger" onClick={weekendPharm}>주말 운영 약국 보기</Button>
+         <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button><Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
          <div id="map" style={{width: "100vw", height: "100vh"}}></div>
          </>
       }
