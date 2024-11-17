@@ -24,5 +24,10 @@ public class PhamarcyServiceImpl implements PhamarcyService {
    public int savePharmDataList(List<Pharm> pharmData) {
      return phamarcyMapper.savePharmDataList(pharmData);
    }
+
+   @Override
+   public List<Pharm> getData() {
+     return phamarcyMapper.getData();
+   }
    
 }

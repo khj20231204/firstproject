@@ -13,5 +13,7 @@ public interface PhamarcyService {
    int savePharmDatas(List<Map<String,Object>> pharmData);
 
    int savePharmDataList(List<Pharm> pharmData);
+
+   List<Pharm> getData();
    
 }

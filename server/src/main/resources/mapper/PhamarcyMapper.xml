@@ -23,6 +23,7 @@
       ,#{x} ,#{y} ,#{dutyweekendat})
   </insert>
 
+  <!-- api 데이터 db에 입력 -->
    <insert id="savePharmDatas" parameterType="List">
     insert into phamarcy(num, dutyaddr, dutyname, dutytel1 
    ,dutytime1c ,dutytime2c, dutytime3c, dutytime4c 
@@ -42,4 +43,9 @@
       ,#{item.X} ,#{item.Y} ,#{item.DUTYWEEKENDAT})
     </foreach>
    </insert>
+
+   <!-- 데이터 가져오기 -->
+   <select id="getData" resultType="Pharm">
+      select * from phamarcy
+   </select>
 </mapper>
