@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjcompany.server.mapper.PhamarcyMapper">
+
+  <insert id="savePharmDataList" parameterType="Pharm">
+    insert into phamarcy(num, dutyaddr, dutyname, dutytel1 
+   ,dutytime1c ,dutytime2c, dutytime3c, dutytime4c 
+   ,dutytime5c ,dutytime6c, dutytime7c, dutytime8c 
+   ,dutytime1s, dutytime2s, dutytime3s, dutytime4s 
+   ,dutytime5s, dutytime6s, dutytime7s ,dutytime8s 
+   ,hpid ,postcdn1 ,postcdn2 ,lon ,lat ,x ,y ,dutyweekendat)
+    values(
+      #{num}, #{dutyaddr}, #{dutyname}, #{dutytel1} 
+      ,#{dutytime1c} ,#{dutytime2c} ,#{dutytime3c} ,#{dutytime4c}
+      ,#{dutytime5c} ,#{dutytime6c} ,#{dutytime7c} ,#{dutytime8c}
+      ,#{dutytime1s} ,#{dutytime2s} ,#{dutytime3s} ,#{dutytime4s}
+      ,#{dutytime5s} ,#{dutytime6s} ,#{dutytime7s} ,#{dutytime8s}
+      ,#{hpid} ,#{postcdn1} ,#{postcdn2} 
+      ,#{lon} ,#{lat} 
+      ,#{x} ,#{y} ,#{dutyweekendat})
+  </insert>
+
+  <!-- api 데이터 db에 입력 -->
+   <insert id="savePharmDatas" parameterType="List">
+    insert into phamarcy(num, dutyaddr, dutyname, dutytel1 
+   ,dutytime1c ,dutytime2c, dutytime3c, dutytime4c 
+   ,dutytime5c ,dutytime6c, dutytime7c, dutytime8c 
+   ,dutytime1s, dutytime2s, dutytime3s, dutytime4s 
+   ,dutytime5s, dutytime6s, dutytime7s ,dutytime8s 
+   ,hpid ,postcdn1 ,postcdn2 ,lon ,lat ,x ,y ,dutyweekendat)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.NUM}, #{item.DUTYADDR}, #{item.DUTYNAME}, #{item.DUTYTEL1} 
+      ,#{item.DUTYTIME1C} ,#{item.DUTYTIME2C} ,#{item.DUTYTIME3C} ,#{item.DUTYTIME4C}
+      ,#{item.DUTYTIME5C} ,#{item.DUTYTIME6C} ,#{item.DUTYTIME7C} ,#{item.DUTYTIME8C}
+      ,#{item.DUTYTIME1S} ,#{item.DUTYTIME2S} ,#{item.DUTYTIME3S} ,#{item.DUTYTIME4S}
+      ,#{item.DUTYTIME5S} ,#{item.DUTYTIME6S} ,#{item.DUTYTIME7S} ,#{item.DUTYTIME8S}
+      ,#{item.HPID} ,#{item.POSTCDN1} ,#{item.POSTCDN2} 
+      ,#{item.LON} ,#{item.LAT} 
+      ,#{item.X} ,#{item.Y} ,#{item.DUTYWEEKENDAT})
+    </foreach>
+   </insert>
+
+   <!-- 데이터 가져오기 -->
+   <select id="getData" resultType="Pharm">
+      select * from phamarcy
+   </select>
+</mapper>
