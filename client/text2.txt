@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -52,3 +53,76 @@ const MapRoute = () => {
 };
 
 export default MapRoute;
+=======
+
+
+
+api pagenation
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const PaginatedData = () => {
+    // 상태 관리
+    const [data, setData] = useState([]);  // 불러온 데이터 목록
+    const [page, setPage] = useState(1);   // 현재 페이지 번호
+    const [limit] = useState(50);          // 한 페이지 당 데이터 수
+    const [loading, setLoading] = useState(false);  // 로딩 상태
+    const [hasMore, setHasMore] = useState(true);    // 더 많은 데이터 여부 확인
+
+    // API 데이터 로드 함수
+    const fetchData = async () => {
+        setLoading(true);  // 로딩 시작
+        try {
+            const response = await axios.get('https://api.example.com/data', {
+                params: { page, limit }
+            });
+            const newData = response.data;
+
+            if (newData.length === 0) {
+                setHasMore(false);  // 더 이상 불러올 데이터가 없으면 false
+            } else {
+                setData(prevData => [...prevData, ...newData]);  // 기존 데이터에 추가
+            }
+        } catch (error) {
+            console.error("데이터 로드 실패:", error);
+        } finally {
+            setLoading(false);  // 로딩 종료
+        }
+    };
+
+    // 컴포넌트가 마운트될 때 첫 페이지 데이터 로드
+    useEffect(() => {
+        fetchData();
+    }, [page]);
+
+    // 다음 페이지 버튼 클릭 핸들러
+    const handleNextPage = () => {
+        if (hasMore && !loading) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
+
+    return (
+        <div>
+            <h1>데이터 목록</h1>
+            <ul>
+                {data.map((item, index) => (
+                    <li key={index}>{item.name}</li>  // 데이터 렌더링
+                ))}
+            </ul>
+            {loading && <p>데이터를 불러오는 중...</p>}
+            {hasMore ? (
+                <button onClick={handleNextPage} disabled={loading}>
+                    다음 페이지
+                </button>
+            ) : (
+                <p>더 이상 데이터가 없습니다.</p>
+            )}
+        </div>
+    );
+};
+
+export default PaginatedData;
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f

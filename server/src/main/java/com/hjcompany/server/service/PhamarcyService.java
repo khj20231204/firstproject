@@ -15,4 +15,8 @@ public interface PhamarcyService {
    int savePharmDataList(List<Pharm> pharmData);
 
    List<Pharm> getData();
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
 }
