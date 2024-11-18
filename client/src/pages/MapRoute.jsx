@@ -65,9 +65,14 @@ const MapRoute = () => {
 		// 시작
 		marker_s = new Tmapv2.Marker(
 				{
+<<<<<<< HEAD
 					//position : new Tmapv2.LatLng(37.564991,126.983937),
 					postition : new Tmapv2.LatLng(37.503551616907366,127.03840705384857),
 					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+=======
+					position : new Tmapv2.LatLng(37.564991,126.983937),
+					icon : "/upload/tmap/marker/pin_r_m_s.png",
+>>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -75,9 +80,14 @@ const MapRoute = () => {
 		// 도착
 		marker_e = new Tmapv2.Marker(
 				{
+<<<<<<< HEAD
 					//position : new Tmapv2.LatLng(37.566158,126.988940),
 					position : new Tmapv2.LatLng(37.5017593,127.0345362),
 					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+=======
+					position : new Tmapv2.LatLng(37.566158,126.988940),
+					icon : "/upload/tmap/marker/pin_r_m_e.png",
+>>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -89,10 +99,17 @@ const MapRoute = () => {
       axios.post(
          "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json",
          {
+<<<<<<< HEAD
             startX:"127.03840705384857",//"126.983937",
             startY: "37.503551616907366",//"37.564991",
             endX: "127.0345362",//"126.988940",
             endY: "37.5017593",//"37.566158",
+=======
+            startX: "126.983937",
+            startY: "37.564991",
+            endX: "126.988940",
+            endY: "37.566158",
+>>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
             reqCoordType: "WGS84GEO",
             resCoordType: "EPSG3857",
             startName: "출발지",
@@ -101,8 +118,13 @@ const MapRoute = () => {
          { headers: headers }
          )
          .then(response => {
+<<<<<<< HEAD
 				var resultData = response.data.features;
 				console.log(resultData)
+=======
+        
+            var resultData = response.features;
+>>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 
 					//결과 출력
 					var tDistance = "총 거리 : "
@@ -196,6 +218,10 @@ const MapRoute = () => {
                      });
 						}
 					}//for문 [E]
+<<<<<<< HEAD
+=======
+               alert("ㅇㄴㄹ");
+>>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 					drawLine(drawInfoArr);
             })
             .catch(error => {

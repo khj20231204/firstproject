@@ -6,9 +6,7 @@ const {kakao} = window;
 const Map = () => {
    return (
       <div>
-         <MapForm>
-            
-         </MapForm>
+         <MapForm/>
       </div>
    );
 };

@@ -1,3 +1,59 @@
+<<<<<<< HEAD
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const MapRoute = () => {
+
+   const location = useLocation();
+   const {lat, lon, myLat, myLog} = location.state;
+
+   console.log(lat);
+   console.log(lon);
+   console.log(myLat);
+   console.log(myLog);
+
+   const makeMap = () => {
+
+      const script = document.createElement("script");
+      script.src = `https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.REACT_APP_TMAP_API_KEY}`;
+      "https://apis.openapi.sk.com/tmap/pois?version=1&searchKeyword=SKT&searchType=all&page=1&count=20&resCoordType=WGS84GEO&multiPoint=N&searchtypCd=A&reqCoordType=WGS84GEO&poiGroupYn=N";
+      script.type = "text/javascript";
+
+      var map;
+      var marker_s, marke_e, marker_p1, marker_p2;
+      var totalMarkerArr = [];
+      var drawInfoArr = [];
+      var resultdrawArr = [];
+
+      script.onload = () => {
+
+         const map = new Tmapv2.Map("map_div", {
+            center: new Tmapv2.LatLng(37.5665, 126.9780), // 중심 좌표 (서울시청)
+            width: "100%",  // 지도의 가로 크기
+            height: "400px", // 지도의 세로 크기
+            zoom: 15         // 초기 줌 레벨
+          });
+      }
+
+      
+
+      document.head.appendChild(script);
+
+      return () => {
+         document.head.removeChild(script);
+      }
+   }
+
+   return (
+      <div>
+         <div id="map_div"></div>
+         <p id="result"></p>
+      </div>
+   );
+};
+
+export default MapRoute;
+=======
 
 
 
@@ -69,3 +125,4 @@ const PaginatedData = () => {
 };
 
 export default PaginatedData;
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f

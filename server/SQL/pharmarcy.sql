@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+-- Active: 1731285396414@@127.0.0.1@3306@membersdb
+
+create table phamarcy(
+   pharmnum int AUTO_INCREMENT PRIMARY key -- pk
+   , num int NOT null -- 일련번호
+=======
 -- Active: 1731150471586@@127.0.0.1@3306@membersdb
 
 create table phamarcy(
    pharmnum int AUTO_INCREMENT PRIMARY key -- pk
    , num int -- 일련번호
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
    , dutyaddr varchar(200) -- 주소
    -- dutyetc varchar(100) -- 비고
    -- dutyinf varchar(100) 기관설명상세
@@ -35,10 +43,13 @@ create table phamarcy(
    , dutyweekendat varchar(3) -- 주말진료여부
 )
 
+<<<<<<< HEAD
+=======
 -- drop table phamarcy;
 
 -- delete from phamarcy;
 
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
 select * from phamarcy;
 
 insert into phamarcy(
@@ -49,3 +60,16 @@ insert into phamarcy(
 ,'1830','1830','1830','1830','1830','1500','1300','1300','0900','0900','0900','0900','0900','0900','0900','0900'
 ,'C1107032','060','95','127.051239538093','37.5127262745682','14143279.29003474','4510817.234371158','Y')
 
+<<<<<<< HEAD
+create table example (
+   name varchar(30),
+   age int
+);
+
+drop table example;
+
+select * from example;
+
+insert into example values('aa',23);
+=======
+>>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f

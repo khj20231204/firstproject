@@ -1,0 +1,35 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+function MapRoute() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url =
+        "https://apis.openapi.sk.com/tmap/pois?version=1&searchKeyword=SKT&searchType=all&page=1&count=20&resCoordType=WGS84GEO&multiPoint=N&searchtypCd=A&reqCoordType=WGS84GEO&poiGroupYn=N";
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            Accept: "application/json",
+            appKey: `${process.env.REACT_APP_TMAP_API_KEY}`, // 발급받은 API Key를 여기에 입력
+          },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>POI Search Results</h1>
+      <pre>{data ? JSON.stringify(data, null, 2) : "Loading..."}</pre>
+    </div>
+  );
+}
+
+export default MapRoute;
