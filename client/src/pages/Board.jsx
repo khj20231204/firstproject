@@ -102,7 +102,7 @@ const Board = () => {
       <div className='container'>
          <div style={{display:'flex',justifyContent:'space-between',margin:50}}>
             <SearchForm />
-            <Button variant="outline-primary" onClick={write}>글쓰기</Button>
+            <Button variant="outline-primary" onClick={write} style={{height:40,width:100}}>글쓰기</Button>
          </div>
          <div>
             <Table striped="columns">

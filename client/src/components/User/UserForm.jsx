@@ -1,22 +1,36 @@
 import React, { useRef } from 'react';
 import './UserForm.css';
+import * as Swal from '../../apis/alert';
 
 const UserForm = ({userInfo, updateUser, deleteUser2}) => { //User.jsx에서 넘겨준 props
 
    const usernameInput = useRef();
    const passwordInput = useRef();
 
-   const onUpdate = (e) => {
+   const onUpdate = async (e) => {
       e.preventDefault(); //submit이라서 막는다
 
-      const form = e.target; 
+     await Swal.confirm("비밀번호 변경", "확인을 누르면 비밀번호가 바로 변경됩니다.","warning",(result) => {
+         if(result.isConfirmed){
+            const form = e.target; 
+            //현재 form안에 button의 기본속성은 submit이다. 
+            //그렇기 때문에 이벤트 속성 e를 통해서 form을 가져올 수 있다
+            const userId = form.username.value;
+            const userPw = form.password.value;
+            const email = form.email.value;
+
+            updateUser({userId, userPw, email})
+         }
+      })
+
+      /* const form = e.target; 
       //현재 form안에 button의 기본속성은 submit이다. 
       //그렇기 때문에 이벤트 속성 e를 통해서 form을 가져올 수 있다
       const userId = form.username.value;
       const userPw = form.password.value;
       const email = form.email.value;
 
-      updateUser({userId, userPw, email})
+      updateUser({userId, userPw, email}) */
    }
 
    const onDelete = () => {

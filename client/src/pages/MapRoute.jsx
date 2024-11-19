@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -21,39 +22,18 @@ const MapRoute = () => {
    var resultdrawArr = [];
 
 
-   const makeMap = () => {
-
-      const script = document.createElement("script");
-      script.src = `https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.REACT_APP_TMAP_API_KEY}`;
-      script.type = "text/javascript";
-
-      script.onload = () => {
-
-         map = new Tmapv2.Map("map_div", {
-            center: new Tmapv2.LatLng(37.5665, 126.9780), // 중심 좌표 (서울시청)
-            width: "100%",  // 지도의 가로 크기
-            height: "400px", // 지도의 세로 크기
-            zoom: 15,         // 초기 줌 레벨
-            zoomControl: true,
-            scrollwheel: true
-          });
-      }
-
-      document.head.appendChild(script);
-
-      return () => {
-         document.head.removeChild(script);
-      }
-   }//makeMap
-
    useEffect(() => {
       initTmap();
    },[])
 
    function initTmap() {
+      var centerLat = (myLat + lat)/2;
+      var centerLog = (myLog + lon)/2;
+
 		// 1. 지도 띄우기
 		map = new Tmapv2.Map("map_div", {
-		center : new Tmapv2.LatLng(37.56520450, 126.98702028),
+		//center : new Tmapv2.LatLng(37.56520450, 126.98702028),
+      center: new Tmapv2.LatLng(centerLat, centerLog), // 중심 좌표 (서울시청)
 			width : "100%",
 			height : "800px",
 			zoom : 17,
@@ -65,8 +45,9 @@ const MapRoute = () => {
 		// 시작
 		marker_s = new Tmapv2.Marker(
 				{
-					position : new Tmapv2.LatLng(37.564991,126.983937),
-					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+					//position : new Tmapv2.LatLng(37.564991,126.983937),
+               position : new Tmapv2.LatLng(myLat,myLog),
+					icon : "https://github.com/khj20231204/firstproject/blob/main/marker_man.png?raw=true",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -74,8 +55,9 @@ const MapRoute = () => {
 		// 도착
 		marker_e = new Tmapv2.Marker(
 				{
-					position : new Tmapv2.LatLng(37.566158,126.988940),
-					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+					//position : new Tmapv2.LatLng(37.566158,126.988940),
+               position : new Tmapv2.LatLng(lat,lon),
+					icon : "https://github.com/khj20231204/firstproject/blob/main/marker_pharm.png?raw=true",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -87,10 +69,14 @@ const MapRoute = () => {
       axios.post(
          "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json",
          {
-            startX: "126.983937",
+            /* startX: "126.983937",
             startY: "37.564991",
-            endX: "126.988940",
-            endY: "37.566158",
+             endX: "126.988940",
+            endY: "37.566158", */
+            startX: myLog,
+            startY: myLat,
+            endX: lon,
+            endY: lat, 
             reqCoordType: "WGS84GEO",
             resCoordType: "EPSG3857",
             startName: "출발지",
@@ -153,11 +139,11 @@ const MapRoute = () => {
 							var size;
 
 							if (properties.pointType == "S") { //출발지 마커
-								markerImg = "/upload/tmap/marker/pin_r_m_s.png";
+								markerImg = "https://github.com/khj20231204/firstproject/blob/main/marker_man.png?raw=true";
 								pType = "S";
 								size = new Tmapv2.Size(24, 38);
 							} else if (properties.pointType == "E") { //도착지 마커
-								markerImg = "/upload/tmap/marker/pin_r_m_e.png";
+								markerImg = "https://github.com/khj20231204/firstproject/blob/main/marker_pharm.png?raw=true";
 								pType = "E";
 								size = new Tmapv2.Size(24, 38);
 							} else { //각 포인트 마커

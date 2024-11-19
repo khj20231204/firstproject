@@ -59,6 +59,8 @@ const LoginContextProvider = ({ children }) => {
 
    const [ch, setCh] = useState();
 
+   let [tokenMsg, setTokenMsg] = useState(null);
+
    /* 
       처음 로그인을 하면 jwt토큰 응답을 받은 상태, 
       토큰을 가지고 다시 서버측에 유저 정보를 응답해주는 요청을 전송 
@@ -90,11 +92,13 @@ const LoginContextProvider = ({ children }) => {
       //accessToken(jwt)이 없음
       if(!accessToken){
          console.log("쿠키에 accessToken이 없음");
+         setTokenMsg("쿠키에 accessToken이 없음")
          //로그아웃 세팅
          logoutSetting()
          return;
       }
 
+      setTokenMsg(accessToken.toString());
       //accessToken(jwt)이 있음 - 바로 header에 담는다
       api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
       
@@ -199,7 +203,7 @@ const LoginContextProvider = ({ children }) => {
       setLogin(true);
 
       //유저정보 세팅
-      const updateUserInfo = {no, userId, roleList};
+      const updateUserInfo = {no, userId, roleList };
       //updateUserInfo {no: 2, userId: 'user2', roleList: Array(1)} 가 객체가 된다
       setUserInfo(updateUserInfo);
       //board에서 새로고침시 아이디를 가져오기 위해서 로컬에 정보를 저장
@@ -249,7 +253,7 @@ const LoginContextProvider = ({ children }) => {
    
    return (
       <div>
-         <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout, loginCheck, logoutSetting}}>
+         <LoginContext.Provider value={{isLogin, userInfo, roles, login, logout, loginCheck, logoutSetting, tokenMsg}}>
             {children}
          </LoginContext.Provider>
       </div>

@@ -31,8 +31,12 @@ const MapForm = () => {
 
   let [pathButton, setPathButton] = useState(false); //false : 경로찾기 버튼 보이기, true : 텍스트 박스
 
+  //도로 위 위치
   let [pathLat ,setPathLat] = useState();
   let [pathLog, setPathLog] = useState();
+
+  let [mLat, setMLat] = useState();
+  let [mLng, setMLng] = useState();
 
   let [myLat, setMyLat] = useState();
   let [myLog, setMyLog] = useState();
@@ -98,8 +102,8 @@ const MapForm = () => {
 
       var pharmData = new Array();
 
-      if(checkPharmData){//전국 약국
-         for(var i=0 ; i<list.length ; i++){
+      if(checkPharmData){
+         for(var i=0 ; i<list.length ; i++){ //전국 약국
             pharmData.push({
                title : list[i].dutyname,
                latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
@@ -115,7 +119,7 @@ const MapForm = () => {
       }else{
          for(var i=0 ; i<list.length ; i++){
 
-            if(list[i].dutyweekendat === "Y"){
+            if(list[i].dutyweekendat === "Y"){ //주말 운영 약국
                pharmData.push({
                   title : list[i].dutyname,
                   latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
@@ -187,8 +191,8 @@ const MapForm = () => {
         var imageSrc;
         var check = true;
         var markerInfo = new Array();
-        //for(var i=0 ; i<pharmData.length ; i++){ 지우면 안됨
-         for(var i=0 ; i<100 ; i++){
+        for(var i=0 ; i<pharmData.length ; i++){ //지우면 안됨
+        /*  for(var i=0 ; i<100 ; i++){ */
             
             markerInfo[i] = pharmData[i];
 
@@ -231,7 +235,17 @@ const MapForm = () => {
 
             //inforwindow.open(map, marker[i]);
             kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
-               
+               let mPosition = marker.getPosition();
+               let mLat = mPosition.getLat();
+               let mLng = mPosition.getLng();
+
+               if(document.getElementById("latpathText") !== null){
+                  document.getElementById("latpathText").value = mLat;
+                  document.getElementById("logpathText").value = mLng;
+               }
+
+               setPathLat(mLat);
+               setPathLog(mLng);
             });
 
             kakao.maps.event.addListener(marker,'mouseover', function(){
