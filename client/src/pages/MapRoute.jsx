@@ -66,7 +66,7 @@ const MapRoute = () => {
 		marker_s = new Tmapv2.Marker(
 				{
 					position : new Tmapv2.LatLng(37.564991,126.983937),
-					icon : "/upload/tmap/marker/pin_r_m_s.png",
+					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -75,7 +75,7 @@ const MapRoute = () => {
 		marker_e = new Tmapv2.Marker(
 				{
 					position : new Tmapv2.LatLng(37.566158,126.988940),
-					icon : "/upload/tmap/marker/pin_r_m_e.png",
+					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -99,8 +99,8 @@ const MapRoute = () => {
          { headers: headers }
          )
          .then(response => {
-        
-            var resultData = response.features;
+				var resultData = response.data.features;
+				console.log(resultData)
 
 					//결과 출력
 					var tDistance = "총 거리 : "
@@ -194,7 +194,6 @@ const MapRoute = () => {
                      });
 						}
 					}//for문 [E]
-               alert("ㅇㄴㄹ");
 					drawLine(drawInfoArr);
             })
             .catch(error => {

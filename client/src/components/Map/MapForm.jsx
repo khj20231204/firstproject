@@ -3,10 +3,7 @@ import Location from './Location';
 import api from '../../apis/api';
 import * as mapapi from '../../apis/mapapi';
 import Button from 'react-bootstrap/Button';
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
 
 const {kakao} = window;
 
@@ -19,12 +16,9 @@ const MapForm = () => {
     Lng : 127.04595
   });
 
-<<<<<<< HEAD
   const nowLat = useRef('37.5112');
   const nowLng = useRef('127.04595');
 
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
   let [page, setPage] = useState(1); //api uri에 사용할 page, api데이터를 db에 입력시 사용
 
   const [list, setList] = useState([]); //배열로 선언, api 데이터 받는 list
@@ -35,7 +29,6 @@ const MapForm = () => {
   //전체약국 버튼 클릭시 true, 주말약국버튼 클릭시 false
   //하나의 PharmData함수에서 처리
 
-<<<<<<< HEAD
   let [pathButton, setPathButton] = useState(false); //false : 경로찾기 버튼 보이기, true : 텍스트 박스
 
   let [pathLat ,setPathLat] = useState();
@@ -46,8 +39,6 @@ const MapForm = () => {
 
   let navigate = useNavigate();
 
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
   /*
   getData() -> PharmData() -> makeMap
   최초 로딩 useEffect()에서 getData() 함수 실행 -> DB에서 데이터를 다 가져오면 setList실행 
@@ -103,21 +94,15 @@ const MapForm = () => {
    //전국 약국
    const PharmData = () => {
 
-<<<<<<< HEAD
       setLoading(true);
 
       var pharmData = new Array();
 
-=======
-      var pharmData = new Array();
-
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
       if(checkPharmData){//전국 약국
          for(var i=0 ; i<list.length ; i++){
             pharmData.push({
                title : list[i].dutyname,
                latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
-<<<<<<< HEAD
                dutyweekendat : list[i].dutyweekendat,
                dutyaddr : list[i].dutyaddr,
                dutytel1 : list[i].dutytel1,
@@ -125,9 +110,6 @@ const MapForm = () => {
                lat : list[i].lat,
                x : list[i].x,
                y : list[i].y
-=======
-               dutyweekendat : list[i].dutyweekendat
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
             })
          }
       }else{
@@ -137,7 +119,6 @@ const MapForm = () => {
                pharmData.push({
                   title : list[i].dutyname,
                   latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
-<<<<<<< HEAD
                   dutyweekendat : list[i].dutyweekendat,
                   dutyaddr : list[i].dutyaddr,
                   dutytel1 : list[i].dutytel1,
@@ -145,28 +126,19 @@ const MapForm = () => {
                   lon : list[i].lon,
                   x : list[i].x,
                   y : list[i].y
-=======
-                  dutyweekendat : list[i].dutyweekendat
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
                })
             }
          }
       }
 
-<<<<<<< HEAD
       setLoading(false);
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
       console.log(pharmData);
 
       makeMap(pharmData)
    }
    
   //맵 생성
-<<<<<<< HEAD
   var map;
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
   const makeMap = (pharmData) => { //전체약국, 주말운영약국을 나눠서 출력하기 위해서 position을 나눠서 입력 받는다
 
    if(loading) return;
@@ -179,7 +151,6 @@ const MapForm = () => {
       script.onload = () => {
          window.kakao.maps.load(() => { 
             const mapContainer = document.getElementById("map");
-<<<<<<< HEAD
             //alert(nowLat.current +" , "+ nowLng.current);
             const mapOption = {
                center : new kakao.maps.LatLng(nowLat.current, nowLng.current),
@@ -187,14 +158,6 @@ const MapForm = () => {
             }
             
       map = new kakao.maps.Map(mapContainer, mapOption);
-=======
-            const mapOption = {
-               center : new kakao.maps.LatLng(centerPos.Lat, centerPos.Lng),
-               level : 3
-            }
-            
-         var map = new kakao.maps.Map(mapContainer, mapOption);
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
             
       //나의 위치 -------------------------------------------
       if(navigator.geolocation){
@@ -203,12 +166,9 @@ const MapForm = () => {
             var lat = position.coords.latitude, 
                lon = position.coords.longitude;
 
-<<<<<<< HEAD
             setMyLat(lat);
             setMyLog(lon);
             
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
             var locPosition = new kakao.maps.LatLng(lat, lon),
             message = `<div style="padding:5px;">나의 위치</div>`;
 
@@ -221,32 +181,10 @@ const MapForm = () => {
             displayMarker(locPosition, message);
       }
 
-<<<<<<< HEAD
-=======
-      function displayMarker(locPosition, message){
-         var marker = new kakao.maps.Marker({
-            map: map,
-            position: locPosition
-         })
-
-         var iwContent = message,
-            iwRemoveable = true;
-
-         var infowindow = new kakao.maps.InfoWindow({
-            content : iwContent,
-            removable : iwRemoveable
-         })
-
-         infowindow.open(map, marker);
-
-         map.setCenter(locPosition);
-      }
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
 
       //마커 표시 -------------------------------------------
 
         var imageSrc;
-<<<<<<< HEAD
         var check = true;
         var markerInfo = new Array();
         //for(var i=0 ; i<pharmData.length ; i++){ 지우면 안됨
@@ -305,30 +243,10 @@ const MapForm = () => {
             })
             // 마커 위에 인포윈도우 표시 끝 -------------------------------------
                
-=======
-        for(var i=0 ; i<pharmData.length ; i++){
-         console.log(pharmData.dutyweekendat);
-         if(pharmData[i].dutyweekendat === "Y"){
-            imageSrc = "https://github.com/khj20231204/firstproject/blob/main/redmarker.png?raw=true";
-         }else{
-            imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-         }
-
-         var markerSize = new kakao.maps.Size(24, 35); //마커 크기 설정
-         var markerImage = new kakao.maps.MarkerImage(imageSrc, markerSize); //마커 이미지 설정
-
-         var marker = new kakao.maps.Marker({
-            map: map, //마커를 표시할 지도
-            position: pharmData[i].latlng,
-            title: pharmData[i].title,
-            image: markerImage
-         })
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
         }
         //마커 표시 끝 -------------------------------------------
 
 
-<<<<<<< HEAD
         //지도 클릭 이벤트
          kakao.maps.event.addListener(map, 'click', function(mouseEvent){
             var latlng = mouseEvent.latLng;
@@ -359,8 +277,6 @@ const MapForm = () => {
         //kakao.maps.event.addListener(map, 'click', function(mouseEvent) { map에서 클릭 이벤트
         //kakao.maps.event.addListener(marker, 'click', function(mouseEvent) { marker에서 클릭 이벤트
         
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
       }); //maps.load
    };//script.onload
 
@@ -371,7 +287,6 @@ const MapForm = () => {
    };
   }//makeMap
 
-<<<<<<< HEAD
   let pathButtonSet = () => {
    console.log(pathButton);
    setPathButton(true);
@@ -397,8 +312,6 @@ const MapForm = () => {
 
       map.setCenter(locPosition);
    }
-=======
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
  
   /*
   api데이터 로드 함수 : api에서 데이터를 가져와서 db에 저장하는 기능을 가진 함수
@@ -451,7 +364,6 @@ const MapForm = () => {
    */}
       {
          loading ? 
-<<<<<<< HEAD
             <div style={{alignItems:'center',top:300}}>loading...</div>
          :
          <div style={{textAlign:'center'}}>
@@ -474,14 +386,6 @@ const MapForm = () => {
          
          <div id="map" style={{width: "100vw", height: "100vh"}}></div>
          </div>
-=======
-            <div style={{alignItems:'center'}}>loading...</div>
-         :
-         <>
-         <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button><Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
-         <div id="map" style={{width: "100vw", height: "100vh"}}></div>
-         </>
->>>>>>> 9168ad4addf2d17b52c6c5a329bc4e8b12f65a4f
       }
     </>
    );
