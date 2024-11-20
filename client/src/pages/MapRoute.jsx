@@ -1,6 +1,9 @@
+
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
 
 const {Tmapv2} = window;
 
@@ -8,6 +11,7 @@ const MapRoute = () => {
 
    const location = useLocation();
    const {lat, lon, myLat, myLog} = location.state;
+   const navigate = useNavigate();
 
    console.log(lat);
    console.log(lon);
@@ -21,41 +25,20 @@ const MapRoute = () => {
    var resultdrawArr = [];
 
 
-   const makeMap = () => {
-
-      const script = document.createElement("script");
-      script.src = `https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.REACT_APP_TMAP_API_KEY}`;
-      script.type = "text/javascript";
-
-      script.onload = () => {
-
-         map = new Tmapv2.Map("map_div", {
-            center: new Tmapv2.LatLng(37.5665, 126.9780), // 중심 좌표 (서울시청)
-            width: "100%",  // 지도의 가로 크기
-            height: "400px", // 지도의 세로 크기
-            zoom: 15,         // 초기 줌 레벨
-            zoomControl: true,
-            scrollwheel: true
-          });
-      }
-
-      document.head.appendChild(script);
-
-      return () => {
-         document.head.removeChild(script);
-      }
-   }//makeMap
-
    useEffect(() => {
       initTmap();
    },[])
 
    function initTmap() {
+      var centerLat = (myLat + lat)/2;
+      var centerLog = (myLog + lon)/2;
+
 		// 1. 지도 띄우기
 		map = new Tmapv2.Map("map_div", {
-		center : new Tmapv2.LatLng(37.56520450, 126.98702028),
+		//center : new Tmapv2.LatLng(37.56520450, 126.98702028),
+      center: new Tmapv2.LatLng(centerLat, centerLog), // 중심 좌표 (서울시청)
 			width : "100%",
-			height : "800px",
+			height : "830px",
 			zoom : 17,
 			zoomControl : true,
 			scrollwheel : true
@@ -65,14 +48,9 @@ const MapRoute = () => {
 		// 시작
 		marker_s = new Tmapv2.Marker(
 				{
-<<<<<<< HEAD
 					//position : new Tmapv2.LatLng(37.564991,126.983937),
-					postition : new Tmapv2.LatLng(37.503551616907366,127.03840705384857),
-					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-=======
-					position : new Tmapv2.LatLng(37.564991,126.983937),
-					icon : "/upload/tmap/marker/pin_r_m_s.png",
->>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
+               position : new Tmapv2.LatLng(myLat,myLog),
+					icon : "https://github.com/khj20231204/firstproject/blob/main/marker_man.png?raw=true",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -80,14 +58,9 @@ const MapRoute = () => {
 		// 도착
 		marker_e = new Tmapv2.Marker(
 				{
-<<<<<<< HEAD
 					//position : new Tmapv2.LatLng(37.566158,126.988940),
-					position : new Tmapv2.LatLng(37.5017593,127.0345362),
-					icon : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-=======
-					position : new Tmapv2.LatLng(37.566158,126.988940),
-					icon : "/upload/tmap/marker/pin_r_m_e.png",
->>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
+               position : new Tmapv2.LatLng(lat,lon),
+					icon : "https://github.com/khj20231204/firstproject/blob/main/marker_pharm.png?raw=true",
 					iconSize : new Tmapv2.Size(24, 38),
 					map : map
 				});
@@ -99,17 +72,14 @@ const MapRoute = () => {
       axios.post(
          "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json",
          {
-<<<<<<< HEAD
-            startX:"127.03840705384857",//"126.983937",
-            startY: "37.503551616907366",//"37.564991",
-            endX: "127.0345362",//"126.988940",
-            endY: "37.5017593",//"37.566158",
-=======
-            startX: "126.983937",
+            /* startX: "126.983937",
             startY: "37.564991",
-            endX: "126.988940",
-            endY: "37.566158",
->>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
+             endX: "126.988940",
+            endY: "37.566158", */
+            startX: myLog,
+            startY: myLat,
+            endX: lon,
+            endY: lat, 
             reqCoordType: "WGS84GEO",
             resCoordType: "EPSG3857",
             startName: "출발지",
@@ -118,13 +88,8 @@ const MapRoute = () => {
          { headers: headers }
          )
          .then(response => {
-<<<<<<< HEAD
 				var resultData = response.data.features;
 				console.log(resultData)
-=======
-        
-            var resultData = response.features;
->>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 
 					//결과 출력
 					var tDistance = "총 거리 : "
@@ -135,9 +100,9 @@ const MapRoute = () => {
 									.toFixed(0) + "분";
 
                var result = document.getElementById("result");
-               result.innerText = result;
+               result.innerText = tDistance + tTime;
 					//$("#result").text(tDistance + tTime);
-					
+
 					//기존 그려진 라인 & 마커가 있다면 초기화
 					if (resultdrawArr.length > 0) {
 						for ( var i in resultdrawArr) {
@@ -177,11 +142,11 @@ const MapRoute = () => {
 							var size;
 
 							if (properties.pointType == "S") { //출발지 마커
-								markerImg = "/upload/tmap/marker/pin_r_m_s.png";
+								markerImg = "https://github.com/khj20231204/firstproject/blob/main/marker_man.png?raw=true";
 								pType = "S";
 								size = new Tmapv2.Size(24, 38);
 							} else if (properties.pointType == "E") { //도착지 마커
-								markerImg = "/upload/tmap/marker/pin_r_m_e.png";
+								markerImg = "https://github.com/khj20231204/firstproject/blob/main/marker_pharm.png?raw=true";
 								pType = "E";
 								size = new Tmapv2.Size(24, 38);
 							} else { //각 포인트 마커
@@ -218,10 +183,6 @@ const MapRoute = () => {
                      });
 						}
 					}//for문 [E]
-<<<<<<< HEAD
-=======
-               alert("ㅇㄴㄹ");
->>>>>>> a0c6d659cb031729c35f4ef021461a44cf1f1de9
 					drawLine(drawInfoArr);
             })
             .catch(error => {
@@ -236,7 +197,6 @@ const MapRoute = () => {
 	}
 	
 	function drawLine(arrPoint) {
-      alert(arrPoint);
 		var polyline_;
 
 		polyline_ = new Tmapv2.Polyline({
@@ -251,11 +211,11 @@ const MapRoute = () => {
    return (
    <div>
       <div id="map_wrap" class="map_wrap3">
-      <div id="map_div"></div>
-   </div>
-   <div class="map_act_btn_wrap clear_box"></div>
-   <p id="result"></p>
-   <br />
+         <div id="map_div"></div>
+      </div>
+      <span id="result"></span><span style={{margin:10}}><Button variant="light" type="button" onClick={() => {
+        navigate(-1);
+      }}>돌아가기</Button></span>
    </div>
    );
 };

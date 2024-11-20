@@ -3,13 +3,21 @@ import { LoginContext } from './LoginContextProvider';
 
 const LoginContextConsumer = () => {
 
-   const { isLogin } = useContext(LoginContext);
+   const { isLogin,tokenMsg,userInfo } = useContext(LoginContext);
 
    return (
       <div>
          <h2>LoginContextConsumer</h2>
-         로그인 여부 : {isLogin ? '로그인' : '로그아웃'}
-
+         {
+            isLogin ? 
+            <>
+            <div>JWT : {tokenMsg.slice(0, 50) + '...' }</div>
+            <div>Payload : {JSON.stringify(userInfo)}</div>
+            </>
+            :
+            <div>Logout</div>
+         }
+          
       </div>
    );
 };

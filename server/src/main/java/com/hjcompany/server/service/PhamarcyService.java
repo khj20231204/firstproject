@@ -15,5 +15,4 @@ public interface PhamarcyService {
    int savePharmDataList(List<Pharm> pharmData);
 
    List<Pharm> getData();
-   
 }
