@@ -14,8 +14,7 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
    countyName 없으면 null
    searchText 없으면 "" 빈칸
    */
-   console.log(stateName + " , " +  countyName + " , " + searchText);
-
+   
    const convert = require('xml-js');
 
   //37.4997799 , 127.0306391
@@ -40,11 +39,9 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
   let [pathLat ,setPathLat] = useState();
   let [pathLog, setPathLog] = useState();
 
-  let [mLat, setMLat] = useState();
-  let [mLng, setMLng] = useState();
-
-  let [myLat, setMyLat] = useState(); //나의 위치 정보
-  let [myLog, setMyLog] = useState(); //나의 위치 정보
+  //나의 위치 정보
+  let [myLat, setMyLat] = useState("37.4997799"); 
+  let [myLog, setMyLog] = useState("127.0306391"); 
 
   let navigate = useNavigate();
 
@@ -73,17 +70,57 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
   }, []) //api데이터를 DB에 입력시 [page] 입력
 
   
+  //list가 다운완료가 되면 useEffect가 실행되기 때문에 이때 loading을 false로 셋팅
   useEffect(() => {
-      setLoading(false); //list를 완전히 받아왔는지 아닌지 loading으로 체크, false이면 다운 완료
-      PharmData(); //첫 페이지 로딩은 전체 약국으로
+       //list를 완전히 받아왔는지 아닌지 loading으로 체크, false이면 다운 완료
+      //PharmData(); //첫 페이지 로딩은 전체 약국으로
+      stateNameCheckNull();
   }, [list]) //checkPharmData 전체, 주말 약국 버튼을 클릭할 때마다 로딩
 
   useEffect(() => {
-   if(!loading){
-      PharmData();
-   }
+   
+   //stateNameCheckNull();
+   /* if(!loading){ //loading이 완료 되었을 때만 실행되기 위해서 위에 useEffect와 따로 작성
+
+      if(stateName === undefined || countyName === undefined || searchText === undefined) //검색창이 아니라 헤더에 있는 메뉴를 클릭한 경우
+      {
+         alert("undefiend")
+         PharmData();
+      }else{
+         if(stateName !== '' || countyName !== '' || searchText !== ''){ //검색을 한 경우
+            alert('검색중')
+            searchPharmData();
+         }else{
+            alert("undefiend")
+            PharmData(); //검색창으로 접근했지만 검색은 하지 않은 경우
+         }
+      }
+   } */
   }, [checkPharmData])
+
+  useEffect(() => {
+   setLoading(false);
+   console.log("useEffect dataList.length:"+dataList.length);
+  }, [dataList])
   
+  const stateNameCheckNull = (check) => {
+   if(!loading){ //loading이 완료 되었을 때만 실행되기 위해서 위에 useEffect와 따로 작성
+
+      if(stateName === undefined || countyName === undefined || searchText === undefined) //검색창이 아니라 헤더에 있는 메뉴를 클릭한 경우
+      {
+         alert("undefiend")
+         PharmData(check);
+      }else{
+         if(stateName !== '' || countyName !== '' || searchText !== ''){ //검색을 한 경우
+            alert('검색중')
+            searchPharmData(check);
+         }else{
+            alert("undefiend")
+            PharmData(check); //검색창으로 접근했지만 검색은 하지 않은 경우
+         }
+      }
+   }
+  }
   
   //DB에서 데이터 가져오기
   const getData = async () => {
@@ -98,17 +135,18 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
       setList([...response.data.list]);
       console.log("RDS connect => list");
       console.log(list);
+      
   }
 
    //전체, 주말, 검색 이후 약국 목록
-   const PharmData = () => {
+   const PharmData = (check) => {
 
       setLoading(true);
       setDataList([]);
 
       var pharmData = new Array();
 
-      if(checkPharmData){
+      if(check){
          for(var i=0 ; i<list.length ; i++){ //전국 약국
             pharmData.push({
                title : list[i].dutyname,
@@ -141,18 +179,93 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
          }
       }
 
-      setLoading(false);
-      console.log(pharmData);
       setDataList([...pharmData]);
 
-      makeMap(pharmData)
+      //if(!loading)
+         makeMap(pharmData)
    }
    
+   //search 항목이 있을 때 실행하게 될 함수
+   const searchPharmData = (totalcheck) => {
+      console.log(stateName + " , " +  countyName + " , " + searchText);
+
+      setLoading(true);
+      setDataList([]);
+
+      var pharmData = new Array();
+
+      let tempLat; //검색한 결과로 이동하기 위한 임시 위치값
+      let tempLng;
+      for(var i=0 ; i<list.length ; i++){ //전국 약국
+
+         var addr = list[i].dutyaddr;
+
+         var addrArray = addr.split(" ")
+         //console.log(addrArray[0]);
+         //console.log(addrArray[1]);
+
+         var state = addrArray[0];
+         var county = addrArray[1];
+         var sText = list[i].dutyname;
+
+         //console.log(!stateName+ " , " + !countyName + ", " + !searchText);
+
+         var check = true;
+         if(stateName && stateName !== state) {check = false;} 
+         if(countyName && countyName !== county) {check = false;}
+         if(searchText && searchText !== sText) {check = false;}
+
+         //checkPharmData = true 전국 약국, checkPharmData = false 주말 약국
+         if(!totalcheck){ //주말약국
+            if(list[i].dutyweekendat !== "Y")
+               check = false;
+         }
+
+         /*
+         stateName && stateName !== state
+         stateName에 입력값이 없으면 false이기 때문에 if문이 실행 안됨, 입력값이 없으면 자동 통과
+         stateName에 입력값이 있는 경우 stateName과 state가 다르면 참이 되어 check는 false가 된다
+         if가 실행되면 입력을 하지 않는다
+         *공백(빈문자), null, 0, undefined, NaN
+         */
+
+         console.log("check:"+check+" ,state:"+state+" ,county:"+county);
+         console.log("check:"+check+" ,stateName:"+stateName+" ,countyName:"+countyName);
+         
+         if(check){
+            pharmData.push({
+               title : list[i].dutyname,
+               latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
+               dutyweekendat : list[i].dutyweekendat,
+               dutyaddr : list[i].dutyaddr,
+               dutytel1 : list[i].dutytel1,
+               lon : list[i].lon,
+               lat : list[i].lat,
+               x : list[i].x,
+               y : list[i].y
+            })
+
+            tempLat = list[i].lat;
+            tempLng = list[i].lon;
+
+         }//if
+      }//for
+      
+      setMyLat(tempLat);
+      setMyLog(tempLng);
+      setDataList([...pharmData]);
+     
+      //if(!loading)
+         makeMap(pharmData)
+   }
+
   //맵 생성
   var map;
   const makeMap = (pharmData) => { //전체약국, 주말운영약국을 나눠서 출력하기 위해서 position을 나눠서 입력 받는다
 
    if(loading) return;
+
+   //if(dataList.length <= 0 ) return;
 
       const script = document.createElement("script");
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`;
@@ -162,14 +275,18 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
       script.onload = () => {
          window.kakao.maps.load(() => { 
             const mapContainer = document.getElementById("map");
-            //alert(nowLat.current +" , "+ nowLng.current);
             const mapOption = {
-               center : new kakao.maps.LatLng(nowLat.current, nowLng.current),
+               //let [myLat, setMyLat] = useState("37.4997799"); 
+               //let [myLog, setMyLog] = useState("127.0306391"); 
+               //center : new kakao.maps.LatLng(nowLat.current, nowLng.current),
+               //center : new kakao.maps.LatLng("30.4997799", "127.0306391"),
+               center : new kakao.maps.LatLng(myLat, myLog),
                level : 3
             }
             
       map = new kakao.maps.Map(mapContainer, mapOption);
-            
+
+      map.setCenter(new kakao.maps.LatLng(myLat, myLat));
       //나의 위치 -------------------------------------------
       if(navigator.geolocation){
          navigator.geolocation.getCurrentPosition(function(position){
@@ -177,15 +294,16 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
             var lat = position.coords.latitude, 
                lon = position.coords.longitude;
 
-            setMyLat(lat);
-            setMyLog(lon);
+            //setMyLat(lat);
+            //setMyLog(lon);
             
-            var locPosition = new kakao.maps.LatLng(lat, lon),
-            message = `<div style="padding:5px;">나의 위치</div>`;
+            var locPosition = new kakao.maps.LatLng(lat, lon);
+            var message = `<div style="padding:5px;">나의 위치</div>`;
 
             displayMarker(locPosition, message);
          })
       }else {
+         
          var locPosition = new kakao.maps.LatLng(37.5112,127.04595),
             message = 'geolocation을 사용할 수 없습니다';
 
@@ -196,13 +314,7 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
       //마커 표시 -------------------------------------------
 
         var imageSrc;
-        var check = true;
-        var markerInfo = new Array();
-        for(var i=0 ; i<pharmData.length ; i++){ //지우면 안됨
-        /*  for(var i=0 ; i<100 ; i++){ */
-            
-            markerInfo[i] = pharmData[i];
-
+        for(var i=0 ; i<pharmData.length ; i++){ 
 
             if(pharmData[i].dutyweekendat === "Y"){
                imageSrc = "https://github.com/khj20231204/firstproject/blob/main/redmarker.png?raw=true";
@@ -232,15 +344,12 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
 
             var iwRemoveable = true;
             
-            //var iwPosition = new kakao.maps.LatLng(pharmData[i].lat, pharmData[i].lon);
-
             let inforwindow = new kakao.maps.InfoWindow({
                position: pharmData[i].latlng,
                content: iwContent,
                removeable: iwRemoveable
             })
 
-            //inforwindow.open(map, marker[i]);
             kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
                let mPosition = marker.getPosition();
                let mLat = mPosition.getLat();
@@ -267,19 +376,14 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
         }
         //마커 표시 끝 -------------------------------------------
 
-
         //지도 클릭 이벤트
          kakao.maps.event.addListener(map, 'click', function(mouseEvent){
             var latlng = mouseEvent.latLng;
 
             if(document.getElementById("latpathText") !== null){
               
-               //중심 위치를 지도에서 클릭한 위치로 등록
-               nowLat.current = latlng.getLat();
-               nowLng.current = latlng.getLng(); 
-
-               console.log(latlng.La) //경도
-               console.log(latlng.Ma) //위도
+               console.log("지도 상의 lat:" + latlng.La) //경도
+               console.log("지도 상의 lng:" + latlng.Ma) //위도
 
                document.getElementById("latpathText").value = latlng.Ma;
                document.getElementById("logpathText").value = latlng.La;
@@ -287,16 +391,8 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
                setPathLat(latlng.Ma);
                setPathLog(latlng.La);
             }
-            //latlng = latlng.subString(1, len);
-            /*
-            var len = latlng.length;
-            latlng = latlng.subString(0, len-1);
-            document.getElementById("pathText").value = latlng;*/
          })
         //지도 클릭 이벤트 끝
-
-        //kakao.maps.event.addListener(map, 'click', function(mouseEvent) { map에서 클릭 이벤트
-        //kakao.maps.event.addListener(marker, 'click', function(mouseEvent) { marker에서 클릭 이벤트
         
       }); //maps.load
    };//script.onload
@@ -331,7 +427,8 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
 
       infowindow.open(map, marker);
 
-      map.setCenter(locPosition);
+      //map.setCenter(locPosition); //지도 중심을 내 위치로
+      map.setCenter(new kakao.maps.LatLng(myLat, myLog)); //지도 중심을 내 위치로
    }
  
   /*
@@ -387,13 +484,14 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
          (dataList.length !== 0) ? 
 
             <div style={{textAlign:'center'}}>
-            <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button>
-            <Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
+            <Button variant="outline-secondary" style={{margin:10}} onClick={() => /* setCheckPharmData(true) */ stateNameCheckNull(true)}>전체 약국 보기</Button>
+            <Button variant="outline-danger" onClick={() => /* setCheckPharmData(false) */ stateNameCheckNull(false)}>주말 운영 약국 보기</Button>
             
             {
                   pathButton ? 
 
                   <span><span style={{margin:10}}>목적지 Lat : <input type="text" id="latpathText" readOnly></input>Log : <input type="text" id="logpathText" readOnly></input></span><Button variant="outline-primary" style={{margin:10}} onClick={() => {
+
                      navigate("/MapRoute", {state : {lat: pathLat, lon : pathLog, myLat:myLat, myLog:myLog}});
                   }}>찾기</Button><Button variant="outline-primary" style={{margin:10}} onClick={() => setPathButton(false)}>취소</Button></span>
                   
@@ -404,7 +502,7 @@ const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMa
                   }}>경로 찾기</Button>
             }
             
-            <div id="map" style={{width: "100vw", height: "100vh"}}></div>
+            <div id="map" style={{width: "100vw", height: "92vh"}}></div>
             </div>
          :
             <div style={{alignItems:'center',top:300}}>loading... 데이터를 불러오고 있습니다.</div>

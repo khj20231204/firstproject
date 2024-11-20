@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
 
 const {Tmapv2} = window;
 
@@ -9,6 +11,7 @@ const MapRoute = () => {
 
    const location = useLocation();
    const {lat, lon, myLat, myLog} = location.state;
+   const navigate = useNavigate();
 
    console.log(lat);
    console.log(lon);
@@ -210,7 +213,9 @@ const MapRoute = () => {
       <div id="map_wrap" class="map_wrap3">
          <div id="map_div"></div>
       </div>
-      <p id="result"></p>
+      <span id="result"></span><span style={{margin:10}}><Button variant="light" type="button" onClick={() => {
+        navigate(-1);
+      }}>돌아가기</Button></span>
    </div>
    );
 };
