@@ -11,7 +11,7 @@ const LoginContextConsumer = () => {
          {
             isLogin ? 
             <>
-            <div>JWT : {tokenMsg}</div>
+            <div>JWT : {tokenMsg.slice(0, 50) + '...' }</div>
             <div>Payload : {JSON.stringify(userInfo)}</div>
             </>
             :

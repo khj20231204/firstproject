@@ -9,6 +9,8 @@ import statedata from '../../state.json';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useContext, useEffect, useRef, useState } from 'react';
 import statecounty from '../../state_county.json';
+import { useNavigate } from 'react-router-dom';
+import MapForm from './../Map/MapForm';
 
 const PharMain = () => {
 
@@ -20,6 +22,8 @@ const PharMain = () => {
    let [countyList, setCountyList] = useState([]); //시/도에 따른 구/군을 저장하는 list
    let [selectCounty, setSelectCounty] = useState(null); //구/군 선택 값
 	let navDropdownRef = useRef(null);
+   
+   let navigate = useNavigate(null);
 
    useEffect(() => {
       setSelectCounty(null); //시/도를 선택하면 구/군은 무조건  구/군 선택으로 만든다
@@ -32,9 +36,11 @@ const PharMain = () => {
       e.preventDefault()
       
       let form = e.target;
-      console.log(form.searchText.value)
+      /* console.log("pharMain stateName:"+stateName);
+      console.log("pharMain countyName:"+selectCounty);
+      console.log("pharMain selectCounty:"+ form.searchText.value); */
 
-      
+      navigate('/map', {state:{stateName:stateName,countyName:selectCounty,searchText:form.searchText.value}});
    }
 
    return (
@@ -80,10 +86,10 @@ const PharMain = () => {
 								</NavDropdown>
 
 								<NavDropdown title={selectCounty === null ? "구/군 선택" : selectCounty} id="navbarScrollingDropdown" style={{width:400, background:'#ffffff', margin:5}}>
-                        <NavDropdown.Item href="#action3" value="" style={{width:300}} onClick={() => setSelectCounty(null)}>구/군 선택</NavDropdown.Item>
+                        <NavDropdown.Item value="" style={{width:300}} onClick={() => setSelectCounty(null)}>구/군 선택</NavDropdown.Item>
                         {
                            countyList.map((v,i) => {
-                             return(<NavDropdown.Item href="#action3" value={v} style={{width:300}} onClick={() => setSelectCounty(v)}>{v}</NavDropdown.Item>)
+                             return(<NavDropdown.Item key={i} href="#action3" value={v} style={{width:300}} onClick={() => setSelectCounty(v)}>{v}</NavDropdown.Item>)
                            })
                         }   
 								</NavDropdown>	

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const useCurrentLocation = (options = {}) => {
   // store location in state
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState({});
   // store error message in state
   const [error, setError] = useState();
 

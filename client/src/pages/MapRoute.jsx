@@ -35,7 +35,7 @@ const MapRoute = () => {
 		//center : new Tmapv2.LatLng(37.56520450, 126.98702028),
       center: new Tmapv2.LatLng(centerLat, centerLog), // 중심 좌표 (서울시청)
 			width : "100%",
-			height : "800px",
+			height : "830px",
 			zoom : 17,
 			zoomControl : true,
 			scrollwheel : true
@@ -97,9 +97,9 @@ const MapRoute = () => {
 									.toFixed(0) + "분";
 
                var result = document.getElementById("result");
-               result.innerText = result;
+               result.innerText = tDistance + tTime;
 					//$("#result").text(tDistance + tTime);
-					
+
 					//기존 그려진 라인 & 마커가 있다면 초기화
 					if (resultdrawArr.length > 0) {
 						for ( var i in resultdrawArr) {
@@ -194,7 +194,6 @@ const MapRoute = () => {
 	}
 	
 	function drawLine(arrPoint) {
-      alert(arrPoint);
 		var polyline_;
 
 		polyline_ = new Tmapv2.Polyline({
@@ -209,11 +208,9 @@ const MapRoute = () => {
    return (
    <div>
       <div id="map_wrap" class="map_wrap3">
-      <div id="map_div"></div>
-   </div>
-   <div class="map_act_btn_wrap clear_box"></div>
-   <p id="result"></p>
-   <br />
+         <div id="map_div"></div>
+      </div>
+      <p id="result"></p>
    </div>
    );
 };

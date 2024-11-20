@@ -1,27 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Location from './Location';
 import api from '../../apis/api';
 import * as mapapi from '../../apis/mapapi';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 
+
 const {kakao} = window;
 
-const MapForm = () => {
+const MapForm = ({stateName, countyName, searchText}) => { //매개변수 PharMain.jsx -> Map.jsx 에서 넘겨받은 값
+
+   /* 
+   stateName 없으면 null
+   countyName 없으면 null
+   searchText 없으면 "" 빈칸
+   */
+   console.log(stateName + " , " +  countyName + " , " + searchText);
 
    const convert = require('xml-js');
 
-  const [centerPos, setCenterPos] = useState({
-    Lat : 37.5112,
-    Lng : 127.04595
-  });
-
-  const nowLat = useRef('37.5112');
-  const nowLng = useRef('127.04595');
+  //37.4997799 , 127.0306391
+  let nowLat = useRef("37.4997799");
+  let nowLng = useRef("127.0306391");
 
   let [page, setPage] = useState(1); //api uri에 사용할 page, api데이터를 db에 입력시 사용
 
-  const [list, setList] = useState([]); //배열로 선언, api 데이터 받는 list
+  const [list, setList] = useState([]); //배열로 선언, api 데이터 받는 전체 list
+
+  const [dataList, setDataList] = useState([]); //주말진료나 검색 이후 만들어진 list
 
   const [loading, setLoading] = useState(true); //db에서 list를 가져올 때 까지 map을 읽지 않는다
 
@@ -38,8 +43,8 @@ const MapForm = () => {
   let [mLat, setMLat] = useState();
   let [mLng, setMLng] = useState();
 
-  let [myLat, setMyLat] = useState();
-  let [myLog, setMyLog] = useState();
+  let [myLat, setMyLat] = useState(); //나의 위치 정보
+  let [myLog, setMyLog] = useState(); //나의 위치 정보
 
   let navigate = useNavigate();
 
@@ -95,10 +100,11 @@ const MapForm = () => {
       console.log(list);
   }
 
-   //전국 약국
+   //전체, 주말, 검색 이후 약국 목록
    const PharmData = () => {
 
       setLoading(true);
+      setDataList([]);
 
       var pharmData = new Array();
 
@@ -137,6 +143,7 @@ const MapForm = () => {
 
       setLoading(false);
       console.log(pharmData);
+      setDataList([...pharmData]);
 
       makeMap(pharmData)
    }
@@ -269,7 +276,7 @@ const MapForm = () => {
               
                //중심 위치를 지도에서 클릭한 위치로 등록
                nowLat.current = latlng.getLat();
-               nowLng.current = latlng.getLng();
+               nowLng.current = latlng.getLng(); 
 
                console.log(latlng.La) //경도
                console.log(latlng.Ma) //위도
@@ -377,29 +384,30 @@ const MapForm = () => {
       </div>
    */}
       {
-         loading ? 
-            <div style={{alignItems:'center',top:300}}>loading...</div>
+         (dataList.length !== 0) ? 
+
+            <div style={{textAlign:'center'}}>
+            <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button>
+            <Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
+            
+            {
+                  pathButton ? 
+
+                  <span><span style={{margin:10}}>목적지 Lat : <input type="text" id="latpathText" readOnly></input>Log : <input type="text" id="logpathText" readOnly></input></span><Button variant="outline-primary" style={{margin:10}} onClick={() => {
+                     navigate("/MapRoute", {state : {lat: pathLat, lon : pathLog, myLat:myLat, myLog:myLog}});
+                  }}>찾기</Button><Button variant="outline-primary" style={{margin:10}} onClick={() => setPathButton(false)}>취소</Button></span>
+                  
+                  :
+
+                  <Button variant="outline-primary" style={{margin:10}} onClick={() => {
+                     setPathButton(true)
+                  }}>경로 찾기</Button>
+            }
+            
+            <div id="map" style={{width: "100vw", height: "100vh"}}></div>
+            </div>
          :
-         <div style={{textAlign:'center'}}>
-         <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button>
-         <Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
-         
-         {
-               pathButton ? 
-
-               <span><span style={{margin:10}}>목적지 Lat : <input type="text" id="latpathText" readOnly></input>Log : <input type="text" id="logpathText" readOnly></input></span><Button variant="outline-primary" style={{margin:10}} onClick={() => {
-                  navigate("/MapRoute", {state : {lat: pathLat, lon : pathLog, myLat:myLat, myLog:myLog}});
-               }}>찾기</Button><Button variant="outline-primary" style={{margin:10}} onClick={() => setPathButton(false)}>취소</Button></span>
-               
-               :
-
-               <Button variant="outline-primary" style={{margin:10}} onClick={() => {
-                  setPathButton(true)
-               }}>경로 찾기</Button>
-         }
-         
-         <div id="map" style={{width: "100vw", height: "100vh"}}></div>
-         </div>
+            <div style={{alignItems:'center',top:300}}>loading... 데이터를 불러오고 있습니다.</div>
       }
     </>
    );

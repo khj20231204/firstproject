@@ -1,249 +1,428 @@
-/*
 
-서울특별시,종로구
-서울특별시,중구
-서울특별시,용산구
-서울특별시,성동구
-서울특별시,광진구
-서울특별시,동대문
-서울특별시,중랑구
-서울특별시,성북구
-서울특별시,강북구
-서울특별시,도봉구
-서울특별시,노원구
-서울특별시,은평구
-서울특별시,서대문
-서울특별시,마포구
-서울특별시,양천구
-서울특별시,강서구
-서울특별시,구로구
-서울특별시,금천구
-서울특별시,영등포8
-서울특별시,동작구
-서울특별시,관악구
-서울특별시,서초구
-서울특별시,강남구
-서울특별시,송파구
-서울특별시,강동구
+//ERROR 남
 
-부산광역시,중구
-부산광역시,서구
-부산광역시,동구
-부산광역시,영도구
-부산광역시,부산진
-부산광역시,동래구
-부산광역시,남구
-부산광역시,북구
-부산광역시,해운대
-부산광역시,사하구
-부산광역시,금정구
-부산광역시,강서구
-부산광역시,연제구
-부산광역시,수영구
-부산광역시,사상구
-부산광역시,기장군
-
-대구광역시,중구
-대구광역시,동구
-대구광역시,서구
-대구광역시,남구
-대구광역시,북구
-대구광역시,수성구
-대구광역시,달서구
-대구광역시,달성군
-인천광역시,중구
-인천광역시,동구
-인천광역시,미추홀
-인천광역시,연수구
-인천광역시,남동구
-인천광역시,부평구
-인천광역시,계양구
-인천광역시,서구
-인천광역시,강화군
-인천광역시,옹진군
-
-광주광역시,동구
-광주광역시,서구
-광주광역시,남구
-광주광역시,북구
-광주광역시,광산구
-
-대전광역시,동구
-대전광역시,중구
-대전광역시,서구
-대전광역시,유성구
-대전광역시,대덕구
-
-울산광역시,중구
-울산광역시,남구
-울산광역시,동구
-울산광역시,북구
-울산광역시,울주군
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../../apis/api';
+import * as mapapi from '../../apis/mapapi';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 
-경기도,수원시
-경기도,성남시
-경기도,의정부시
-경기도,안양시
-경기도,부천시
-경기도,광명시
-경기도,평택시
-경기도,동두천시
-경기도,안산시
-경기도,고양시
-경기도,과천시
-경기도,구리시
-경기도,남양주시
-경기도,오산시,18100,18151
-경기도,시흥시,14900,15119
-경기도,군포시,15800,15892
-경기도,의왕시,16000,16109
-경기도,하남시,12900,13029
-경기도,용인시 처인구,16884,17183
-경기도,용인시 기흥구,16834,17114
-경기도,용인시 수지구,16800,16944
-경기도,파주시,10800,10955
-경기도,이천시,17300,17424
-경기도,안성시,17500,17609
-경기도,김포시,10000,10136
-경기도,화성시,18200,18635
-경기도,광주시,12700,12819
-경기도,양주시,11400,11525
-경기도,포천시,11100,11192
-경기도,여주시,12600,12668
-경기도,연천군,11000,11050
-경기도,가평군,12400,12474
-경기도,양평군,12500,12585
-강원특별자치도,춘천시,24200,24471
-강원특별자치도,원주시,26300,26509
-강원특별자치도,강릉시,25400,25646
-강원특별자치도,동해시,25700,25822
-강원특별자치도,태백시,26000,26053
-강원특별자치도,속초시,24800,24904
-강원특별자치도,삼척시,25900,25961
-강원특별자치도,홍천군,25100,25171
-강원특별자치도,횡성군,25200,25273
-강원특별자치도,영월군,26200,26248
-강원특별자치도,평창군,25300,25384
-강원특별자치도,정선군,26100,26157
-강원특별자치도,철원군,24000,24065
-강원특별자치도,화천군,24100,24161
-강원특별자치도,양구군,24500,24564
-강원특별자치도,인제군,24600,24668
-강원특별자치도,고성군,24701,24770
-강원특별자치도,양양군,25000,25061
-충청북도,청주시 상당구,28186,28806
-충청북도,청주시 서원구,28178,28805
-충청북도,청주시 흥덕구,28100,28644
-충청북도,청주시 청원구,28100,28540
-충청북도,충주시,27300,27502
-충청북도,제천시,27100,27226
-충청북도,보은군,28900,28966
-충청북도,옥천군,29000,29064
-충청북도,영동군,29100,29167
-충청북도,증평군,27900,27950
-충청북도,진천군,27800,27876
-충청북도,괴산군,28000,28065
-충청북도,음성군,27600,27740
-충청북도,단양군,27000,27029
-충청남도,천안시 동남구,31062,31261
-충청남도,천안시 서북구,31000,31181
-충청남도,공주시,32500,32626
-충청남도,보령시,33400,33522
-충청남도,아산시,31400,31584
-충청남도,서산시,31900,32030
-충청남도,논산시,32900,33028
-충청남도,계룡시,32800,32842
-충청남도,당진시,31700,31817
-충청남도,금산군,32700,32762
-충청남도,부여군,33100,33232
-충청남도,서천군,33600,33677
-충청남도,청양군,33300,33368
-충청남도,홍성군,32200,32299
-충청남도,예산군,32400,32457
-충청남도,태안군,32100,32172
-전라북도,전주시 완산구,54877,55144
-전라북도,전주시 덕진구,54800,55151
-전라북도,군산시,54000,54179
-전라북도,익산시,54500,54679
-전라북도,정읍시,56100,56216
-전라북도,남원시,55700,55805
-전라북도,김제시,54300,54426
-전라북도,완주군,55300,55368
-전라북도,진안군,55400,55460
-전라북도,무주군,55500,55563
-전라북도,장수군,55600,55662
-전라북도,임실군,55900,55957
-전라북도,순창군,56000,56059
-전라북도,고창군,56400,56469
-전라북도,부안군,56300,56349
-전라남도,목포시,58600,58763
-전라남도,여수시,59600,59792
-전라남도,순천시,57900,58035
-전라남도,나주시,58200,58330
-전라남도,광양시,57700,57817
-전라남도,담양군,57300,57393
-전라남도,곡성군,57500,57562
-전라남도,구례군,57600,57662
-전라남도,고흥군,59500,59572
-전라남도,보성군,59400,59475
-전라남도,화순군,58100,58165
-전라남도,장흥군,59300,59366
-전라남도,강진군,59200,59269
-전라남도,해남군,59000,59067
-전라남도,영암군,58400,58467
-전라남도,무안군,58500,58580
-전라남도,함평군,57100,57167
-전라남도,영광군,57000,57069
-전라남도,장성군,57200,57257
-전라남도,완도군,59100,59170
-전라남도,진도군,58900,58958
-전라남도,신안군,58800,58866
-경상북도,포항시 남구,37653,37947
-경상북도,포항시 북구,37500,37948
-경상북도,경주시,38000,38221
-경상북도,김천시,39500,39698
-경상북도,안동시,36600,36760
-경상북도,구미시,39100,39459
-경상북도,영주시,36000,36175
-경상북도,영천시,38800,38913
-경상북도,상주시,37100,37276
-경상북도,문경시,36900,37003
-경상북도,경산시,38400,38698
-경상북도,군위군,39000,39066
-경상북도,의성군,37300,37375
-경상북도,청송군,37400,37465
-경상북도,영양군,36500,36564
-경상북도,영덕군,36400,36464
-경상북도,청도군,38300,38368
-경상북도,고령군,40100,40166
-경상북도,성주군,40000,40066
-경상북도,칠곡군,39800,39915
-경상북도,예천군,36800,36867
-경상북도,봉화군,36200,36273
-경상북도,울진군,36300,36371
-경상북도,울릉군,40200,40240
-경상남도,창원시 의창구,51100,51446
-경상남도,창원시 성산구,51411,51712
-경상남도,창원시 마산합포구,51251,51797
-경상남도,창원시 마산회원구,51203,51366
-경상남도,창원시 진해구,51578,51703
-경상남도,진주시,52600,52859
-경상남도,통영시,53000,53104
-경상남도,사천시,52500,52571
-경상남도,김해시,50800,51025
-경상남도,밀양시,50400,50467
-경상남도,거제시,53200,53337
-경상남도,양산시,50500,50658
-경상남도,의령군,52100,52160
-경상남도,함안군,52000,52073
-경상남도,창녕군,50300,50367
-경상남도,고성군,52900,52963
-경상남도,남해군,52400,52455
-경상남도,하동군,52300,52355
-경상남도,산청군,52200,52264
-경상남도,함양군,50000,50057
-경상남도,거창군,50100,50153
-경상남도,합천군,50200,50253
-제주특별자치도,제주시,63000,63365
-제주특별자치도,서귀포시,63500,63644
+const {kakao} = window;
+
+const MapForm = ({location, stateName, countyName, searchText}) => { //매개변수 PharMain.jsx -> Map.jsx 에서 넘겨받은 값
+
+   //console.log(location.latitude)
+   console.log(location.latitude+ " , " + location.longitude);
+   /* 
+   stateName 없으면 null
+   countyName 없으면 null
+   searchText 없으면 "" 빈칸
+   */
+   //console.log(stateName + " , " +  countyName + " , " + searchText);
+
+   const convert = require('xml-js');
+
+  const [centerPos, setCenterPos] = useState({
+    Lat :location.latitude,
+    Lng : location.longitude
+  });
+  //37.4997799 , 127.0306391
+  let nowLat = useRef("37.4997799");
+  let nowLng = useRef("127.0306391");
+
+  let [page, setPage] = useState(1); //api uri에 사용할 page, api데이터를 db에 입력시 사용
+
+  const [list, setList] = useState([]); //배열로 선언, api 데이터 받는 전체 list
+
+  const [dataList, setDataList] = useState([]); //주말진료나 검색 이후 만들어진 list
+
+  const [loading, setLoading] = useState(true); //db에서 list를 가져올 때 까지 map을 읽지 않는다
+
+  const [checkPharmData, setCheckPharmData] = useState(true); 
+  //전체약국 버튼 클릭시 true, 주말약국버튼 클릭시 false
+  //하나의 PharmData함수에서 처리
+
+  let [pathButton, setPathButton] = useState(false); //false : 경로찾기 버튼 보이기, true : 텍스트 박스
+
+  //도로 위 위치
+  let [pathLat ,setPathLat] = useState();
+  let [pathLog, setPathLog] = useState();
+
+  let [mLat, setMLat] = useState();
+  let [mLng, setMLng] = useState();
+
+  let [myLat, setMyLat] = useState();
+  let [myLog, setMyLog] = useState();
+
+  let navigate = useNavigate();
+
+  /*
+  getData() -> PharmData() -> makeMap
+  최초 로딩 useEffect()에서 getData() 함수 실행 -> DB에서 데이터를 다 가져오면 setList실행 
+  -> list로 입력이 완료되면 loading state를 false로 변경 : 데이터가 2만건이 넘기 때문에 딜레이 발생해서 loading을 따로두고
+  useEffect를 나눠서 실행
+  -> 첫 페이지는 PharmData에서 전체 약국을 기준으로 출력
+  -> 이후 "전체 약국", "주말 운영 약국" 을 클릭할 때마다 checkPharmData 값이 변하고 이때 재랜더링 될 때마다
+
+   useEffect(() => {
+   if(!loading){
+      PharmData();
+   }
+  }, [checkPharmData])
+  
+  가 실행
+
+  PharmData() -> 실제 맵을 그려주는 makeMap 호출
+  */
+
+   useEffect(() => {
+      //fetchData(); api데이터 DB에 입력하는 함수
+      getData(); //DB에 있는 api데이터 가져오기
+  }, []) //api데이터를 DB에 입력시 [page] 입력
+
+  
+  useEffect(() => {
+      setLoading(false); //list를 완전히 받아왔는지 아닌지 loading으로 체크, false이면 다운 완료
+      PharmData(); //첫 페이지 로딩은 전체 약국으로
+  }, [list]) //checkPharmData 전체, 주말 약국 버튼을 클릭할 때마다 로딩
+
+  useEffect(() => {
+   if(!loading){
+      PharmData();
+   }
+  }, [checkPharmData])
+  
+  
+  //DB에서 데이터 가져오기
+  const getData = async () => {
+
+      let response;
+      try{
+         response = await mapapi.getData();
+      }catch(error){
+         console.log(error);
+      }
+
+      setList([...response.data.list]);
+      console.log("RDS connect => list");
+      console.log(list);
+  }
+
+   //전체, 주말, 검색 이후 약국 목록
+   const PharmData = () => {
+
+      setLoading(true);
+      setDataList([]);
+
+      var pharmData = new Array();
+
+      if(checkPharmData){
+         for(var i=0 ; i<list.length ; i++){ //전국 약국
+            pharmData.push({
+               title : list[i].dutyname,
+               latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
+               dutyweekendat : list[i].dutyweekendat,
+               dutyaddr : list[i].dutyaddr,
+               dutytel1 : list[i].dutytel1,
+               lon : list[i].lon,
+               lat : list[i].lat,
+               x : list[i].x,
+               y : list[i].y
+            })
+         }
+      }else{
+         for(var i=0 ; i<list.length ; i++){
+
+            if(list[i].dutyweekendat === "Y"){ //주말 운영 약국
+               pharmData.push({
+                  title : list[i].dutyname,
+                  latlng : new kakao.maps.LatLng(list[i].lat, list[i].lon),
+                  dutyweekendat : list[i].dutyweekendat,
+                  dutyaddr : list[i].dutyaddr,
+                  dutytel1 : list[i].dutytel1,
+                  lat : list[i].lat,
+                  lon : list[i].lon,
+                  x : list[i].x,
+                  y : list[i].y
+               })
+            }
+         }
+      }
+
+      setLoading(false);
+      console.log(pharmData);
+      setDataList([...pharmData]);
+
+      makeMap(pharmData)
+   }
+   
+  //맵 생성
+  var map;
+  const makeMap = (pharmData) => { //전체약국, 주말운영약국을 나눠서 출력하기 위해서 position을 나눠서 입력 받는다
+
+   if(loading) return;
+
+      const script = document.createElement("script");
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`;
+      script.async = true;
+      script.type = "text/javascript";
+
+      script.onload = () => {
+         window.kakao.maps.load(() => { 
+            const mapContainer = document.getElementById("map");
+            //alert(nowLat.current +" , "+ nowLng.current);
+            const mapOption = {
+               center : new kakao.maps.LatLng(nowLat.current, nowLng.current),
+               level : 3
+            }
+            
+      map = new kakao.maps.Map(mapContainer, mapOption);
+            
+      //나의 위치 -------------------------------------------
+      if(navigator.geolocation){
+         navigator.geolocation.getCurrentPosition(function(position){
+
+            var lat = position.coords.latitude, 
+               lon = position.coords.longitude;
+
+            //setMyLat(lat);
+            //setMyLog(lon);
+            setMyLat(nowLat.current);
+            setMyLog(nowLng.current);
+            
+            //var locPosition = new kakao.maps.LatLng(lat, lon),
+            var locPosition = new kakao.maps.LatLng(nowLat.current, nowLng.current),
+            message = `<div style="padding:5px;">나의 위치</div>`;
+
+            displayMarker(locPosition, message);
+         })
+      }else {
+         var locPosition = new kakao.maps.LatLng(37.5112,127.04595),
+            message = 'geolocation을 사용할 수 없습니다';
+
+            displayMarker(locPosition, message);
+      }
+
+
+      //마커 표시 -------------------------------------------
+
+        var imageSrc;
+        var check = true;
+        var markerInfo = new Array();
+        for(var i=0 ; i<pharmData.length ; i++){ //지우면 안됨
+        /*  for(var i=0 ; i<100 ; i++){ */
+            
+            markerInfo[i] = pharmData[i];
+
+
+            if(pharmData[i].dutyweekendat === "Y"){
+               imageSrc = "https://github.com/khj20231204/firstproject/blob/main/redmarker.png?raw=true";
+            }else{
+               imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+            }
+
+            var markerSize = new kakao.maps.Size(24, 35); //마커 크기 설정
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, markerSize); //마커 이미지 설정
+
+            let marker = new kakao.maps.Marker({
+               map: map, //마커를 표시할 지도
+               position: pharmData[i].latlng,
+               title: pharmData[i].title,
+               image: markerImage,
+               clickable: true
+            })
+
+            // 마커 위에 인포윈도우 표시 --------------------------------------
+            
+            let iwContent = `
+            <div style="width:100%;height:50px;font-size:12px;background-color:'red'">
+            <div>${pharmData[i].title}</div>
+            <div>${pharmData[i].dutytel1}</div>
+            </div>
+            `;
+
+            var iwRemoveable = true;
+            
+            //var iwPosition = new kakao.maps.LatLng(pharmData[i].lat, pharmData[i].lon);
+
+            let inforwindow = new kakao.maps.InfoWindow({
+               position: pharmData[i].latlng,
+               content: iwContent,
+               removeable: iwRemoveable
+            })
+
+            //inforwindow.open(map, marker[i]);
+            kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
+               let mPosition = marker.getPosition();
+               let mLat = mPosition.getLat();
+               let mLng = mPosition.getLng();
+
+               if(document.getElementById("latpathText") !== null){
+                  document.getElementById("latpathText").value = mLat;
+                  document.getElementById("logpathText").value = mLng;
+               }
+
+               setPathLat(mLat);
+               setPathLog(mLng);
+            });
+
+            kakao.maps.event.addListener(marker,'mouseover', function(){
+               inforwindow.open(map, marker);
+            })
+            
+            kakao.maps.event.addListener(marker, 'mouseout', function(){
+               inforwindow.close(map, marker);
+            })
+            // 마커 위에 인포윈도우 표시 끝 -------------------------------------
+               
+        }
+        //마커 표시 끝 -------------------------------------------
+
+
+        //지도 클릭 이벤트
+         kakao.maps.event.addListener(map, 'click', function(mouseEvent){
+            var latlng = mouseEvent.latLng;
+
+            if(document.getElementById("latpathText") !== null){
+              
+               //중심 위치를 지도에서 클릭한 위치로 등록
+               /* nowLat.current = latlng.getLat();
+               nowLng.current = latlng.getLng(); */
+
+               console.log(latlng.La) //경도
+               console.log(latlng.Ma) //위도
+
+               document.getElementById("latpathText").value = latlng.Ma;
+               document.getElementById("logpathText").value = latlng.La;
+
+               setPathLat(latlng.Ma);
+               setPathLog(latlng.La);
+            }
+            //latlng = latlng.subString(1, len);
+            /*
+            var len = latlng.length;
+            latlng = latlng.subString(0, len-1);
+            document.getElementById("pathText").value = latlng;*/
+         })
+        //지도 클릭 이벤트 끝
+
+        //kakao.maps.event.addListener(map, 'click', function(mouseEvent) { map에서 클릭 이벤트
+        //kakao.maps.event.addListener(marker, 'click', function(mouseEvent) { marker에서 클릭 이벤트
+        
+      }); //maps.load
+   };//script.onload
+
+   document.head.appendChild(script);
+
+   return () => {
+      document.head.removeChild(script);
+   };
+  }//makeMap
+
+  let pathButtonSet = () => {
+   console.log(pathButton);
+   setPathButton(true);
+   console.log(pathButton);
+  }
+
+  //나의 위치 마커 표시
+  function displayMarker(locPosition, message){
+      var marker = new kakao.maps.Marker({
+         map: map,
+         position: locPosition
+      })
+
+      var iwContent = message,
+         iwRemoveable = true;
+
+      var infowindow = new kakao.maps.InfoWindow({
+         content : iwContent,
+         removable : iwRemoveable
+      })
+
+      infowindow.open(map, marker);
+
+      map.setCenter(locPosition);
+   }
+ 
+  /*
+  api데이터 로드 함수 : api에서 데이터를 가져와서 db에 저장하는 기능을 가진 함수
+  총 데이터가 24만 건이기 때문에 실시간으로 가져오는데 딜레이가 심해서 db에 저장
+  row를 2000으로 설정하고 page를 12페이지까지 증가 시킴   
+  page는 useState로 두고 버튼을 누를 때마다 1씩 증가 시키는데 uri의 ${page}값이
+  7이상이 되면 에러 발생
+  1페이지부터 4페이지까지는 정상 작동   
+  5페이지부터 8페이지까지 서버쪽에서 값을 제대로 못 넘김
+  9페이지 13페이지까지 정상 작동
+  */
+ //api데이터를 DB에 입력하는 함수
+  const fetchData = async () => {
+
+      try{
+
+         let obj = new Object();
+         let array = new Array();
+
+         let testUrl = encodeURI(`http://safemap.go.kr/openApiService/data/getPharmacyData.do?serviceKey=${process.env.REACT_APP_PHAMARCY_API_KEY}&pageNo=${page}&numOfRows=2000&type=JSON`);
+         let response = await api.get(testUrl);
+         //console.log(response);
+         const jsonResult = convert.xml2json(response.data, {compact:true, spaces:3}); // Compact : JSON으로 받기, spaces : 들여쓰기
+         let data = JSON.parse(jsonResult);
+
+         let itemData = data.response.body.items;
+         console.log(itemData.item.length);
+
+         for(var i=0 ; i<itemData.item.length ; i++)
+            array.push(itemData.item[i]);
+   
+         /* await mapapi.savePharmDatas(array);  
+         여기 풀면 첫번째 데이터는 바로 입력
+         이후부터 버튼으로 page 증가*/
+
+      }catch(error){
+         console.log(error);
+      }
+   }
+
+   return (
+   <>
+   {/* 
+      <div>
+      <button onClick={() => {
+         setPage(page+1);
+      }}>페이지 증가</button> 
+      <div>현재 페이지 {page} : 12페이지가 마지막</div> 
+      </div>
+   */}
+      {
+         (dataList.length !== 0) ? 
+
+            <div style={{textAlign:'center'}}>
+            <Button variant="outline-secondary" style={{margin:10}} onClick={() => setCheckPharmData(true)}>전체 약국 보기</Button>
+            <Button variant="outline-danger" onClick={() => setCheckPharmData(false)}>주말 운영 약국 보기</Button>
+            
+            {
+                  pathButton ? 
+
+                  <span><span style={{margin:10}}>목적지 Lat : <input type="text" id="latpathText" readOnly></input>Log : <input type="text" id="logpathText" readOnly></input></span><Button variant="outline-primary" style={{margin:10}} onClick={() => {
+                     navigate("/MapRoute", {state : {lat: pathLat, lon : pathLog, myLat:myLat, myLog:myLog}});
+                  }}>찾기</Button><Button variant="outline-primary" style={{margin:10}} onClick={() => setPathButton(false)}>취소</Button></span>
+                  
+                  :
+
+                  <Button variant="outline-primary" style={{margin:10}} onClick={() => {
+                     setPathButton(true)
+                  }}>경로 찾기</Button>
+            }
+            
+            <div id="map" style={{width: "100vw", height: "100vh"}}></div>
+            </div>
+         :
+            <div style={{alignItems:'center',top:300}}>loading... 데이터를 불러오고 있습니다.</div>
+      }
+    </>
+   );
+};
+
+export default MapForm;
