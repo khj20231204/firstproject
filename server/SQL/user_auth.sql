@@ -1,3 +1,4 @@
+-- Active: 1731407083250@@firstproject.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
                                                                                                                                                                                                                                                                                                                                                                                                             -- active: 1731407083250@@firstproject.ch2m8mqmk43c.ap-northeast-2.rds.amazonaws.com@3306@firstproject
 
 -- user_auth : 권한 테이블

@@ -104,15 +104,31 @@ const User = () => {
          const status = response.status;
          
          setUserId(userId); //넘겨받은 userId를 state에 저장
-         Swal.confirm("계정 삭제","계정을 삭제하시겠습니까?","success",(result) => {
+         let userconfirm = window.confirm("계정을 삭제하시겠습니까?")
+         if(userconfirm){
+            response = await auth.remove(userId);
+
+            alert(response.status === 200)
+
+            Swal.alert("계정 삭제 성공","메인화면으로 이동합니다.","error");
+            setDelanswer(true); 
+            navigate("/");
+         }
+         /* Swal.confirm("계정 삭제","계정을 삭제하시겠습니까?","success",(result) => {
             if(result.isConfirmed) { 
+
+               response = await auth.remove(userId);
+
+               Swal.alert("계정 삭제 성공","메인화면으로 이동합니다.","error");
                setDelanswer(true); 
+               navigate("/");
                //Swal의 값이 true로 변화가 있을 때마다 Delanser을 변경시켜서 useEffect가 실행되도록 했다
             }
-         });
+         }); */
 
       }catch(error){
-         Swal.alert("","비밀번호가 일치하지 않습니다.","error");
+         //Swal.alert("","비밀번호가 일치하지 않습니다.","error");
+         Swal.alert("","참조키 오류로 삭제되지 않았습니다.","error");
       }
       
       /*

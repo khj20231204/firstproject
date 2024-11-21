@@ -15,6 +15,8 @@ create table `user` (
 
 drop table user;
 
+delete from user;
+
 select * from user;
 
 -- bcryptpasswordencoder : 암호화 시

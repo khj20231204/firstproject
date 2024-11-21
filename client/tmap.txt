@@ -13,7 +13,6 @@ const MapRoute = () => {
    const {lat, lon, myLat, myLog} = location.state;
    const navigate = useNavigate();
 
-	console.log("-===============-")
    console.log(lat);
    console.log(lon);
    console.log(myLat);
@@ -31,9 +30,8 @@ const MapRoute = () => {
    },[])
 
    function initTmap() {
-      var centerLat = (Number(myLat) + Number(lat))/2;
-      var centerLog = (Number(myLog) + Number(lon))/2;
-		console.log(centerLat)
+      var centerLat = (myLat + lat)/2;
+      var centerLog = (myLog + lon)/2;
 
 		// 1. 지도 띄우기
 		map = new Tmapv2.Map("map_div", {
@@ -189,8 +187,6 @@ const MapRoute = () => {
             })
             .catch(error => {
             console.error("Error:", error); // 에러 처리
-            alert("유효거리를 초과했습니다.")
-            navigate(-1);
             });
 
          }
@@ -201,6 +197,7 @@ const MapRoute = () => {
 	}
 	
 	function drawLine(arrPoint) {
+		alert(arrPoint)
 		var polyline_;
 
 		polyline_ = new Tmapv2.Polyline({
@@ -213,8 +210,8 @@ const MapRoute = () => {
 	}
 
    return (
-		<div>
-      <div id="map_wrap">
+   <div>
+      <div id="map_wrap" class="map_wrap3">
          <div id="map_div"></div>
       </div>
       <span id="result"></span><span style={{margin:10}}><Button variant="light" type="button" onClick={() => {
