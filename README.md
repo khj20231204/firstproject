@@ -16,5 +16,11 @@
   ![MySql](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
   ![SpringBoot](https://img.shields.io/badge/springboot-green.svg?style=for-the-badge&logo=springboot&logoColor=white)
 
+1. # 데모 영상📽️
+   https://www.youtube.com/@HJk-wj7uh
+
+1. # 테이블 설계📲
+   <img src="aution_db.png" width="100%">
+
 
 
