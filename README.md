@@ -25,7 +25,10 @@
    <img src="https://github.com/khj20231204/firstproject/blob/main/pharm_db.png?raw=true" width="100%">
 
 1. # 개발 개요📖 
-  이번 프로젝트에서는 앞서 진행한 프로젝트 이외의 기능으로 구현하고 싶었습니다. 서버와 클라이언트를 구분하여 서버 쪽은 JAVA로 클라이언트 쪽은 React로 구현했습니다. React를 사용하면 Session을 사용할 수 없기 때문에 JWT와 StpringSecurity를 적용했습니다. React를 이용하여 게시판을 만들었고 1만6천개의 약국정보를 API를 이용하여 가져와 XML파일을 JSON파일로 변환 후 Parsing하여 서버쪽에서 원하는 데이터만 잘라내어 RDS에 저장했습니다. 시/도 구/군 별로 검색이 가능하고 현재 자신의 위치에서 약국까지 도보 경로를 그려줍니다. 서버쪽은 EC2로 배포를 끝냈습니다.
+  이번 프로젝트에서는 앞서 진행한 프로젝트 이외의 기능으로 구현하고 싶었습니다. 서버와 클라이언트를 구분하여 서버 쪽은 JAVA로 클라이언트 쪽은 React로 구현했습니다. React를 사용하면 Session을 사용할 수 없기 때문에 JWT와 StpringSecurity를 적용했습니다. React를 이용하여 게시판을 만들었고 1만6천개의 약국정보를 API를 이용하여 가져와 XML파일을 JSON파일로 변환 후 Parsing하여 서버쪽에서 원하는 데이터만 잘라내어 RDS에 저장했습니다. 시/도 구/군 별로 검색이 가능하고 현재 자신의 위치에서 약국까지 도보 경로를 그려줍니다. 서버쪽은 EC2로 배포를 끝냈습니다.   
 
 1. # 개발 환경👨‍💻
- <img src="https://github.com/khj20231204/firstproject/blob/main/pharm_tools2.png?raw=true" width="100%">
+ <img src="https://github.com/khj20231204/firstproject/blob/main/pharm_tools2.png?raw=true" width="100%">   
+
+1. # JWT와 AUTH 2.0
+  
