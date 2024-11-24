@@ -44,7 +44,7 @@
        </td></tr></table>
 
    1. ## JWT
-   서버 - 최초 로그인을 하면 서버에서 JWT를 생성   
+      서버 - 최초 로그인을 하면 서버에서 JWT를 생성   
       ```
         String jwt = Jwts.builder()
            .signWith(getShaKey(), Jwts.SIG.HS512)    
@@ -58,7 +58,7 @@
            .compact();      
       ```   
 
-    서버 - 클라이언트로부터 받은 JWT를 해석   
+      서버 - 클라이언트로부터 받은 JWT를 해석   
       ```
          String jwt = authHeader.replace(JwtConstants.TOKEN_PREFIX, "");
          Jws<Claims> parsedToken = Jwts.parser()
@@ -67,7 +67,7 @@
                .parseSignedClaims(jwt);    
       ```   
    
-   클라이언트 - 쿠키에 저장된 JWT를 가져와 Header에 JWT를 추가 후 전송   
+      클라이언트 - 쿠키에 저장된 JWT를 가져와 Header에 JWT를 추가 후 전송   
       ```
           const accessToken = Cookies.get("accessToken");
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
