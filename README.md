@@ -72,6 +72,8 @@
           const accessToken = Cookies.get("accessToken");
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
           response = await auth.info();
-      ```   
+      ```
+      
+   1. ## SpringSecurity
        
   
