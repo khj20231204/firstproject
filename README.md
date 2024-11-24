@@ -20,7 +20,7 @@
    https://www.youtube.com/@HJk-wj7uh
 
 1. # 테이블 설계📲
-   <img src="aution_db.png" width="100%">
+   <img src="https://github.com/khj20231204/firstproject/blob/main/pharm_db.png?raw=true" width="100%">
 
 
 
