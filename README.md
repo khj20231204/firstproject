@@ -38,7 +38,7 @@
 
    1. ## Client와 Server의 분리
        <br>
-       <img src="" 
+       <img src="https://github.com/khj20231204/firstproject/blob/main/client_server.png?raw=true" style="border:3px solid black;border-radius:9px;width:200px">
       <table style="border:2px solid black"><tr><td>
       Client는 React로 구현하였고 Server는 SpringBoot로 구현했습니다. 클라이언트와 서버는 axios를 이용하여 데이터를 주고 받습니다. 최초 로그인 후 서버로부터 JWT를 받아오게 되고 해석된 JWT값들은 Context로 모든 컴포넌트에 정보가 전달됩니다. 최초 로그인 시에만 서버로 접속을 하고 이후부터는 로컬에 저장된 JWT 정보로 로그인 유무를 판단하게 됩니다. JAVA로 구현된 서버는 MVC패턴을 따르며 MyBatis를 이용하여 RDS에 있는 MySQl에 데이터가 저장됩니다.
        </td></tr></table>
