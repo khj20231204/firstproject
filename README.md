@@ -81,9 +81,7 @@
        작성 중...
        <table style="border:2px solid black">
            <tr>
-               <td><img src=""></td>
-               <td><img src=""></td>
-               <td><img src=""></td>
+              
            </tr>
        
        
