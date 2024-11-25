@@ -76,9 +76,10 @@
       
    1. ## SpringSecurity
   
-   1. ## 리액트로 구현한 게시판 로그인/글쓰기/수정/댓글/검색
+   1. ## 게시판
   
-       작성 중...   
+      리액트로 구현한 게시판으로 로그인, 원글에 대한 CRUD, 댓글에 대한 CRUD를 구현했습니다. 로그인의 경우 JWT를 이용하여 구현이 되었고 상단 왼쪽에 암호화된 토큰값과 인코딩된 payload정보를 보여주도록 했습니다.
+       
        <table style="border:2px solid black">
            <tr>
                <td><img src="https://github.com/khj20231204/firstproject/blob/main/login.gif?raw=true" width="200px"></td>
@@ -87,6 +88,14 @@
                <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_board_search.gif?raw=true" width="200px"></td>
            </tr>
        </table>
-       
+
+   1. # 약국 정보를 출력하는 지도맵
+      생활안전정보에서 전국 1만6천개 정도의 약국에 대한 정보를 xml파일로 가져와 Json으로 변환 후 parseing과정을 거쳐 서버로 넘겨주고 서버측에서 원하는 데이터만 잘라 RDS에 저장했습니다.
+
+      <table style="border:2px solid black">
+         <tr>
+             <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_map.gif?raw=true" width="300px"></td>
+         </tr>
+      </table>
        
   
