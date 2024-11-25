@@ -81,9 +81,10 @@
        작성 중...   
        <table style="border:2px solid black">
            <tr>
-              <td><img src="https://github.com/khj20231204/firstproject/blob/main/pharm_comment.gif?raw=true" width="200px"></td>
-              <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_board_search.gif?raw=true" width="200px"></td>
-              <td><img src="https://github.com/khj20231204/firstproject/blob/main/board_write.gif?raw=true" width="200px"></td>
+               <td><img src="https://github.com/khj20231204/firstproject/blob/main/login.gif?raw=true" width="200px"></td>
+               <td><img src="https://github.com/khj20231204/firstproject/blob/main/board_write.gif?raw=true" width="200px"></td>
+               <td><img src="https://github.com/khj20231204/firstproject/blob/main/pharm_comment.gif?raw=true" width="200px"></td>
+               <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_board_search.gif?raw=true" width="200px"></td>
            </tr>
        </table>
        
