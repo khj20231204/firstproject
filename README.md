@@ -76,14 +76,15 @@
       
    1. ## SpringSecurity
   
-   1. ## 리액트로 구현한 게시판 글쓰기/수정/댓글/검색
+   1. ## 리액트로 구현한 게시판 로그인/글쓰기/수정/댓글/검색
   
        작성 중...
        <table style="border:2px solid black">
            <tr>
+              <td><img src="https://github.com/khj20231204/firstproject/blob/main/pharm_comment.gif?raw=true" width="300px"></td>
               <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_board_search.gif?raw=true" width="300px"></td>
                <td><img src="https://github.com/khj20231204/firstproject/blob/main/board_write.gif?raw=true" width="300px"></td>
-               <td><img src="https://github.com/khj20231204/firstproject/blob/main/pharm_comment.gif?raw=true" width="300px"></td>
+               
            </tr>
        
        
