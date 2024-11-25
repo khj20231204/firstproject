@@ -81,7 +81,7 @@
        작성 중...
        <table style="border:2px solid black">
            <tr>
-              
+              <td><img src="https://github.com/khj20231204/firstproject/blob/main/PHARM_board_search.gif?raw=true"></td>
            </tr>
        
        
