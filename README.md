@@ -32,7 +32,7 @@
     </td></tr></table>
   
 1. # 개발 환경👨‍💻
-   <img src="https://github.com/khj20231204/firstproject/blob/main/pharm_tools2.png?raw=true" width="100%">   
+   <img src="https://github.com/khj20231204/firstproject/blob/main/firstproject_stack.png?raw=true" width="100%">   
   
 1. # 주요 기능
 
