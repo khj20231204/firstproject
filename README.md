@@ -73,8 +73,6 @@
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
           response = await auth.info();
       ```
-      
-   1. ## SpringSecurity
   
    1. ## 게시판
       리액트로 구현한 게시판으로 로그인, 원글에 대한 CRUD, 댓글에 대한 CRUD를 구현했습니다. 로그인의 경우 JWT를 이용하여 구현이 되었고 상단 왼쪽에 암호화된 토큰값과 인코딩된 payload정보를 보여주도록 했습니다.
