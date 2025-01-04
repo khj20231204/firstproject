@@ -5,7 +5,7 @@
 1. # 프로젝트 개요💡
     주말에 갑작스러운 통증이 있는 경우, 병원을 가기에 부담이 되고 참기엔 힘든 통증인 경우 우리는 약국을 떠올리게 됩니다. 이런 경우를 대비하여 자신의 주변에 주말에도 운영이 되는 약국을 찾을 수 있다면 비상시에 많은 도움이 될 것입니다. 
   
-     프로젝트 기간 : 2024.10.21 ~ 2024.11.22   
+     프로젝트 기간 : 1개월   
      개발 인원 : 1명   
      JDK17 LTS    
      React 18
@@ -21,7 +21,7 @@
     ![SpringBoot](https://img.shields.io/badge/springboot-green.svg?style=for-the-badge&logo=springboot&logoColor=white)
   
 1. # 테이블 설계📲
-     <img src="/readme_img/pharm_db.png" width="100%">
+     <img src="/readme_img/pharm_db.png" width="100%">   
   
 1. # 개발 개요📖
      <table style="border:2px solid black"><tr><td>
