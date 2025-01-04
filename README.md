@@ -78,7 +78,7 @@
         <td><img src="/readme_img/login.gif" width="200px"></td>
         <td><img src="/readme_img/board_write.gif" width="200px"></td>
         <td><img src="/readme_img/pharm_comment.gif" width="200px"></td>
-        <td><img src="P/readme_img/HARM_board_search.gif" width="200px"></td>
+        <td><img src="/readme_img/HARM_board_search.gif" width="200px"></td>
         </tr>
         </table>
 
