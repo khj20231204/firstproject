@@ -21,7 +21,7 @@
     ![SpringBoot](https://img.shields.io/badge/springboot-green.svg?style=for-the-badge&logo=springboot&logoColor=white)
   
 1. # 테이블 설계📲
-     <img src="pharm_db.png" width="100%">
+     <img src="/readme_img/pharm_db.png" width="100%">
   
 1. # 개발 개요📖
      <table style="border:2px solid black"><tr><td>
@@ -29,13 +29,13 @@
     </td></tr></table>
   
 1. # 개발 환경👨‍💻
-   <img src="firstproject_stack.png" width="100%">   
+   <img src="/readme_img/firstproject_stack.png" width="100%">   
   
 1. # 주요 기능
 
    1. ## Client와 Server의 분리
         <br>
-        <img src="client_server.png" style="border:3px solid black;border-radius:9px;width:200px">
+        <img src="/readme_img/client_server.png" style="border:3px solid black;border-radius:9px;width:200px">
         <table style="border:2px solid black"><tr><td>
         Client는 React로 구현하였고 Server는 SpringBoot로 구현했습니다. 클라이언트와 서버는 axios를 이용하여 데이터를 주고 받습니다. 사용자 정보는 Context를 통해 모든 컴포넌트에 정보가 전달됩니다. JAVA로 구현된 서버는 MVC패턴을 따르며 MyBatis를 이용하여 RDS에 있는 MySQl에 데이터가 저장됩니다. 첫 로그인 시 서버로부터 JWT를 받아 쿠키에 저장합니다. 이후 로그인시 마다 JWT를 서버로 전송하여 유효성을 검증받고 userInfo 값을 받아오게 됩니다. 세션을 사용할 때는 세션 관리를 서버가 해야하지만 JWT를 사용할 경우에는 인증 절차만 거치면 됩니다.
         </td></tr></table>
@@ -75,10 +75,10 @@
       리액트로 구현한 게시판으로 로그인, 원글에 대한 CRUD, 댓글에 대한 CRUD를 구현했습니다. 로그인의 경우 JWT를 이용하여 구현이 되었고 상단 왼쪽에 암호화된 토큰값과 인코딩된 payload정보를 보여주도록 했습니다.
         <table style="border:2px solid black">
         <tr>
-        <td><img src="login.gif" width="200px"></td>
-        <td><img src="board_write.gif" width="200px"></td>
-        <td><img src="pharm_comment.gif" width="200px"></td>
-        <td><img src="PHARM_board_search.gif" width="200px"></td>
+        <td><img src="/readme_img/login.gif" width="200px"></td>
+        <td><img src="/readme_img/board_write.gif" width="200px"></td>
+        <td><img src="/readme_img/pharm_comment.gif" width="200px"></td>
+        <td><img src="P/readme_img/HARM_board_search.gif" width="200px"></td>
         </tr>
         </table>
 
@@ -87,8 +87,8 @@
       자신이 위치한 곳에서 선택한 약국까지 경로를 탐색하여 지도상에 나타내줍니다. 목적지까지 걸리는 거리과 시간을 표시합니다.   
       <table style="border:2px solid black">
         <tr>
-        <td><img src="PHARM_map_weekday_weekend.gif" width="300px"></td>
-        <td><img src="PHARM_map_path_draw.gif" width="300px"></td>
+        <td><img src="/readme_img/PHARM_map_weekday_weekend.gif" width="300px"></td>
+        <td><img src="/readme_img/PHARM_map_path_draw.gif" width="300px"></td>
         </tr>
       </table>
 
@@ -96,7 +96,7 @@
       시/도, 구/군, 약국명으로 검색이 가능하도록 했습니다. 자신의 위치한 곳에서 주말에 운영이 되는 약국을 검색할 수 있습니다.
       <table style="border:2px solid black">
         <tr>
-        <td><img src="PHARM_map_search.gif" width="300px"></td>
+        <td><img src="/readme_img/PHARM_map_search.gif" width="300px"></td>
         </tr>
       </table>
   
